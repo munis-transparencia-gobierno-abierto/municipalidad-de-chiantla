@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_budget_info"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="45dp"
+    android:paddingRight="45dp"
+    android:paddingTop="100dp"
+    tools:context="gt.muni.chiantla.budget.BudgetInfoFragment">
+
+    <gt.muni.chiantla.widget.CustomNestedScrollView
+        android:id="@+id/scrollableInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="23dp"
+                app:srcCompat="@mipmap/discusionhome" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:text="@string/discussion"
+                android:textAppearance="@style/BudgetIntroTitleText" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/discussion_explanation"
+                android:textAppearance="@style/LongText" />
+
+            <Button
+                android:id="@+id/budgetButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_radius"
+                android:backgroundTint="@color/primaryDiscussionColor"
+                android:onClick="goToFacebook"
+                android:text="@string/go_to_facebook"
+                android:textAppearance="@style/ButtonText" />
+
+        </LinearLayout>
+    </gt.muni.chiantla.widget.CustomNestedScrollView>
+
+    <include layout="@layout/section_scroll_indicator" />
+
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_expanded="false">
+        <bitmap android:gravity="center" android:src="@mipmap/downarrow_black" />
+    </item>
+    <item android:state_expanded="true">
+        <bitmap android:gravity="center" android:src="@mipmap/uparrow_black" />
+    </item>
+</selector>

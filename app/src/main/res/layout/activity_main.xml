@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/myMuniButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:background="@color/menuChiantla"
+            android:clickable="true"
+            android:onClick="menu"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30dp"
+                app:srcCompat="@mipmap/muni_icon_black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="100dp"
+                android:paddingRight="25dp"
+                android:text="@string/my_muni"
+                android:textAppearance="@style/MenuText" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@mipmap/rightarrow_black" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/budgetButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:background="@color/colorBudgetsPrimary"
+            android:clickable="true"
+            android:onClick="menu"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30dp"
+                app:srcCompat="@mipmap/budget_icon_black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="100dp"
+                android:paddingRight="25dp"
+                android:text="@string/budget"
+                android:textAppearance="@style/MenuText" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@mipmap/rightarrow_black" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/notificationButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:background="@color/notificationsPrimary"
+            android:clickable="true"
+            android:onClick="menu"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30dp"
+                app:srcCompat="@mipmap/avisomunihome" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="100dp"
+                android:paddingRight="25dp"
+                android:text="@string/notification"
+                android:textAppearance="@style/MenuText" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@mipmap/rightarrow_black" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/discussionButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:background="@color/primaryDiscussionColor"
+            android:clickable="true"
+            android:onClick="menu"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30dp"
+                app:srcCompat="@mipmap/message_icon_black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="100dp"
+                android:paddingRight="25dp"
+                android:text="@string/discussion"
+                android:textAppearance="@style/MenuText" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@mipmap/rightarrow_black" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

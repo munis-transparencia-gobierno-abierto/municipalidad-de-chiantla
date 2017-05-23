@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_income_section"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="gt.muni.chiantla.budget.IncomeSectionFragment">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorIncomeAuxPrimary"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:id="@+id/sectionName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/IncomeClassBigText" />
+
+        <TextView
+            android:id="@+id/textView38"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sectionName"
+            android:layout_marginTop="15dp"
+            android:text="@string/added"
+            android:textAppearance="@style/ProgressNumberBudgets" />
+
+        <TextView
+            android:id="@+id/sectionValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textAppearance="@style/IncomeTypeBigFigures" />
+    </LinearLayout>
+
+    <gt.muni.chiantla.widget.CustomListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:background="@color/white"
+        android:divider="@color/budgetDividerColor"
+        android:dividerHeight="1dp"
+        android:paddingLeft="35sp"
+        android:paddingRight="35dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="false"
+        android:background="@color/colorBudgetsPrimary"
+        android:cropToPadding="true"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:stateListAnimator="@null"
+        android:visibility="visible"
+        app:srcCompat="@mipmap/scrolldownwhite" />
+
+</RelativeLayout>

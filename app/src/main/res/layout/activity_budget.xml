@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_budget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="gt.muni.chiantla.budget.BudgetActivity">
+
+    <RelativeLayout
+        android:id="@+id/progressExpenses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        android:visibility="visible">
+
+        <include layout="@layout/section_expenses_progress" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/progressIncome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        android:visibility="visible">
+
+        <include layout="@layout/section_income_progress" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+</RelativeLayout>

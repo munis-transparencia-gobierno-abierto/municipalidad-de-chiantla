@@ -1,0 +1,9 @@
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="card_horizontal_margin">8dp</dimen>
+    <dimen name="card_bottom_padding">20dp</dimen>
+    <dimen name="title_margin">29dp</dimen>
+    <dimen name="content_margin">23dp</dimen>
+    <dimen name="src_margin">30dp</dimen>
+</resources>

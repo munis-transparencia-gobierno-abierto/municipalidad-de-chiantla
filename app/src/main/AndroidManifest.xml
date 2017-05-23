@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="gt.muni.chiantla">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.location.gps" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/MenuTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="KEY DE GOOGLE MAPS" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <activity
+            android:name=".SplashActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mymuni.MyMuniActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".mymuni.know.KnowActivity"
+            android:parentActivityName=".mymuni.MyMuniActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBackground" />
+        <activity
+            android:name=".mymuni.development.DevelopmentActivity"
+            android:parentActivityName=".mymuni.MyMuniActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBackground" />
+        <activity
+            android:name=".mymuni.development.AxesActivity"
+            android:parentActivityName=".mymuni.development.DevelopmentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".mymuni.development.ObjectivesActivity"
+            android:parentActivityName=".mymuni.development.AxesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".mymuni.development.ProjectsActivity"
+            android:parentActivityName=".mymuni.development.ObjectivesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".mymuni.ContactsActivity"
+            android:parentActivityName=".mymuni.MyMuniActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".mymuni.LawsActivity"
+            android:parentActivityName=".mymuni.MyMuniActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".mymuni.HealthActivity"
+            android:parentActivityName=".mymuni.MyMuniActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".budget.BudgetActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BudgetsTheme" />
+        <activity
+            android:name=".notifications.NotificationsActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NotificationsTheme" />
+        <activity
+            android:name=".notifications.NewNotificationActivity"
+            android:parentActivityName=".notifications.NotificationsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NotificationsThemeFullBackground"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".notifications.NotificationActivity"
+            android:parentActivityName=".notifications.NotificationsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NotificationsTheme" />
+        <activity
+            android:name=".DiscussionActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DiscussionTheme" />
+        <activity
+            android:name=".AboutActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DiscussionTheme" />
+    </application>
+
+</manifest>

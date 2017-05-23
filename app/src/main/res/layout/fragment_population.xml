@@ -1,0 +1,288 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="gt.muni.chiantla.mymuni.know.PopulationFragment">
+
+    <gt.muni.chiantla.widget.CustomNestedScrollView
+        android:id="@id/scrollableInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/card_bottom_padding">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/sectionTitle"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/title_margin"
+                android:layout_marginTop="@dimen/title_margin"
+                android:layout_weight="0"
+                android:gravity="center_horizontal"
+                android:lineSpacingExtra="2sp"
+                android:text="Numero de lugares poblados"
+                android:textAppearance="@style/HeaderText" />
+
+
+            <LinearLayout
+                android:id="@+id/table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sectionTitle"
+                android:layout_centerInParent="true"
+                android:layout_weight="0"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/border_radius"
+                    android:backgroundTint="@color/populationList"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        style="@style/PopulationTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/top_radius"
+                        android:backgroundTint="@color/colorBudgetsButtons"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/category"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/villas" />
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/zones" />
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/villages" />
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/cantons" />
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/colonies" />
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/farmhouses" />
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/places" />
+
+                    <TextView
+                        android:id="@+id/textView19"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/fams" />
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        style="@style/PopulationTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/total" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_radius"
+                    android:backgroundTint="@color/populationList"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView21"
+                        style="@style/PopulationTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/top_radius"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/number"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/popNum1"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/villas" />
+
+                    <TextView
+                        android:id="@+id/popNum2"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/zones" />
+
+                    <TextView
+                        android:id="@+id/popNum3"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/villages" />
+
+                    <TextView
+                        android:id="@+id/popNum4"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/cantons" />
+
+                    <TextView
+                        android:id="@+id/popNum5"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/colonies" />
+
+                    <TextView
+                        android:id="@+id/popNum6"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/farmhouses" />
+
+                    <TextView
+                        android:id="@+id/popNum7"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/places" />
+
+                    <TextView
+                        android:id="@+id/popNum8"
+                        style="@style/PopulationList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/fams" />
+
+                    <TextView
+                        android:id="@+id/popNum9"
+                        style="@style/PopulationTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@string/total" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/src"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/table"
+                android:layout_marginTop="@dimen/src_margin"
+                android:layout_weight="0"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp"
+                android:textAppearance="@style/SmallerText" />
+        </RelativeLayout>
+    </gt.muni.chiantla.widget.CustomNestedScrollView>
+
+    <include layout="@layout/section_scroll_indicator" />
+
+</RelativeLayout>

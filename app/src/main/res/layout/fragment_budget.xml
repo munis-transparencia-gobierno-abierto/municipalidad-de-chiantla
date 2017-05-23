@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_budget"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="gt.muni.chiantla.budget.BudgetFragment">
+
+    <gt.muni.chiantla.widget.CustomNestedScrollView
+        android:id="@+id/scrollableInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/incomeButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@color/colorIncomePrimary"
+                android:clickable="true"
+                android:onClick="goToNext"
+                android:padding="35dp"
+                android:paddingEnd="0dp"
+                android:paddingRight="0dp">
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="15dp"
+                    app:srcCompat="@mipmap/flecha" />
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42sp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:lineSpacingExtra="5sp"
+                    android:paddingRight="60dp"
+                    android:text="@string/income"
+                    android:textAppearance="@style/BudgetsBigText" />
+
+                <TextView
+                    android:id="@+id/textView38"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView19"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/added"
+                    android:textAppearance="@style/ProgressNumberBudgets" />
+
+                <TextView
+                    android:id="@+id/income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView38"
+                    android:layout_marginTop="5dp"
+                    android:paddingRight="60dp"
+                    android:textAppearance="@style/BudgetsBigFigures"
+                    android:textSize="30sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/expensesButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@color/colorExpensesPrimary"
+                android:clickable="true"
+                android:onClick="goToNext"
+                android:padding="35dp"
+                android:paddingEnd="0dp"
+                android:paddingRight="0dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="15dp"
+                    app:srcCompat="@mipmap/flecha" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="5sp"
+                    android:paddingRight="60dp"
+                    android:text="@string/expenses"
+                    android:textAppearance="@style/BudgetsBigText" />
+
+                <TextView
+                    android:id="@+id/textView37"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView21"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/budgeted"
+                    android:textAppearance="@style/ProgressNumberBudgets" />
+
+                <TextView
+                    android:id="@+id/commited"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView37"
+                    android:layout_marginTop="5dp"
+                    android:paddingRight="60dp"
+                    android:textAppearance="@style/BudgetsBigFigures"
+                    android:textSize="30sp" />
+
+                <RelativeLayout
+                    android:id="@+id/progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/commited"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/section_progress_expenses" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </gt.muni.chiantla.widget.CustomNestedScrollView>
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="false"
+        android:background="@color/colorBudgetsPrimary"
+        android:cropToPadding="true"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:stateListAnimator="@null"
+        android:visibility="visible"
+        app:srcCompat="@mipmap/scrolldownwhite" />
+
+</RelativeLayout>

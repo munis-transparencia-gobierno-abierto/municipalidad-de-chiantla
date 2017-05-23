@@ -1,0 +1,84 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#AA000000"
+    tools:context="gt.muni.chiantla.notifications.SavedFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="23dp">
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="23dp"
+            android:layout_weight="1"
+            app:srcCompat="@mipmap/message_black_outline" />
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/sent_success"
+            android:textAppearance="@style/HeaderText" />
+
+        <TextView
+            android:id="@+id/textView32"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:layout_weight="1"
+            android:lineSpacingExtra="6dp"
+            android:text="@string/sent_emergencies"
+            android:textAppearance="@style/SmallRegularText" />
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:text="En caso de emergencia, llamar directamente al número siguiente:"
+            android:textAppearance="@style/SmallRegularText" />
+
+        <TextView
+            android:id="@+id/phoneLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:onClick="phoneNumber"
+            android:text="@string/sent_phone"
+            android:textAppearance="@style/SmallRegularText"
+            android:textColor="@color/notificationsPrimary" />
+
+        <Button
+            android:id="@+id/goToMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:layout_weight="1"
+            android:background="@color/notificationsPrimary"
+            android:onClick="closeFragment"
+            android:text="@string/sent_notification_return"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_development"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="gt.muni.chiantla.mymuni.development.DevelopmentActivity">
+
+    <gt.muni.chiantla.widget.CustomNestedScrollView
+        android:id="@+id/scrollableInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:paddingTop="24dp">
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:text="Plan de Desarollo\nMunicipal 2010 - 2025"
+                android:textAppearance="@style/HeaderText" />
+
+
+            <LinearLayout
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView23"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                android:paddingLeft="28dp"
+                android:paddingRight="28dp">
+
+                <include layout="@layout/section_development_progress" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/progress"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                app:srcCompat="@mipmap/graphicdesarrollo" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="205dp"
+                android:layout_height="44dp"
+                android:layout_below="@+id/imageView17"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/border_radius"
+                android:backgroundTint="@color/colorBudgetsButtons"
+                android:onClick="goToAxes"
+                android:stateListAnimator="@null"
+                android:text="@string/next"
+                android:textAllCaps="true"
+                android:textAppearance="@style/FiguresSub"
+                android:textColor="@color/white" />
+
+
+        </RelativeLayout>
+    </gt.muni.chiantla.widget.CustomNestedScrollView>
+
+    <include layout="@layout/section_scroll_indicator" />
+
+</RelativeLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_expenses_project"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="gt.muni.chiantla.budget.ExpensesProjectFragment">
+
+    <RelativeLayout
+        android:id="@+id/project"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorExpensesActivityPrimary"
+        android:orientation="vertical"
+        android:padding="35dp">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:textAppearance="@style/IncomeClassBigText" />
+
+        <TextView
+            android:id="@+id/textView37"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_marginTop="15dp"
+            android:text="@string/budgeted"
+            android:textAppearance="@style/ProgressNumberBudgets" />
+
+        <TextView
+            android:id="@+id/value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView37"
+            android:layout_marginTop="5dp"
+            android:textAppearance="@style/IncomeTypeBigFigures" />
+
+        <RelativeLayout
+            android:id="@+id/progressNotProjects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/value"
+            android:layout_marginTop="15sp"
+            android:orientation="horizontal">
+
+            <include
+                layout="@layout/section_progress_expenses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <gt.muni.chiantla.widget.CustomExpandableListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/project"
+        android:background="@color/white"
+        android:divider="@color/white"
+        android:groupIndicator="@null"
+        android:scrollbars="none" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="false"
+        android:background="@color/colorBudgetsPrimary"
+        android:cropToPadding="true"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:stateListAnimator="@null"
+        android:visibility="visible"
+        app:srcCompat="@mipmap/scrolldownwhite" />
+
+</RelativeLayout>
