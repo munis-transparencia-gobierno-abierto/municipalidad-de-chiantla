@@ -3,13 +3,13 @@ Aplicación de Transparencia y Participación Ciudadana
 ## Creditos
 
 ### Financiamiento
-[USAID Nexos Locales](www.facebook.com/USAID.NexosLocales)
+[USAID Nexos Locales](http://www.facebook.com/USAID.NexosLocales)
 
 ### Desarrollo
-[Ludiverse Inc. / Explico S.A.](www.ludiverse.net)
+[Ludiverse Inc. / Explico S.A.](http://www.ludiverse.net)
 
 ### Programación
-[InnerLemonade](www.innerlemonade.com)
+[InnerLemonade](http://www.innerlemonade.com)
 
 ### Diseño
-[Klap](www.klap.com.gt)
+[Klap](http://www.klap.com.gt)
