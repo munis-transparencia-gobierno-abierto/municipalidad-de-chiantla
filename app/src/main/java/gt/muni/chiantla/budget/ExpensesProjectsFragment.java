@@ -6,23 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import gt.muni.chiantla.CustomActivity;
 import gt.muni.chiantla.R;
 import gt.muni.chiantla.Utils;
 import gt.muni.chiantla.content.Expense;
-import gt.muni.chiantla.widget.CustomListView;
 
 /**
  * Fragmento que muestra los programas de gastos, filtrando dependiendo de si tienen proyecto o no.
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
 public class ExpensesProjectsFragment extends Fragment implements AdapterView.OnItemClickListener {
     private Expense expense;
     private boolean project;
+    private BudgetActivity activity;
 
     public static ExpensesProjectsFragment newInstance(boolean project) {
         ExpensesProjectsFragment instance = new ExpensesProjectsFragment();
@@ -37,11 +38,21 @@ public class ExpensesProjectsFragment extends Fragment implements AdapterView.On
 
         expense = Expense.getInstance();
 
-        CustomListView listView = (CustomListView) view.findViewById(R.id.list);
+        ListView listView = view.findViewById(R.id.list);
         ArrayList<String[]> objects = expense.getProgramsByProject(project);
-        listView.setAdapter(new BudgetExpenseAdapter(objects, getContext(), R.layout.section_expenses_project));
+
+        BudgetListAdapter adapter = new BudgetListAdapter.Builder().setObjects(objects)
+                .setContext(getContext()).setResId(R.layout.section_budget_item)
+                .setExpense(true)
+                .setProgressBackgroundColor(R.color.white)
+                .setProgressColor(R.color.backgroundBudgets)
+                .setCardBackgroundColor(R.color.colorExpensesProgramPrimary)
+                .setSubtitleSize(22)
+                .setItemId(R.id.programButton)
+                .create();
+
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
-        ((CustomActivity) getActivity()).initScroll(listView, view);
 
         String category;
         if (project)
@@ -51,7 +62,19 @@ public class ExpensesProjectsFragment extends Fragment implements AdapterView.On
         Utils.sendFirebaseEvent("Presupuesto", "Gastos", category, null,
                 "Programas_" + category, "Programas_" + category, getActivity());
 
+        activity = (BudgetActivity) getActivity();
+        activity.moveProgress(1);
+
         return view;
+    }
+
+    /**
+     * Cuando este fragmento se muestre, cambiar el tema de la actividad.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        activity.setTheme(R.style.ExpensesTheme);
     }
 
     @Override
@@ -61,6 +84,6 @@ public class ExpensesProjectsFragment extends Fragment implements AdapterView.On
         String[] program = (String[]) adapterView.getAdapter().getItem(position);
         bundle.putLong("programId", programId);
         bundle.putString("programName", program[1]);
-        ((BudgetActivity) getActivity()).goToNext(bundle, view);
+        activity.goToNext(bundle, view);
     }
 }

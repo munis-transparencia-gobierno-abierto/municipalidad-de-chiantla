@@ -1,344 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/gray"
-        android:gravity="center_vertical"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="@string/main"
-        android:textAppearance="@style/SubtitleText" />
-
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:onClick="goToAddress">
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="@color/black"
+        app:cardCornerRadius="6dp">
 
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="50dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:scaleType="center"
-            app:srcCompat="@mipmap/ubigreen" />
+            android:paddingLeft="12dp"
+            android:paddingTop="16dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="16dp">
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imageView6"
-            android:text="@string/address"
-            android:textAppearance="@style/SmallBlueText" />
+            <ImageView
+                android:id="@+id/callButton"
+                android:layout_width="39dp"
+                android:layout_height="39dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/budget_button_inverted"
+                android:onClick="mainActions"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:src="@drawable/telefono"
+                android:visibility="gone" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingRight="16dp"
-            app:srcCompat="@mipmap/arrowgreycontactos" />
+            <TextView
+                android:id="@+id/main_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_toStartOf="@id/nextButton"
+                android:layout_toLeftOf="@id/nextButton"
+                android:text="@string/main_contact"
+                android:textAppearance="@style/BudgetSubtitleText"
+                android:textColor="@color/white" />
 
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView1"
-            android:layout_below="@+id/textView1"
-            android:textAppearance="@style/SmallText" />
-    </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/address_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_title"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="12dp"
+                android:layout_toStartOf="@id/nextButton"
+                android:layout_toLeftOf="@id/nextButton"
+                android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/address"
+                    android:textAppearance="@style/SmallBlueText" />
 
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:scaleType="center"
-            app:srcCompat="@mipmap/horariosgreen" />
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/NormalText"
+                    android:textColor="@color/colorMiMuniPrimary" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imageView7"
-            android:layout_toRightOf="@+id/imageView7"
-            android:text="@string/schedule"
-            android:textAppearance="@style/SmallBlueText" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/schedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView3"
-            android:layout_below="@+id/textView3"
-            android:textAppearance="@style/SmallText" />
-    </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/insertPoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/address_container"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_toStartOf="@id/nextButton"
+                android:layout_toLeftOf="@id/nextButton"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:clickable="true"
-        android:onClick="sendEmail">
+                <LinearLayout
+                    android:id="@+id/phone_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:scaleType="center"
-            app:srcCompat="@mipmap/emailgreen" />
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/phone"
+                        android:textAppearance="@style/SmallBlueText" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imageView4"
-            android:layout_toRightOf="@+id/imageView4"
-            android:text="@string/mail"
-            android:textAppearance="@style/SmallBlueText" />
+                    <TextView
+                        android:id="@+id/main_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/NormalText"
+                        android:textColor="@color/colorMiMuniPrimary" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingRight="16dp"
-            app:srcCompat="@mipmap/arrowgreycontactos" />
+                </LinearLayout>
 
-        <TextView
-            android:id="@+id/mail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView2"
-            android:layout_below="@+id/textView2"
-            android:textAppearance="@style/SmallText" />
-    </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/email_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:clickable="true"
-        android:onClick="callNumber">
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/email"
+                        android:textAppearance="@style/SmallBlueText" />
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:scaleType="center"
-            app:srcCompat="@mipmap/phonegreen" />
+                    <TextView
+                        android:id="@+id/main_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/NormalText"
+                        android:textColor="@color/colorMiMuniPrimary" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imageView5"
-            android:layout_toRightOf="@+id/imageView5"
-            android:text="@string/phone"
-            android:textAppearance="@style/SmallBlueText" />
+                </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingRight="16dp"
-            app:srcCompat="@mipmap/arrowgreycontactos" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView5"
-            android:layout_below="@+id/textView5"
-            android:textAppearance="@style/SmallText" />
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/nextButton"
+                android:layout_width="39dp"
+                android:layout_height="39dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/budget_button_inverted"
+                android:contentDescription="@string/next_button"
+                android:paddingLeft="13dp"
+                android:paddingRight="13dp"
+                android:rotation="270"
+                android:src="@drawable/arrow_big_black" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:onClick="goToDiscussion">
+        </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:scaleType="center"
-            app:srcCompat="@mipmap/facebookgreen" />
+    </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imageView9"
-            android:layout_toRightOf="@+id/imageView9"
-            android:text="@string/facebook"
-            android:textAppearance="@style/SmallBlueText" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingRight="16dp"
-            app:srcCompat="@mipmap/arrowgreycontactos" />
-
-        <TextView
-            android:id="@+id/facebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView8"
-            android:layout_below="@+id/textView8"
-            android:textAppearance="@style/SmallText" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-        <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:scaleType="center" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imageView10"
-            android:layout_toRightOf="@+id/imageView10"
-            android:text="@string/instagram"
-            android:textAppearance="@style/SmallBlueText" />
-
-        <TextView
-            android:id="@+id/instagram"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView9"
-            android:layout_below="@+id/textView9"
-            android:textAppearance="@style/SmallText" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-        <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:scaleType="center" />
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imageView11"
-            android:layout_toRightOf="@+id/imageView11"
-            android:text="@string/twitter"
-            android:textAppearance="@style/SmallBlueText" />
-
-        <TextView
-            android:id="@+id/twitter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView10"
-            android:layout_below="@+id/textView10"
-            android:textAppearance="@style/SmallText" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-        <ImageView
-            android:id="@+id/imageView12"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:scaleType="center" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imageView12"
-            android:layout_toRightOf="@+id/imageView12"
-            android:text="@string/youtube"
-            android:textAppearance="@style/SmallBlueText" />
-
-        <TextView
-            android:id="@+id/youtube"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView11"
-            android:layout_below="@+id/textView11"
-            android:textAppearance="@style/SmallText" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-        <ImageView
-            android:id="@+id/imageView13"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:scaleType="center" />
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imageView13"
-            android:layout_toRightOf="@+id/imageView13"
-            android:text="@string/website"
-            android:textAppearance="@style/SmallBlueText" />
-
-        <TextView
-            android:id="@+id/website"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView12"
-            android:layout_below="@+id/textView12"
-            android:textAppearance="@style/SmallText" />
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray"
-        android:gravity="center_vertical"
-        android:paddingLeft="21dp"
-        android:paddingRight="21dp"
-        android:text="@string/offices"
-        android:textAppearance="@style/SubtitleText" />
-
-</LinearLayout>
+</RelativeLayout>

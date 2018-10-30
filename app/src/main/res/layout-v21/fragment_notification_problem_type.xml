@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/notification_title_margin_bottom"
+        android:gravity="center"
+        android:text="@string/problem_type"
+        android:textAppearance="@style/BudgetSubtitleText" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:paddingLeft="37dp"
+            android:paddingRight="37dp">
+
+            <RadioButton
+                android:id="@+id/problem_type_budget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/budget_problem_type"
+                android:textColor="@drawable/text_button_inverted"
+                android:visibility="gone" />
+
+            <RadioButton
+                android:id="@+id/problem_type_water"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_water"
+                android:textColor="@drawable/text_button_inverted" />
+
+            <RadioButton
+                android:id="@+id/problem_type_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_light"
+                android:textColor="@drawable/text_button_inverted" />
+
+            <RadioButton
+                android:id="@+id/problem_type_streets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_streets"
+                android:textColor="@drawable/text_button_inverted" />
+
+            <RadioButton
+                android:id="@+id/problem_type_transit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_transit"
+                android:textColor="@drawable/text_button_inverted" />
+
+            <RadioButton
+                android:id="@+id/problem_type_services"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_services"
+                android:textColor="@drawable/text_button_inverted" />
+
+            <RadioButton
+                android:id="@+id/problem_type_corruption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_corruption"
+                android:textColor="@drawable/text_button_inverted" />
+
+            <RadioButton
+                android:id="@+id/problem_type_security"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_security"
+                android:textColor="@drawable/text_button_inverted" />
+
+            <RadioButton
+                android:id="@+id/problem_type_ambient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_ambient"
+                android:textColor="@drawable/text_button_inverted" />
+
+            <RadioButton
+                android:id="@+id/problem_type_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_information"
+                android:textColor="@drawable/text_button_inverted" />
+
+            <RadioButton
+                android:id="@+id/problem_type_activities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_activities"
+                android:textColor="@drawable/text_button_inverted" />
+
+            <RadioButton
+                android:id="@+id/problem_type_service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_service"
+                android:textColor="@drawable/text_button_inverted" />
+
+            <RadioButton
+                android:id="@+id/problem_type_application"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_application"
+                android:textColor="@drawable/text_button_inverted" />
+
+            <RadioButton
+                android:id="@+id/problem_type_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/white_button"
+                android:button="@drawable/inset_radio_button"
+                android:paddingLeft="7dp"
+                android:paddingTop="18dp"
+                android:paddingRight="7dp"
+                android:paddingBottom="18dp"
+                android:text="@string/problem_type_other"
+                android:textColor="@drawable/text_button_inverted" />
+        </RadioGroup>
+    </ScrollView>
+
+</LinearLayout>

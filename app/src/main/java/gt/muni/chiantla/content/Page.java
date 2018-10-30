@@ -1,140 +1,179 @@
 package gt.muni.chiantla.content;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import gt.muni.chiantla.connections.database.InformationOpenHelper;
+import gt.muni.chiantla.AppDatabase;
+import gt.muni.chiantla.R;
+import gt.muni.chiantla.mymuni.CollapsibleActivity;
+import gt.muni.chiantla.mymuni.ContactsActivity;
+import gt.muni.chiantla.mymuni.know.ImageFragment;
+import gt.muni.chiantla.mymuni.know.KnowFragment;
+import gt.muni.chiantla.mymuni.know.NumbersFragment;
+import gt.muni.chiantla.mymuni.know.TableFragment;
+import gt.muni.chiantla.mymuni.know.TextFragment;
+import gt.muni.chiantla.mymuni.know.TwoColumnsFragment;
 
 /**
  * Clase que representa una página de información
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
-public class Page {
-    // constantes para la base de datos
-    public static final String TABLE = "pages";
-    public static final String KEY_CONTENT = "content";
-    public static final String KEY_NAME = "name";
-    public static final String KEY_ID = "id";
+@Entity
+public class Page extends MenuElement {
+    @Ignore
+    public static final String APP_NAME = "pages";
+    @Ignore
+    public static final String MODEL_NAME = "Page";
 
-    private String name;
+    @ColumnInfo(name = "content")
     private String content;
-    private int id;
-    private ArrayList<PageItem> items;
+    @Ignore
+    private List<PageItem> items;
+    @Ignore
+    private List<PageItem> extraItems;
+    @ColumnInfo(name = "source")
+    private String source;
+    @ColumnInfo(name = "end_content")
+    private String endContent;
 
-    public Page(String name, String content, int id, ArrayList<PageItem> items) {
-        this.name = name;
+    public Page(int id, int order, String name, String template, Integer menu, String content,
+                String source, String endContent) {
+        super(id, order, name, template, menu);
         this.content = content;
-        this.id = id;
+        this.source = source;
+        this.endContent = endContent;
+    }
+
+    public Page(String name, String content, int id, ArrayList<PageItem> items, String template) {
+        setName(name);
+        this.content = content;
+        setId(id);
         this.items = items;
+        setTemplate(template);
     }
 
     /**
      * Crea una página con un json devuelto del servidor. También crea los {@link PageItem}
      * relacionados
+     *
      * @param response la respuesta del servidor
      */
     public Page(JsonArray response) {
         JsonObject page = response.get(0).asObject();
-        this.id = page.get("id").asInt();
-        this.name = page.get("name").asString();
+        setId(page.get("id").asInt());
+        setName(page.get("name").asString());
+        if (page.get("menu") != null) setMenu(page.get("menu").asInt());
         this.content = null;
         JsonValue jsonContent = page.get("content");
         if (!jsonContent.isNull())
             content = jsonContent.asString();
-        this.items = new ArrayList();
+        this.items = new ArrayList<>();
+        extraItems = new ArrayList<>();
         for (int i = 1; i < response.size(); i++) {
             JsonObject item = response.get(i).asObject();
-            String itemContent = null;
-            if (!item.get("content").isNull())
-                itemContent = item.get("content").asString();
-            if (itemContent == "" || itemContent == null)
-                if (!item.get("long_content").isNull())
-                    itemContent = item.get("long_content").asString();
-            int id = item.get("id").asInt();
-            String itemName = item.get("name").asString();
-            int order = item.get("order").asInt();
-            items.add(new PageItem(itemContent, id, itemName, this, order));
+            PageItem itemObject = new PageItem(item, this);
+            if (getTemplate() != null && getTemplate().equals("Contactos") &&
+                    itemObject.isSpecial()) {
+                extraItems.add(itemObject);
+                break;
+            } else {
+                items.add(itemObject);
+            }
         }
     }
 
     /**
-     * Crea una página con información de la base de datos. También busca los {@link PageItem}
+     * Crea una página con un json devuelto del servidor. También crea los {@link PageItem}
      * relacionados
-     * a la misma.
-     * @param helper el helper de la base de datos
-     * @param id el id de la página a buscar
+     *
+     * @param response la respuesta del servidor
      */
-    public Page(InformationOpenHelper helper, int id) {
-        this.id = id;
-        SQLiteDatabase db = helper.getReadableDatabase();
-        String PAGE_SELECT_QUERY = String.format(
-                "SELECT * FROM %s WHERE %s = %s",
-                TABLE,
-                KEY_ID, id);
-        Cursor cursor = db.rawQuery(PAGE_SELECT_QUERY, null);
-        try {
-            if (cursor.moveToFirst()) {
-                int contentIndex = cursor.getColumnIndex(KEY_CONTENT);
-                if (!cursor.isNull(contentIndex))
-                    content = cursor.getString(contentIndex);
-                name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
-                id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
-            }
-        } catch (Exception e) {
-            Log.e("DB", e.getMessage());
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-        this.items = new ArrayList();
-        String ITEMS_SELECT_UPDATE = String.format(
-                "SELECT * FROM %s WHERE %s = %s ORDER BY %s",
-                PageItem.TABLE,
-                PageItem.KEY_PAGE, id,
-                PageItem.KEY_ORDER);
-        cursor = db.rawQuery(ITEMS_SELECT_UPDATE, null);
-        try {
-            if (cursor.moveToFirst()) {
-                do {
-                    String itemContent = null;
-                    int contentIndex = cursor.getColumnIndex(PageItem.KEY_CONTENT);
-                    if (!cursor.isNull(contentIndex))
-                        itemContent = cursor.getString(contentIndex);
-                    int itemId = cursor.getInt(cursor.getColumnIndex(PageItem.KEY_ID));
-                    String itemName = cursor.getString(cursor.getColumnIndex(PageItem.KEY_NAME));
-                    int order = cursor.getInt(cursor.getColumnIndex(PageItem.KEY_ORDER));
-                    items.add(new PageItem(itemContent, itemId, itemName, this, order));
-                } while (cursor.moveToNext());
-            }
-        } catch (Exception e) {
-            Log.e("DB", e.getMessage());
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
+    public Page(JsonObject response) {
+        setId(response.get("id").asInt());
+        setOrder(response.get("order").asInt());
+        setName(response.get("name").asString());
+        setTemplate(response.get("template").asString());
+        setMenu(response.get("menu").asInt());
+        content = (response.get("content").isNull()) ? null : response.get("content").asString();
+        JsonArray responseItems = response.get("items").asArray();
+        items = new ArrayList<>();
+        extraItems = new ArrayList<>();
+        for (int i = 0; i < responseItems.size(); i++) {
+            JsonObject item = responseItems.get(i).asObject();
+            JsonValue jsonItemName = item.get("name");
+            String itemName = (jsonItemName.isNull()) ? "" : jsonItemName.asString();
+            switch (itemName) {
+                case "SOURCE":
+                    JsonValue source = item.get("long_content");
+                    if (!source.isNull()) this.source = source.asString();
+                    break;
+                case "END_CONTENT":
+                    JsonValue content = item.get("long_content");
+                    if (!content.isNull()) endContent = content.asString();
+                    break;
+                default:
+                    PageItem itemObject = new PageItem(item, this);
+                    if (getTemplate().equals("Contactos") && itemObject.isSpecial()) {
+                        extraItems.add(itemObject);
+                        break;
+                    } else {
+                        items.add(itemObject);
+                    }
+                    break;
             }
         }
+    }
+
+    /**
+     * Crea una Pagina a partir de la informacion guardada en la base de datos
+     *
+     * @param db     la base de datos
+     * @param pageId el id de la pagina
+     * @return la pagina
+     */
+    public static Page getFromDatabase(AppDatabase db, int pageId) {
+        Page page = db.pageDao().findById(pageId);
+        List<PageItem> items = db.pageItemDao().findByPageId(pageId);
+        List<PageItem> extraItems = new ArrayList<>();
+        page.items = new ArrayList<>(items);
+        for (PageItem item : items) {
+            if (page.getTemplate() != null && page.getTemplate().equals("Contactos") &&
+                    item.isSpecial()) {
+                page.items.remove(item);
+                extraItems.add(item);
+            }
+            item.setPage(page);
+        }
+        page.extraItems = extraItems;
+        return page;
     }
 
     /**
      * Obtiene los textos de la página, por lo general para ser mostrados en una view
-     * @param name el nombre de la página
-     * @param content el contenido de la página
+     *
+     * @param name    si utiliza el nombre de la pagina
+     * @param content si utiliza el contenido de la pagina
      * @return un {@link ArrayList} con lel nombre y el contenido de la página y los
      * contenidos de los items relacionados a la misma.
      */
     public ArrayList<String> getTexts(boolean name, boolean content) {
-        ArrayList<String> response = new ArrayList();
+        ArrayList<String> response = new ArrayList<>();
         if (name)
-            response.add(this.name);
+            response.add(getName());
         if (content)
             response.add(this.content);
         for (PageItem item : items) {
@@ -145,29 +184,98 @@ public class Page {
 
     /**
      * Guarda la página en la base de datos
+     *
      * @param db la base de datos donde será guardada la página
      */
-    public void save(InformationOpenHelper db) {
-        db.addOrUpdatePage(id, name, content);
-        for (PageItem item : items) {
-            item.save(db);
+    public void save(AppDatabase db) {
+        db.pageDao().insertPages(this);
+        if (items != null && items.size() > 0)
+            db.pageItemDao().insertItems(items.toArray(new PageItem[items.size()]));
+        if (extraItems != null && extraItems.size() > 0)
+            db.pageItemDao().insertItems(extraItems.toArray(new PageItem[extraItems.size()]));
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        AppCompatActivity context = (AppCompatActivity) v.getContext();
+        Intent intent = null;
+        KnowFragment fragment = null;
+        switch (getTemplate()) {
+            case "Números":
+                fragment = NumbersFragment.newInstance(this);
+                break;
+            case "Números en dos Columnas":
+                fragment = TwoColumnsFragment.newInstance(this);
+                break;
+            case "Texto":
+                fragment = TextFragment.newInstance(this);
+                break;
+            case "Tabla":
+                fragment = TableFragment.newInstance(this);
+                break;
+            case "Despegables":
+                intent = new Intent(context, CollapsibleActivity.class);
+                break;
+            case "Contactos":
+                intent = new Intent(context, ContactsActivity.class);
+                break;
+            case "Imagen":
+                fragment = ImageFragment.newInstance(this);
+                break;
+        }
+        if (intent != null) {
+            intent.putExtra("page", this);
+            context.startActivity(intent);
+            context.overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+        }
+        if (fragment != null) {
+            FragmentManager fm = context.getSupportFragmentManager();
+            fm.beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
+                    .add(android.R.id.content, fragment)
+                    .commit();
         }
     }
 
     // Getters
-    public String getName() {
-        return name;
+    public List<PageItem> getExtraItems() {
+        return extraItems;
     }
 
     public String getContent() {
         return content;
     }
 
-    public int getId() {
-        return id;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public ArrayList<PageItem> getItems() {
+    public List<PageItem> getItems() {
         return items;
+    }
+
+    public void setItems(ArrayList<PageItem> items) {
+        this.items = items;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getEndContent() {
+        return endContent;
+    }
+
+    public void setEndContent(String endContent) {
+        this.endContent = endContent;
     }
 }

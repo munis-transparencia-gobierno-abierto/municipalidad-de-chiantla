@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 /**
  * Fragmento transparente
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */

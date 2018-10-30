@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_contacts"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1"
     tools:context="gt.muni.chiantla.mymuni.ContactsActivity">
 
-    <gt.muni.chiantla.widget.CustomListView
+    <TextView
+        android:id="@+id/sectionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/title_margin"
+        android:gravity="center_horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textAppearance="@style/HeaderText"
+        android:textColor="@color/white" />
+
+    <ExpandableListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:childDivider="@color/dividerColor"
+        android:clipToPadding="false"
+        android:divider="@color/dividerColor"
+        android:dividerHeight="1dp"
+        android:groupIndicator="@null"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="12dp" />
 
-    <include layout="@layout/section_scroll_indicator" />
-
-</RelativeLayout>
+</LinearLayout>

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -19,6 +18,7 @@ import gt.muni.chiantla.content.Project;
 
 /**
  * Adaptador para los proyectos de desarrollo
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
@@ -30,11 +30,12 @@ public class ListProjectAdapter extends ListAdapter {
     };
 
     public ListProjectAdapter(Context context, ArrayList<DevelopmentItem> objects) {
-        super(context, objects);
+        super(context, objects, 0, false);
     }
 
     /**
      * Muestra un proyecto. Para cada proyecto muestra el estado correcto.
+     *
      * @see android.widget.BaseAdapter
      */
     @Override
@@ -50,41 +51,37 @@ public class ListProjectAdapter extends ListAdapter {
         }
         String[] strings = new String[]{currentNumbering, name, location};
         Utils.setTexts(ids, strings, view);
-        int color = ContextCompat.getColor(getContext(), R.color.progress_bar_background_inverted);
+        int color = ContextCompat.getColor(getContext(), R.color.black);
         ColorDrawable drawable = new ColorDrawable(color);
-        int colorDone = ContextCompat.getColor(getContext(), R.color.colorPrimary);
+        int colorDone = ContextCompat.getColor(getContext(), R.color.colorMiMuniPrimary);
         ColorDrawable drawableDone = new ColorDrawable(colorDone);
-        int colorNotDone = ContextCompat.getColor(getContext(), R.color.statusNotDone);
         switch (current.getState()) {
             case 0:
-                setStatusColor(0, R.mipmap.circlegreencheckstatus, view, drawableDone, colorDone);
-                setStatusColor(1, R.mipmap.gray_circle, view, drawable, colorNotDone);
-                setStatusColor(2, R.mipmap.gray_circle, view, drawable, colorNotDone);
+                setStatusColor(0, R.drawable.circlegreencheckstatus, view, drawableDone);
+                setStatusColor(1, R.drawable.gray_circle, view, drawable);
+                setStatusColor(2, R.drawable.gray_circle, view, drawable);
                 break;
             case 1:
-                setStatusColor(0, R.mipmap.circlegreenstatus, view, drawableDone, color);
-                setStatusColor(1, R.mipmap.circlegreencheckstatus, view, drawableDone, colorDone);
-                setStatusColor(2, R.mipmap.gray_circle, view, drawable, colorNotDone);
+                setStatusColor(0, R.drawable.circlegreenstatus, view, drawableDone);
+                setStatusColor(1, R.drawable.circlegreencheckstatus, view, drawableDone);
+                setStatusColor(2, R.drawable.gray_circle, view, drawable);
                 break;
             case 2:
-                setStatusColor(0, R.mipmap.circlegreenstatus, view, drawableDone, color);
-                setStatusColor(1, R.mipmap.circlegreenstatus, view, drawableDone, color);
-                setStatusColor(2, R.mipmap.circlegreencheckstatus, view, drawableDone, colorDone);
+                setStatusColor(0, R.drawable.circlegreenstatus, view, drawableDone);
+                setStatusColor(1, R.drawable.circlegreenstatus, view, drawableDone);
+                setStatusColor(2, R.drawable.circlegreencheckstatus, view, drawableDone);
                 break;
         }
         return view;
     }
 
-    private void setStatusColor(int number, int circleId, View view, ColorDrawable drawable, int color) {
+    private void setStatusColor(int number, int circleId, View view, ColorDrawable drawable) {
         Resources resources = getContext().getResources();
         int imageId = resources.getIdentifier("status" + number, "id", "gt.muni.chiantla");
-        ImageView image = (ImageView) view.findViewById(imageId);
+        ImageView image = view.findViewById(imageId);
         int lineId = resources.getIdentifier("lineStatus" + number, "id", "gt.muni.chiantla");
         View line = view.findViewById(lineId);
-        int textId = resources.getIdentifier("status" + number + "Text", "id", "gt.muni.chiantla");
-        TextView text = (TextView) view.findViewById(textId);
         image.setImageResource(circleId);
-        text.setTextColor(color);
         if (number > 0)
             line.setBackground(drawable);
     }

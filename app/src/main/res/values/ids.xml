@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="activityButton" type="id" />
+    <item name="projectButton" type="id" />
+    <item name="classButton" type="id" />
+    <item name="sectionButton" type="id" />
+    <item name="programButton" type="id" />
+</resources>

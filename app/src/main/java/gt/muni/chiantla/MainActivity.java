@@ -19,16 +19,18 @@ import com.eclipsesource.json.JsonObject;
 
 import java.io.IOException;
 
-import gt.muni.chiantla.budget.BudgetActivity;
+import gt.muni.chiantla.budget.BudgetInfoActivity;
 import gt.muni.chiantla.connections.api.RestConnectionActivity;
 import gt.muni.chiantla.connections.database.InformationOpenHelper;
-import gt.muni.chiantla.mymuni.MyMuniActivity;
-import gt.muni.chiantla.notifications.NotificationsActivity;
+import gt.muni.chiantla.mymuni.MenuActivity;
+import gt.muni.chiantla.notifications.NotificationsMenuActivity;
 import gt.muni.chiantla.notifications.WifiReceiver;
 
 /**
- * Actividad principal de la aplicación. Muestra un menú. Actualiza los indicadores de actualización.
+ * Actividad principal de la aplicación. Muestra un menú. Actualiza los indicadores de
+ * actualización.
  * Revisa si existe la base de datos, para colocar la base de datos con data inicial.
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
@@ -40,37 +42,38 @@ public class MainActivity extends RestConnectionActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setCustomActionBar(R.string.app_name, false);
+        setCustomActionBar(null, false);
         setContentView(R.layout.activity_main);
 
         // obtiene la base de datos
         db = InformationOpenHelper.getInstance(this);
 
         // Revisa si la base de datos existe.
+        AppDatabase.initDatabase(this);
         SQLiteDatabase mDb;
-        try{
+        try {
             boolean isExist = db.dataBaseExist();
-            if(!isExist){ // Si no existe copia la base de datos con la data inicial
+            if (!isExist) { // Si no existe copia la base de datos con la data inicial
                 mDb = db.getWritableDatabase();
                 mDb.close();
                 db.copyDataBase();
-
             }
 
-        }catch(SQLException eSQL){
-            Log.e("log_tag","Can not open database");
-        }
-        catch (IOException IOe) {
-            Log.e("log_tag","Can not copy initial database");
+        } catch (SQLException eSQL) {
+            Log.e("log_tag", "Can not open database");
+        } catch (IOException IOe) {
+            Log.e("log_tag", "Can not copy initial database");
         }
 
         checkUpdates();
 
-        Utils.sendFirebaseEvent("Menu_Principal", null, null, null, "Menu_Principal", "Menu001", this);
+        Utils.sendFirebaseEvent("Menu_Principal", null, null, null, "Menu_Principal", "Menu001",
+                this);
 
         // Registra el WifiReceiver para que se envíen las notificaciones que se encuentren
         // guardadas en la base de datos sin enviar.
-        this.registerReceiver(new WifiReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        this.registerReceiver(new WifiReceiver(), new IntentFilter(ConnectivityManager
+                .CONNECTIVITY_ACTION));
     }
 
     @Override
@@ -97,19 +100,20 @@ public class MainActivity extends RestConnectionActivity {
 
     /**
      * Listener que abre la actividad correspondiente al botón presionado.
+     *
      * @param view el view presionado.
      */
     public void menu(View view) {
         Intent intent = null;
         switch (view.getId()) {
             case R.id.myMuniButton:
-                intent = new Intent(this, MyMuniActivity.class);
+                intent = new Intent(this, MenuActivity.class);
                 break;
             case R.id.budgetButton:
-                intent = new Intent(this, BudgetActivity.class);
+                intent = new Intent(this, BudgetInfoActivity.class);
                 break;
             case R.id.notificationButton:
-                intent = new Intent(this, NotificationsActivity.class);
+                intent = new Intent(this, NotificationsMenuActivity.class);
                 break;
             case R.id.discussionButton:
                 intent = new Intent(this, DiscussionActivity.class);
@@ -131,6 +135,7 @@ public class MainActivity extends RestConnectionActivity {
 
     /**
      * Crea o actualiza los indicadores de actualización que el servidor devolvió.
+     *
      * @param response la respuesta del servidor
      */
     @Override
@@ -138,7 +143,7 @@ public class MainActivity extends RestConnectionActivity {
         super.restResponseHandler(response);
         if (response != null) {
             long newUpdateTime = (long) response.get(0).asDouble();
-            SharedPreferences settings = getSharedPreferences(PREFS_NAME, 1493145912);
+            SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
             SharedPreferences.Editor editor = settings.edit();
             editor.putLong("lastUpdate", newUpdateTime);
             editor.apply();

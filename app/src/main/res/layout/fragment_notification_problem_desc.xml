@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/notification_title_margin_bottom"
+        android:gravity="center"
+        android:text="@string/problem_description"
+        android:textAppearance="@style/BudgetSubtitleText" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/problem_desc"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/white_radius_background"
+                android:gravity="top"
+                android:hint="@string/problem_description_placeholder"
+                android:inputType="textMultiLine"
+                android:paddingLeft="12dp"
+                android:paddingTop="14dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="14dp"
+                android:textAppearance="@style/InputText" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

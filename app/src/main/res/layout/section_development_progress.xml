@@ -2,12 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/progressNumber"
+        android:id="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
         android:layout_weight="0"
-        android:textAppearance="@style/FiguresSub"
-        android:textColor="@color/colorPrimary" />
+        android:text="@string/executed"
+        android:textAppearance="@style/ExecutedText" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -17,22 +18,21 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="2"
         android:indeterminate="false"
-        android:paddingEnd="7dp"
-        android:paddingLeft="7dp"
-        android:paddingRight="7dp"
         android:paddingStart="7dp"
+        android:paddingLeft="7dp"
+        android:paddingEnd="7dp"
+        android:paddingRight="7dp"
         android:progress="30"
         android:progressDrawable="@drawable/custom_progress_inverted"
-        android:progressTint="@color/colorPrimary"
+        android:progressTint="@color/colorMiMuniPrimary"
         android:visibility="visible"
         tools:visibility="visible" />
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/progressNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
         android:layout_weight="0"
-        android:text="@string/executed"
-        android:textAppearance="@style/ExecutedText" />
+        android:textAppearance="@style/NormalText"
+        android:textColor="@color/white" />
 </merge>

@@ -1,30 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorExpensesPrimary"
+    android:orientation="vertical"
     tools:context="gt.muni.chiantla.budget.ExpensesActivitiesFragment">
 
-    <gt.muni.chiantla.widget.CustomListView
+    <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/white"
-        android:dividerHeight="1dp" />
-
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:adjustViewBounds="false"
-        android:background="@color/colorBudgetsPrimary"
-        android:cropToPadding="true"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:stateListAnimator="@null"
-        android:visibility="visible"
-        app:srcCompat="@mipmap/scrolldownwhite" />
+        android:clipToPadding="false"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="@dimen/card_margin"
+        android:paddingLeft="@dimen/budget_padding"
+        android:paddingRight="@dimen/budget_padding"
+        android:paddingBottom="@dimen/card_margin"
+        android:scrollbarStyle="outsideOverlay" />
 
 </RelativeLayout>

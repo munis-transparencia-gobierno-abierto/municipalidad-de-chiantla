@@ -2,9 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="gt.muni.chiantla.notifications.LocationFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context="gt.muni.chiantla.notifications.NewNotificationActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,39 +12,38 @@
         android:layout_marginRight="8dp"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingBottom="15dp"
         android:paddingLeft="15dp"
+        android:paddingTop="23dp"
         android:paddingRight="15dp"
-        android:paddingTop="23dp">
+        android:paddingBottom="15dp">
 
         <TextView
-            android:id="@+id/textView31"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Obteniendo tu ubicación"
-            android:textAppearance="@style/HeaderText" />
+            android:text="@string/obtaining_location"
+            android:textAppearance="@style/BudgetSubtitleText"
+            android:textColor="@color/textColor" />
 
         <TextView
-            android:id="@+id/textView35"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="23dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Espera un momento mientras obtenemos tu ubicación"
-            android:textAppearance="@style/SmallRegularText" />
+            android:text="@string/wait_while_location_obtained"
+            android:textAppearance="@style/NormalText" />
 
         <Button
             android:id="@+id/cancel"
-            android:layout_width="match_parent"
+            android:layout_width="185dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:layout_weight="1"
-            android:background="@color/notificationsPrimary"
-            android:onClick="closeFragment"
-            android:text="Cancelar"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="37dp"
+            android:background="@drawable/notification_next_button"
+            android:onClick="closeLocationFragment"
+            android:text="@string/cancel"
             android:textColor="@color/white" />
     </LinearLayout>
 </FrameLayout>

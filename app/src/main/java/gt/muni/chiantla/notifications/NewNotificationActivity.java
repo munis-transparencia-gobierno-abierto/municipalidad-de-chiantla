@@ -1,14 +1,11 @@
 package gt.muni.chiantla.notifications;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -16,224 +13,176 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
+import android.util.SparseArray;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.view.inputmethod.InputMethodManager;
 
 import com.eclipsesource.json.JsonArray;
 
-import java.io.File;
-import java.io.IOException;
-
-import gt.muni.chiantla.MainActivity;
 import gt.muni.chiantla.R;
+import gt.muni.chiantla.TutorialFragment;
 import gt.muni.chiantla.Utils;
 import gt.muni.chiantla.connections.api.RestConnectionActivity;
 import gt.muni.chiantla.connections.database.InformationOpenHelper;
 import gt.muni.chiantla.content.Notification;
-import gt.muni.chiantla.widget.CustomNestedScrollView;
 
 /**
  * Actividad que contiene el formulario para crear un nuevo reporte. Envía el reporte al servidor
  * luego de que se complete la información requerida.
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
 public class NewNotificationActivity extends RestConnectionActivity implements
-        LocationFragment.LocationDialogInterface,
-        AdapterView.OnItemSelectedListener {
+        LocationFragment.LocationDialogInterface {
     public static final String PREFS_NAME = "DbIDs";
-    private static final int SELECT_PICTURE = 1;
-    private static final int TAKE_PHOTO = 2;
-    private final int LOCATION_PERMISSION = 0;
-    private final int FILES_PERMISSION = 1;
+    private static final int STEP_COUNT = 5;
     private final Handler handler = new Handler();
     protected InformationOpenHelper db;
-    TextView problemView;
-    TextView locationView;
-    TextView addressView;
-    TextView solutionView;
-    TextView nameView;
-    TextView phoneView;
-    private Uri fileUri;
-    private CheckBox gpsCheckbox;
-    private FragmentManager fragmentManager;
+    private ViewPager pager;
+    private ScreenSlidePagerAdapter pagerAdapter;
     private LocationFragment locationFragment;
     private LocationManager locationManager;
     private Location lastLocation;
     private LocationListener locationListener;
-    private Spinner spinner;
-    private boolean firstSelection;
-    private ImageView selectedImage;
-    private View selectedImageWrap;
     private boolean saved;
-    private TextView problemTypeView;
     private Notification notification;
+
+    private String problemType;
+    private String problem;
+    private String location;
+    private String address;
+    private String name;
+    private String phone;
+    private String email;
+    private boolean gpsCheckboxChecked;
+    private Uri fileUri;
+
+    private boolean isBudgetFragment;
+
+    // flag to call nextTutorial only once
+    private boolean tutorialShown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        firstSelection = true;
-        setCustomActionBar(R.string.new_notification, true);
+        setCustomActionBar(null, true);
+        createOptionsMenu = true;
 
         setContentView(R.layout.activity_new_notification);
 
-        CustomNestedScrollView scroll = (CustomNestedScrollView) findViewById(R.id.scrollableInfo);
-        initScroll(scroll, findViewById(android.R.id.content));
-
         db = InformationOpenHelper.getInstance(this);
 
-        spinner = (Spinner) findViewById(R.id.problem_spinner);
-        // Muestra una view customizada para la selección de tipo de problema
-        NotificationProblemsAdapter customAdapter = new NotificationProblemsAdapter(this,
-                getResources().getStringArray(R.array.problem_types));
-        spinner.setAdapter(customAdapter);
-        spinner.setOnItemSelectedListener(this);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String name = extras.getString("name", null);
+            if (name != null) {
+                isBudgetFragment = true;
+                String imageUri = extras.getString("image", null);
+                fileUri = Uri.parse(imageUri);
+                problemType = getResources().getString(R.string.budget_problem_type);
+                problem = getResources().getString(R.string.budget_notification, name);
+            }
+        }
 
         fragmentManager = getSupportFragmentManager();
-
-        gpsCheckbox = (CheckBox) findViewById(R.id.gpsLocation);
-        problemTypeView = (TextView) findViewById(R.id.problem_type);
-        selectedImage = (ImageView) findViewById(R.id.selectedImage);
-        selectedImageWrap = findViewById(R.id.selectedImageWrap);
-
-        problemView = (TextView) findViewById(R.id.problem);
-        locationView = (TextView) findViewById(R.id.location);
-        addressView = (TextView) findViewById(R.id.address);
-        solutionView = (TextView) findViewById(R.id.solution);
-        nameView = (TextView) findViewById(R.id.name);
-        phoneView = (TextView) findViewById(R.id.phone);
-
-        askPermission(null);
+        pager = findViewById(R.id.pager);
+        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager);
+        pager.setAdapter(pagerAdapter);
 
         Utils.sendFirebaseEvent("Avisos_a_la_muni", null, null, null,
                 "Formulario_Aviso", "Formulario_Aviso", this);
         saved = false;
+        tutorialShown = false;
     }
 
-    public void openSpinner(View view) {
-        spinner.performClick();
-    }
-
-    public void askPermission(View view) {
-        if (gpsCheckbox.isChecked()) {
-            if (android.os.Build.VERSION.SDK_INT >= 23) {
-                int permissionCheck = ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION);
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                            LOCATION_PERMISSION);
-                }
-            }
-        }
-    }
-
+    /**
+     * Shows the tutorial
+     *
+     * @param hasFocus Whether the window of this activity has focus.
+     * @see #hasWindowFocus()
+     * @see #onResume
+     * @see View#onWindowFocusChanged(boolean)
+     */
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_PERMISSION:
-                if (grantResults.length == 0
-                        || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    gpsCheckbox.setChecked(false);
-                }
-                break;
-            case FILES_PERMISSION:
-                setGalleryBitmap();
-                break;
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (!tutorialShown) {
+            nextTutorial();
+            tutorialShown = true;
         }
     }
 
     /**
      * Se muestra un fragmento indicando si se envió o no el reporte. Si no se envió se guarda
      * localmente y se guarda su id local para enviarlo posteriormente.
+     *
      * @param response la respuesta del servidor
      */
     @Override
     public void restResponseHandler(JsonArray response) {
         super.restResponseHandler(response);
-        PopupWindow window = new PopupWindow(this);
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        int id;
+        String id;
         if (response != null && response.get(0).asBoolean()) {
-            id = R.layout.fragment_sent;
+            id = NotificationProcessedActivity.ACTION_SENT;
             notification.setGenId(response.get(1).asString());
+            notification.setOffice(response.get(3).asString());
             notification.save(db);
         } else {
             notification.setStatus(getString(R.string.saved));
             long dbId = notification.save(db);
-            id = R.layout.fragment_saved;
+            id = NotificationProcessedActivity.ACTION_SAVED;
             SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
             SharedPreferences.Editor editor = settings.edit();
             editor.putLong(Long.toString(dbId), dbId);
             editor.apply();
         }
-        View rootView = inflater.inflate(id,
-                (ViewGroup) findViewById(android.R.id.content).getRootView());
-        window.showAtLocation(rootView, Gravity.CENTER, 0, 0);
+        Intent intent = new Intent(this, NotificationProcessedActivity.class);
+        intent.setAction(id);
+        startActivity(intent);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+        finish();
     }
 
     /**
      * Obtiene la información ingresada para el reporte y obtiene la ubicacicón. Si no se debe
      * de obtener la ubicación se intenta enviar el reporte. Si se ha ingresado toda la información
      * necesaria se muestra un fragmento que lo indica.
-     * @param view El botón que fue presionadao.
      */
-    public void saveNotification(View view) {
-        String problemType = problemTypeView.getText().toString();
-        String problem = problemView.getText().toString();
-        String location = locationView.getText().toString();
-        String address = addressView.getText().toString();
-        String name = nameView.getText().toString();
-        String phone = phoneView.getText().toString();
-        if (!problemType.equals("") &&
-                !problem.equals("") &&
-                !location.equals("") &&
-                !address.equals("") &&
-                !name.equals("") &&
-                !phone.equals("")) {
-
-            if (gpsCheckbox.isChecked()) {
-                int permissionCheck = ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION);
-                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    String locationProvider = LocationManager.GPS_PROVIDER;
-                    locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-                    lastLocation = locationManager.getLastKnownLocation(locationProvider);
-                    locationListener = new LocationListener();
-                    locationManager.requestLocationUpdates(locationProvider, 1000, 0, locationListener);
-                    locationFragment = new LocationFragment();
-                    locationFragment.show(fragmentManager, "dialog");
-                    handler.postDelayed(
-                            new Runnable() {
-                                public void run() {
-                                    cancelLocationUpdates();
-                                }
+    public void saveNotification() {
+        if (gpsCheckboxChecked) {
+            int permissionCheck = ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION);
+            if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                String locationProvider = LocationManager.GPS_PROVIDER;
+                locationManager = (LocationManager) this.getSystemService(Context
+                        .LOCATION_SERVICE);
+                lastLocation = locationManager.getLastKnownLocation(locationProvider);
+                locationListener = new LocationListener();
+                locationManager.requestLocationUpdates(locationProvider, 1000, 0,
+                        locationListener);
+                locationFragment = new LocationFragment();
+                locationFragment.show(fragmentManager, "dialog");
+                handler.postDelayed(
+                        new Runnable() {
+                            public void run() {
+                                cancelLocationUpdates();
                             }
-                            , 20000);
-                }
-            } else {
-                createNotification(0, 0);
+                        }
+                        , 20000);
             }
         } else {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Error");
-            alert.setMessage("Debes llenar todos los campos que tienen un asterisco (*).");
-            alert.setPositiveButton("Aceptar", null);
-            alert.show();
+            createNotification(0, 0);
         }
     }
 
@@ -250,6 +199,10 @@ public class NewNotificationActivity extends RestConnectionActivity implements
         }
     }
 
+    public void closeLocationFragment(View view) {
+        cancelLocationUpdates();
+    }
+
     private void locationObtained(Location location) {
         handler.removeCallbacksAndMessages(null);
         locationFragment.dismiss();
@@ -260,6 +213,7 @@ public class NewNotificationActivity extends RestConnectionActivity implements
      * Crea la notificación e intenta enviarla al servidor. Si no hay internet la notificación
      * es guardada, junto con su id para ser enviado posteriormente, y se muestra un
      * fragmento que indica que fue guardado localmente.
+     *
      * @param lat la latitud obtenida
      * @param lon la longitud obtenida
      */
@@ -273,15 +227,9 @@ public class NewNotificationActivity extends RestConnectionActivity implements
                 internet = true;
             saved = true;
 
-            String problemType = problemTypeView.getText().toString();
-            String problem = problemView.getText().toString();
-            String location = locationView.getText().toString();
-            String address = addressView.getText().toString();
-            String solution = solutionView.getText().toString();
-            String name = nameView.getText().toString();
-            String phone = phoneView.getText().toString();
+            String fileUriString = (fileUri != null) ? fileUri.toString() : null;
             notification = new Notification(problemType, problem, location, address,
-                    solution, name, phone, fileUri, lat, lon, getString(R.string.sent));
+                    email, name, phone, fileUriString, lat, lon, getString(R.string.sent));
             if (!internet) {
                 notification.setStatus(getString(R.string.saved));
                 long dbId = notification.save(db);
@@ -289,12 +237,11 @@ public class NewNotificationActivity extends RestConnectionActivity implements
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putLong(Long.toString(dbId), dbId);
                 editor.apply();
-                PopupWindow window = new PopupWindow(this);
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                int id = R.layout.fragment_saved;
-                View rootView = inflater.inflate(id,
-                        (ViewGroup) findViewById(android.R.id.content).getRootView());
-                window.showAtLocation(rootView, Gravity.CENTER, 0, 0);
+                Intent intent = new Intent(this, NotificationProcessedActivity.class);
+                intent.setAction(NotificationProcessedActivity.ACTION_SAVED);
+                startActivity(intent);
+                overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+                finish();
             } else {
                 String[] keys = notification.getKeys();
                 String[] values = notification.getStrings();
@@ -309,97 +256,6 @@ public class NewNotificationActivity extends RestConnectionActivity implements
         }
     }
 
-    public void selectImages(View view) {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_PICK);
-        startActivityForResult(Intent.createChooser(intent,
-                "Select Picture"), SELECT_PICTURE);
-
-    }
-
-    public void closeFragment(View view) {
-        if (view.getId() == R.id.cancel) {
-            locationFragment.dismiss();
-            cancelLocationUpdates();
-        } else {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        }
-    }
-
-    public void phoneNumber(View view) {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        TextView phoneView = (TextView) findViewById(R.id.phoneLink);
-        Uri number = Uri.parse("tel:" + phoneView.getText().toString());
-        intent.setData(number);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case SELECT_PICTURE:
-                if (resultCode == Activity.RESULT_OK) {
-                    fileUri = Utils.getAbsoluteUri(this, data.getData());
-                    if (android.os.Build.VERSION.SDK_INT >= 23) {
-                        int permissionCheck = ContextCompat.checkSelfPermission(this,
-                                Manifest.permission.READ_EXTERNAL_STORAGE);
-                        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                    FILES_PERMISSION);
-                        } else {
-                            setGalleryBitmap();
-                        }
-                    } else {
-                        setGalleryBitmap();
-                    }
-                }
-                break;
-            case TAKE_PHOTO:
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), fileUri);
-                    setSelectedImage(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-        }
-    }
-
-    private void setGalleryBitmap() {
-        Bitmap bitmap = BitmapFactory.decodeFile(fileUri.toString());
-        setSelectedImage(bitmap);
-    }
-
-    private void setSelectedImage(Bitmap bitmap) {
-        selectedImage.setImageBitmap(bitmap);
-        selectedImageWrap.setVisibility(View.VISIBLE);
-    }
-
-    public void removeImage(View view) {
-        selectedImageWrap.setVisibility(View.GONE);
-        fileUri = null;
-    }
-
-    public void openCamera(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = Utils.createImageFile(this);
-            fileUri = Uri.fromFile(photoFile);
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(intent, TAKE_PHOTO);
-            }
-        }
-    }
-
     public Location getLastLocation() {
         return lastLocation;
     }
@@ -408,18 +264,195 @@ public class NewNotificationActivity extends RestConnectionActivity implements
         this.lastLocation = lastLocation;
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (!firstSelection) {
-            String newType = (String) adapterView.getSelectedItem();
-            problemTypeView.setText(newType);
-        } else {
-            firstSelection = false;
+    public void prevStep(View view) {
+        this.onBackPressed();
+    }
+
+    public void setProblemType(String problemType) {
+        this.problemType = problemType;
+    }
+
+    public void setProblem(String problem) {
+        this.problem = problem;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setGpsCheckboxChecked(boolean gpsCheckboxChecked) {
+        this.gpsCheckboxChecked = gpsCheckboxChecked;
+    }
+
+    public void setFileUri(Uri fileUri) {
+        this.fileUri = fileUri;
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            View rootView = findViewById(android.R.id.content);
+            imm.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
         }
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+    public void onBackPressed() {
+        if (pager.getCurrentItem() == 0) {
+            // If the user is currently looking at the first step, allow the system to handle the
+            // Back button. This calls finish() on this activity and pops the back stack.
+            super.onBackPressed();
+        } else {
+            // Otherwise, select the previous step.
+            pager.setCurrentItem(pager.getCurrentItem() - 1);
+        }
+    }
+
+    /**
+     * Pasa al siguiente paso, si se ha llenado toda la informacion necesaria
+     *
+     * @param view la view que fue presionada
+     */
+    public void nextStep(View view) {
+        int nextItem = this.pager.getCurrentItem() + 1;
+        if (nextItem <= STEP_COUNT) {
+            if (pagerAdapter.saveData()) {
+                this.pager.setCurrentItem(nextItem, true);
+                if (nextItem == 3) {
+                    currentTutorial = 0;
+                    nextTutorial();
+                }
+            } else {
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.required_fields_content)
+                        .setTitle(R.string.required_fields)
+                        .create()
+                        .show();
+            }
+            if (nextItem == STEP_COUNT) saveNotification();
+        }
+    }
+
+    /**
+     * Obtiene el id del recurso array del tutorial a mostrar en esta actividad
+     *
+     * @return el id del tutorial
+     */
+    @Override
+    protected Integer getTutorialResourceId() {
+        if (pager.getCurrentItem() == 3) {
+            return R.array.tutorial_new_notification_photo;
+        }
+        return R.array.tutorial_new_notification;
+    }
+
+    /**
+     * Obtiene la cantidad de tutoriales a mostrar en la actividad
+     *
+     * @return la cantidad de tutoriales
+     */
+    @Override
+    protected Integer getTutorialCount() {
+        if (pager.getCurrentItem() == 3) {
+            return 2;
+        }
+        return 1;
+    }
+
+    /**
+     * Obtiene el nombre del setting en donde se guarda si ya se realizo el tutorial
+     *
+     * @return el nombre del setting
+     */
+    @Override
+    protected String getTutorialSettingName() {
+        if (pager.getCurrentItem() == 3) {
+            return "NewNotificationPhotoTutorial";
+        }
+        return "NewNotificationTutorial";
+    }
+
+    /**
+     * Obtiene el tutorial que se debe mostrar
+     *
+     * @return el tutorial a mostrar
+     */
+    @Override
+    protected View getCurrentTutorialView() {
+        if (pager.getCurrentItem() == 3) {
+            switch (currentTutorial) {
+                case 0:
+                    return findViewById(R.id.camera_button);
+                case 1:
+                    return findViewById(R.id.photo_button);
+                default:
+                    return null;
+            }
+        }
+        switch (currentTutorial) {
+            case 0:
+                return findViewById(R.id.nextButton);
+        }
+        return null;
+    }
+
+    /**
+     * Obtiene la posicion de la flecha del tutorial actual
+     *
+     * @return la posicion de la flecha del tutorial
+     */
+    @Override
+    protected Integer getCurrentTutorialArrowPosition() {
+        if (pager.getCurrentItem() == 3) {
+            switch (currentTutorial) {
+                case 0:
+                case 1:
+                    return TutorialFragment.ARROW_BOTTOM_CENTER;
+                default:
+                    return null;
+            }
+        }
+        switch (currentTutorial) {
+            case 0:
+                return TutorialFragment.ARROW_BOTTOM_RIGHT;
+        }
+        return null;
+    }
+
+    /**
+     * Custom ViewPager que no permite al usuario cambiar de fragmento haciendo swipe
+     */
+    public static class NewNotificationViewPager extends ViewPager {
+
+        public NewNotificationViewPager(Context context) {
+            super(context);
+        }
+
+        public NewNotificationViewPager(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(MotionEvent event) {
+            return false;
+        }
     }
 
     /**
@@ -454,6 +487,65 @@ public class NewNotificationActivity extends RestConnectionActivity implements
         @Override
         public void onProviderDisabled(String s) {
 
+        }
+    }
+
+    /**
+     * Adaptador que guarda en una SparseArray los fragmentos que se muestran.
+     */
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        private SparseArray<StepValidation> currentFragments;
+
+        private ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+            currentFragments = new SparseArray<>();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            hideKeyboard();
+            StepValidation fragment;
+            switch (position) {
+                case 0:
+                    fragment = NotificationProblemTypeFragment.createFragment(isBudgetFragment);
+                    currentFragments.put(position, fragment);
+                    break;
+                case 1:
+                    fragment = NotificationProblemDescFragment.createFragment(problem);
+                    currentFragments.put(position, fragment);
+                    break;
+                case 2:
+                    currentFragments.put(position, new NotificationProblemLocationFragment());
+                    break;
+                case 3:
+                    fragment = NotificationProblemImageFragment.createFragment(fileUri);
+                    currentFragments.put(position, fragment);
+                    break;
+                case 4:
+                    currentFragments.put(position, new NotificationProblemContactFragment());
+                    break;
+            }
+            return (Fragment) currentFragments.get(position);
+        }
+
+        private boolean saveData() {
+            int current = pager.getCurrentItem();
+            if (currentFragments.get(current).validate()) {
+                currentFragments.get(current).getData(NewNotificationActivity.this);
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+            currentFragments.delete(position);
+        }
+
+        @Override
+        public int getCount() {
+            return STEP_COUNT;
         }
     }
 }

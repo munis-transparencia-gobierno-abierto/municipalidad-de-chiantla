@@ -7,6 +7,7 @@ import android.view.animation.Transformation;
 /**
  * Animación de ancho para una View. La animación se hace sobre la view (es permanente).
  * Código derivado de <a href="http://stackoverflow.com/a/17200611">Stack Overflow</a>
+ *
  * @author Ludiverse
  * @author Innerlemonade
  * @see Animation

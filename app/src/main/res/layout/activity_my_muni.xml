@@ -1,180 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_my_muni"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".mymuni.MyMuniActivity">
 
-    <RelativeLayout
-        android:id="@+id/know_button"
+    <LinearLayout
+        android:id="@+id/insertPoint"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_weight="0.2"
-        android:clickable="true"
-        android:lineSpacingMultiplier="1.5"
-        android:onClick="menu">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="60dp"
-            android:gravity="center_horizontal"
-            android:text="@string/explore_muni"
-            android:textAppearance="@style/MuniMenuText" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            app:srcCompat="@mipmap/arrowrightgreen" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="0"
-        android:background="@color/colorPrimary" />
-
-    <RelativeLayout
-        android:id="@+id/contacts_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_weight="0.2"
-        android:clickable="true"
-        android:lineSpacingMultiplier="1.5"
-        android:onClick="menu">
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="29dp"
+            app:srcCompat="@drawable/chiantla_100x100___01" />
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="60dp"
-            android:gravity="center_horizontal"
-            android:text="@string/contacts"
-            android:textAppearance="@style/MuniMenuText" />
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="33dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/HeaderText" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            app:srcCompat="@mipmap/arrowrightgreen" />
+    </LinearLayout>
 
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="0"
-        android:background="@color/colorPrimary" />
-
-    <RelativeLayout
-        android:id="@+id/centers_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_weight="0.2"
-        android:clickable="true"
-        android:lineSpacingMultiplier="1.5"
-        android:onClick="menu">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="60dp"
-            android:gravity="center_horizontal"
-            android:text="@string/health_centers"
-            android:textAppearance="@style/MuniMenuText" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            app:srcCompat="@mipmap/arrowrightgreen" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="0"
-        android:background="@color/colorPrimary" />
-
-    <RelativeLayout
-        android:id="@+id/development_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_weight="0.2"
-        android:clickable="true"
-        android:lineSpacingMultiplier="1.5"
-        android:onClick="menu">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="60dp"
-            android:gravity="center_horizontal"
-            android:text="@string/development_plan"
-            android:textAppearance="@style/MuniMenuText" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            app:srcCompat="@mipmap/arrowrightgreen" />
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="0"
-        android:background="@color/colorPrimary" />
-
-    <RelativeLayout
-        android:id="@+id/laws_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_weight="0.2"
-        android:clickable="true"
-        android:lineSpacingMultiplier="1.5"
-        android:onClick="menu">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="60dp"
-            android:gravity="center_horizontal"
-            android:text="@string/laws"
-            android:textAppearance="@style/MuniMenuText" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            app:srcCompat="@mipmap/arrowrightgreen" />
-
-    </RelativeLayout>
-
-</LinearLayout>
+</ScrollView>

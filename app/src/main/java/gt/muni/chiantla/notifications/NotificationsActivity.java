@@ -2,54 +2,50 @@ package gt.muni.chiantla.notifications;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
-import gt.muni.chiantla.CustomActivity;
-import gt.muni.chiantla.InformationFragment;
 import gt.muni.chiantla.R;
+import gt.muni.chiantla.TutorialFragment;
 import gt.muni.chiantla.Utils;
 import gt.muni.chiantla.connections.api.RestConnectionActivity;
 import gt.muni.chiantla.connections.database.InformationOpenHelper;
 import gt.muni.chiantla.content.Notification;
-import gt.muni.chiantla.widget.CustomListView;
 
 /**
- * Muestra los reportes que se encuentran guardadas en la base de datos y un botón para
- * enviar nuevos reportes.
- * @author Ludiverse
- * @author Innerlemonade
+ * Actividad que muestra las notificaciones guardadas
  */
-public class NotificationsActivity extends RestConnectionActivity implements AdapterView.OnItemClickListener {
+public class NotificationsActivity extends RestConnectionActivity implements AdapterView
+        .OnItemClickListener {
     protected InformationOpenHelper db;
-    private ArrayList<Notification> objects;
-    private CustomListView listView;
+    private ListView listView;
+    private HashMap<String, Notification> objects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setCustomActionBar(R.string.notification, true);
+        setCustomActionBar(null, true);
         setContentView(R.layout.activity_notifications);
-
-        db = InformationOpenHelper.getInstance(this);
-
-        listView = (CustomListView) findViewById(R.id.list);
-        initScroll(listView, findViewById(android.R.id.content));
-        listView.setOnScrollListener(this);
-
-        updateStatus();
+        createOptionsMenu = true;
 
         Utils.sendFirebaseEvent("Avisos_a_la_muni", null, null, null,
-                "Menu_Avisos", "Menu_Avisos", this);
+                "Menu_Avisos", "Avisos_Enviados", this);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        db = InformationOpenHelper.getInstance(this);
+        listView = findViewById(R.id.list);
+        updateStatus();
     }
 
     /**
@@ -59,79 +55,95 @@ public class NotificationsActivity extends RestConnectionActivity implements Ada
     private void updateStatus() {
         objects = Notification.getAll(db);
         String ids = "[";
-        for (Notification object: objects) {
+        Collection<Notification> values = objects.values();
+        int cont = 0;
+        for (Notification object : values) {
             if (object.getGenId() != null) {
-                if (objects.get(0) != object)
+                if (cont != 0)
                     ids += ",";
                 ids += '"' + object.getGenId() + '"';
             }
+            cont++;
         }
         ids += "]";
-        connect("notifications/status/", new String[] {"ids"}, new String[] {ids});
-    }
-
-    public void goToNewNotification(View view) {
-        Intent intent = new Intent(this, NewNotificationActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+        connect("notifications/info/", new String[]{"ids"}, new String[]{ids});
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         Intent intent = new Intent(this, NotificationActivity.class);
         Notification object = (Notification) adapterView.getAdapter().getItem(position);
-        intent.putExtra("notificationId", object.getId());
-        intent.putExtra("genId", object.getGenId());
+        intent.putExtra("notification", object);
         startActivity(intent);
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.info, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.about_info:
-                fragmentManager = getSupportFragmentManager();
-                informationFragment = InformationFragment.newInstance(
-                        R.string.notifications_info_title,
-                        R.string.notifications_info_content
-                );
-                informationFragment.show(fragmentManager, "dialog");
-                break;
-            default:
-                super.onOptionsItemSelected(item);
-                break;
-        }
-        return true;
-    }
-
     /**
      * Actualiza el estatus de las notificaciones para las que el mismo ha cambiado.
+     *
      * @param response la respuesta del servidor
      */
     @Override
     public void restResponseHandler(JsonArray response) {
         super.restResponseHandler(response);
         if (response != null) {
-            JsonObject status = response.get(0).asObject();
-            for (Notification object :
-                    objects) {
-                if (object.getGenId() != null) {
-                    String newStatus = status.get(object.getGenId()).asString();
+            JsonObject info = response.get(0).asObject();
+            for (Notification object : objects.values()) {
+                if (!object.getGenId().equals("")) {
+                    JsonObject currentInfo = info.get(object.getGenId()).asObject();
+                    String newStatus = currentInfo.get(Notification.KEY_STATUS).asString();
                     if (!newStatus.equals(object.getStatus())) {
                         object.setStatus(newStatus);
                         object.saveStatus(db);
                     }
+                    if (currentInfo.get(Notification.KEY_COMMENTS) != null) {
+                        JsonArray comments = currentInfo.get(Notification.KEY_COMMENTS).asArray();
+                        for (int j = object.getCommentsNumber(); j < comments.size(); j++) {
+                            JsonObject comment = comments.get(j).asObject();
+                            String date = comment.get("date").asString();
+                            String commentContent = comment.get("content").asString();
+                            object.addComment(date, commentContent, db);
+                        }
+                    }
                 }
             }
         }
-        listView.setAdapter(new NotificationAdapter(objects, this));
-        listView.setOnItemClickListener(this);
+        if (getIntent().getExtras() != null &&
+                getIntent().getExtras().getString("genId") != null) {
+            String id = getIntent().getExtras().getString("genId");
+            Intent intent = new Intent(this, NotificationActivity.class);
+            intent.putExtra("notification", objects.get(id));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+        } else {
+            listView.setAdapter(new NotificationAdapter(objects.values(), this));
+            listView.setOnItemClickListener(this);
+            nextTutorial();
+        }
+    }
+
+    @Override
+    protected Integer getTutorialResourceId() {
+        return R.array.tutorial_notifications;
+    }
+
+    @Override
+    protected Integer getTutorialCount() {
+        return 1;
+    }
+
+    @Override
+    protected String getTutorialSettingName() {
+        return "NotificationsTutorial";
+    }
+
+    @Override
+    protected Integer getCurrentTutorialArrowPosition() {
+        switch (currentTutorial) {
+            case 0:
+                return TutorialFragment.NO_ARROW;
+        }
+        return null;
     }
 }

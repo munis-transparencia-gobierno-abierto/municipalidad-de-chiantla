@@ -10,28 +10,30 @@ import android.widget.TextView;
 import gt.muni.chiantla.R;
 import gt.muni.chiantla.Utils;
 import gt.muni.chiantla.content.Objective;
-import gt.muni.chiantla.widget.CustomListView;
 
 /**
  * Actividad de los objetivos del plan de desarrollo
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
-public class ObjectivesActivity extends DevelopmentItemActivity implements AdapterView.OnItemClickListener {
+public class ObjectivesActivity extends DevelopmentItemActivity implements AdapterView
+        .OnItemClickListener {
     private Integer parentId;
     private String parentName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setCustomActionBar(R.string.objectives, true);
+        setCustomActionBar(null, true);
         setContentView(R.layout.activity_development_item);
+
+        ((TextView) findViewById(R.id.sectionTitle)).setText(R.string.objectives);
 
         parentId = getIntent().getIntExtra("parentId", 1);
         parentName = getIntent().getStringExtra("parentName");
-        mListView = (CustomListView) findViewById(R.id.list);
+        mListView = findViewById(R.id.list);
         mListView.setOnItemClickListener(this);
-        initScroll(mListView, findViewById(android.R.id.content));
         ((ProgressBar) findViewById(R.id.progressBar)).setProgress(67);
         ((TextView) findViewById(R.id.progressBarText)).setText("2/3");
         showTextInView(parentId);
@@ -54,5 +56,13 @@ public class ObjectivesActivity extends DevelopmentItemActivity implements Adapt
         intent.putExtra("parentName", objective.getName());
         startActivity(intent);
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+    }
+
+    protected int getCardColor() {
+        return getResources().getColor(R.color.colorAccent);
+    }
+
+    protected boolean getButtonInverted() {
+        return false;
     }
 }

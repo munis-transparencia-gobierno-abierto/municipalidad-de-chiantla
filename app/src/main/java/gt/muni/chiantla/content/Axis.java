@@ -14,6 +14,7 @@ import gt.muni.chiantla.connections.database.InformationOpenHelper;
 
 /**
  * Clase de un eje del plan de desarrollo
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
@@ -31,7 +32,8 @@ public class Axis extends DevelopmentItem {
 
     /**
      * Busca en la base de datos los ejes que sean hijos del padre indicado.
-     * @param helper el helper
+     *
+     * @param helper   el helper
      * @param parentId el id del padre
      * @return un array de los ejes seleccionados
      */
@@ -65,11 +67,13 @@ public class Axis extends DevelopmentItem {
 
     /**
      * Guarda los ejes que devolvió el servidor y devuelve los objetos.
-     * @param db el helper
+     *
+     * @param db       el helper
      * @param response la respuesta del servidor
      * @return un array de los ejes que devolvió el servidor.
      */
-    public static ArrayList<DevelopmentItem> getFromParentId(InformationOpenHelper db, JsonArray response) {
+    public static ArrayList<DevelopmentItem> getFromParentId(InformationOpenHelper db, JsonArray
+            response) {
         ArrayList<DevelopmentItem> axes = new ArrayList();
         for (JsonValue value : response) {
             JsonObject axis = value.asObject();
@@ -87,6 +91,7 @@ public class Axis extends DevelopmentItem {
 
     /**
      * Guarda el eje en la base de datos
+     *
      * @param db el helper de la base de datos
      */
     public void save(InformationOpenHelper db) {

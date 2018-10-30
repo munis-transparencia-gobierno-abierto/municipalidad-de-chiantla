@@ -1,178 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/artboard_11"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
-        <RelativeLayout
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="33dp"
+            android:src="@drawable/menu_logo_chiantla" />
+
+        <android.support.v7.widget.CardView
             android:id="@+id/myMuniButton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:background="@color/menuChiantla"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
             android:clickable="true"
+            android:focusable="true"
             android:onClick="menu"
-            android:paddingLeft="35dp"
-            android:paddingRight="35dp">
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="6dp">
 
-            <ImageView
-                android:layout_width="50dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30dp"
-                app:srcCompat="@mipmap/muni_icon_black" />
+                android:paddingLeft="12dp"
+                android:paddingTop="15dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="15dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="100dp"
-                android:paddingRight="25dp"
-                android:text="@string/my_muni"
-                android:textAppearance="@style/MenuText" />
+                <ImageView
+                    android:id="@+id/icon1"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/chiantla_100x100___01" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                app:srcCompat="@mipmap/rightarrow_black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/know_button_arrow1"
+                    android:layout_toLeftOf="@id/know_button_arrow1"
+                    android:layout_toEndOf="@id/icon1"
+                    android:layout_toRightOf="@id/icon1"
+                    android:text="@string/my_muni"
+                    android:textAppearance="@style/MainButtonText" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/know_button_arrow1"
+                    android:layout_width="39dp"
+                    android:layout_height="39dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:background="@drawable/budget_button_inverted"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
+                    app:srcCompat="@drawable/arrow_big_black" />
 
-        <RelativeLayout
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
             android:id="@+id/budgetButton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:background="@color/colorBudgetsPrimary"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
             android:clickable="true"
+            android:focusable="true"
             android:onClick="menu"
-            android:paddingLeft="35dp"
-            android:paddingRight="35dp">
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="6dp">
 
-            <ImageView
-                android:layout_width="50dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30dp"
-                app:srcCompat="@mipmap/budget_icon_black" />
+                android:paddingLeft="12dp"
+                android:paddingTop="15dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="15dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="100dp"
-                android:paddingRight="25dp"
-                android:text="@string/budget"
-                android:textAppearance="@style/MenuText" />
+                <ImageView
+                    android:id="@+id/icon2"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/chiantla_100x100___02" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                app:srcCompat="@mipmap/rightarrow_black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/know_button_arrow2"
+                    android:layout_toLeftOf="@id/know_button_arrow2"
+                    android:layout_toEndOf="@id/icon2"
+                    android:layout_toRightOf="@id/icon2"
+                    android:text="@string/budget"
+                    android:textAppearance="@style/MainButtonText" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/know_button_arrow2"
+                    android:layout_width="39dp"
+                    android:layout_height="39dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:background="@drawable/budget_button_inverted"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
+                    app:srcCompat="@drawable/arrow_big_black" />
 
-        <RelativeLayout
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
             android:id="@+id/notificationButton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:background="@color/notificationsPrimary"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
             android:clickable="true"
+            android:focusable="true"
             android:onClick="menu"
-            android:paddingLeft="35dp"
-            android:paddingRight="35dp">
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="6dp">
 
-            <ImageView
-                android:layout_width="50dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30dp"
-                app:srcCompat="@mipmap/avisomunihome" />
+                android:paddingLeft="12dp"
+                android:paddingTop="15dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="15dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="100dp"
-                android:paddingRight="25dp"
-                android:text="@string/notification"
-                android:textAppearance="@style/MenuText" />
+                <ImageView
+                    android:id="@+id/icon3"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/chiantla_100x100___03" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                app:srcCompat="@mipmap/rightarrow_black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/know_button_arrow3"
+                    android:layout_toLeftOf="@id/know_button_arrow3"
+                    android:layout_toEndOf="@id/icon3"
+                    android:layout_toRightOf="@id/icon3"
+                    android:text="@string/notification"
+                    android:textAppearance="@style/MainButtonText" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/know_button_arrow3"
+                    android:layout_width="39dp"
+                    android:layout_height="39dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:background="@drawable/budget_button_inverted"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
+                    app:srcCompat="@drawable/arrow_big_black" />
 
-        <RelativeLayout
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
             android:id="@+id/discussionButton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:background="@color/primaryDiscussionColor"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
             android:clickable="true"
+            android:focusable="true"
             android:onClick="menu"
-            android:paddingLeft="35dp"
-            android:paddingRight="35dp">
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="6dp">
 
-            <ImageView
-                android:layout_width="50dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30dp"
-                app:srcCompat="@mipmap/message_icon_black" />
+                android:paddingLeft="12dp"
+                android:paddingTop="15dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="15dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="100dp"
-                android:paddingRight="25dp"
-                android:text="@string/discussion"
-                android:textAppearance="@style/MenuText" />
+                <ImageView
+                    android:id="@+id/icon4"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/chiantla_100x100___04" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                app:srcCompat="@mipmap/rightarrow_black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/know_button_arrow4"
+                    android:layout_toLeftOf="@id/know_button_arrow4"
+                    android:layout_toEndOf="@id/icon4"
+                    android:layout_toRightOf="@id/icon4"
+                    android:text="@string/discussion"
+                    android:textAppearance="@style/MainButtonText" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/know_button_arrow4"
+                    android:layout_width="39dp"
+                    android:layout_height="39dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:background="@drawable/budget_button_inverted"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
+                    app:srcCompat="@drawable/arrow_big_black" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

@@ -13,10 +13,11 @@ import gt.muni.chiantla.R;
 
 /**
  * Fragmento que se muestra mientras se obtiene la ubicación actual.
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
-public class LocationFragment extends DialogFragment  {
+public class LocationFragment extends DialogFragment {
     LocationDialogInterface callback;
 
     public LocationFragment() {
@@ -27,8 +28,7 @@ public class LocationFragment extends DialogFragment  {
         super.onAttach(context);
         try {
             callback = (LocationDialogInterface) context;
-        }
-        catch (ClassCastException error) {
+        } catch (ClassCastException error) {
             throw new ClassCastException(context.toString() +
                     " must implement LocationDialogInterface");
         }

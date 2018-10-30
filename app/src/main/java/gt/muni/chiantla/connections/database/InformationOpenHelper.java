@@ -18,23 +18,23 @@ import java.util.ArrayList;
 import gt.muni.chiantla.MainActivity;
 import gt.muni.chiantla.Utils;
 import gt.muni.chiantla.content.Axis;
+import gt.muni.chiantla.content.Comment;
 import gt.muni.chiantla.content.DevelopmentItem;
 import gt.muni.chiantla.content.Expense;
 import gt.muni.chiantla.content.Income;
 import gt.muni.chiantla.content.Notification;
 import gt.muni.chiantla.content.Objective;
-import gt.muni.chiantla.content.Page;
-import gt.muni.chiantla.content.PageItem;
 import gt.muni.chiantla.content.Project;
 
 /**
  * Helper para la conexión a la base de datos.
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
 public class InformationOpenHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "items";
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 23;
 
     private static final String TABLE_UPDATES = "updates";
 
@@ -49,13 +49,15 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     private InformationOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        DB_PATH =  "/data/data/"+context.getPackageName()+"/databases/";
+        DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
         myContext = context;
 
     }
 
     public static synchronized InformationOpenHelper getInstance(Context context) {
         if (instance == null) {
+            if (context == null)
+                return null;
             instance = new InformationOpenHelper(context.getApplicationContext());
         }
         return instance;
@@ -63,24 +65,11 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Crea las tablas de la base de datos
-     * @param db
+     *
+     * @param db la base de datos en la que se crearan las tablas
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TABLE_PAGE = "CREATE TABLE IF NOT EXISTS " + Page.TABLE +
-                "(" +
-                Page.KEY_ID + " INTEGER PRIMARY KEY," +
-                Page.KEY_CONTENT + " TEXT," +
-                Page.KEY_NAME + " TEXT" +
-                ")";
-        String CREATE_TABLE_ITEMS = "CREATE TABLE IF NOT EXISTS " + PageItem.TABLE +
-                "(" +
-                PageItem.KEY_ID + " INTEGER PRIMARY KEY," +
-                PageItem.KEY_CONTENT + " TEXT," +
-                PageItem.KEY_NAME + " TEXT," +
-                PageItem.KEY_ORDER + " INTEGER, " +
-                PageItem.KEY_PAGE + " INTEGER REFERENCES " + Page.TABLE +
-                ")";
         String CREATE_TABLE_UPDATES = "CREATE TABLE IF NOT EXISTS " + TABLE_UPDATES +
                 "(" +
                 KEY_UPDATE_ID + " INTEGER PRIMARY KEY," +
@@ -127,7 +116,8 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Income.KEY_AUXILIARY + " TEXT," +
                 Income.KEY_AUXILIARY_COD + " NUMBER," +
                 Income.KEY_AUXILIARY_COD2 + " NUMBER," +
-                Income.KEY_PERCEIVED + " REAL" +
+                Income.KEY_PERCEIVED + " REAL," +
+                Income.KEY_YEAR + " INTEGER" +
                 ")";
         String CREATE_TABLE_EXPENSE = "CREATE TABLE IF NOT EXISTS " + Expense.TABLE +
                 "(" +
@@ -144,8 +134,11 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.KEY_ROW_COD + " NUMBER," +
                 Expense.KEY_PAID + " REAL," +
                 Expense.KEY_COMMITED + " REAL," +
-                Expense.KEY_ACTIVITY + " ACTIVITY," +
-                Expense.KEY_ACTIVITY_COD + " NUMBER" +
+                Expense.KEY_ACTIVITY + " TEXT," +
+                Expense.KEY_ACTIVITY_COD + " NUMBER," +
+                Expense.KEY_WORK + " TEXT," +
+                Expense.KEY_WORK_COD + " NUMBER," +
+                Expense.KEY_YEAR + " INTEGER" +
                 ")";
         String CREATE_TABLE_NOTIFICATION = "CREATE TABLE IF NOT EXISTS " + Notification.TABLE +
                 "(" +
@@ -162,10 +155,18 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Notification.KEY_LAT + " REAL," +
                 Notification.KEY_LON + " REAL," +
                 Notification.KEY_GEN_ID + " TEXT," +
-                Notification.KEY_STATUS + " INTEGER" +
+                Notification.KEY_STATUS + " INTEGER," +
+                Notification.KEY_OFFICE + " TEXT" +
                 ")";
-        db.execSQL(CREATE_TABLE_PAGE);
-        db.execSQL(CREATE_TABLE_ITEMS);
+        String CREATE_TABLE_NOTIFICATION_MESSAGE = "CREATE TABLE IF NOT EXISTS " +
+                Comment.TABLE + "(" +
+                Comment.KEY_ORDER + " INTEGER," +
+                Comment.KEY_DATE + " TEXT," +
+                Comment.KEY_COMMENTS + " TEXT," +
+                Notification.KEY_GEN_ID + " TEXT," +
+                "FOREIGN KEY (" + Notification.KEY_GEN_ID + ") REFERENCES " +
+                Notification.TABLE + "(" + Notification.KEY_GEN_ID + ")" +
+                ")";
         db.execSQL(CREATE_TABLE_UPDATES);
         db.execSQL(CREATE_TABLE_AXIS);
         db.execSQL(CREATE_TABLE_OBJECTIVES);
@@ -173,13 +174,15 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_INCOME);
         db.execSQL(CREATE_TABLE_EXPENSE);
         db.execSQL(CREATE_TABLE_NOTIFICATION);
+        db.execSQL(CREATE_TABLE_NOTIFICATION_MESSAGE);
     }
 
     /**
      * Crea o actualiza los indicadores de actualización para objetos que no están actualizados.
-     * @param app el app a la que pertenece el objeto en el servidor
+     *
+     * @param app   el app a la que pertenece el objeto en el servidor
      * @param model el modelo al que pertenece el objeto en el servidor
-     * @param id el id del objeto en el servidor
+     * @param id    el id del objeto en el servidor
      */
     public void addOrUpdateUpdate(String app, String model, Integer id) {
         addOrUpdateUpdate(app, model, id, false);
@@ -187,9 +190,10 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Crea o actualiza los indicadores de actualización.
-     * @param app el app a la que pertenece el objeto en el servidor
-     * @param model el modelo al que pertenece el objeto en el servidor
-     * @param id el id del objeto en el servidor
+     *
+     * @param app     el app a la que pertenece el objeto en el servidor
+     * @param model   el modelo al que pertenece el objeto en el servidor
+     * @param id      el id del objeto en el servidor
      * @param updated el nuevo estatus del indicador
      */
     public void addOrUpdateUpdate(String app, String model, Integer id, boolean updated) {
@@ -212,38 +216,6 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
             }
 
             db.setTransactionSuccessful();
-        }
-        catch (Exception e) {
-            Log.e("DB", e.getMessage());
-        }
-        finally {
-            db.endTransaction();
-        }
-    }
-
-    /**
-     * Crea o actualiza una página.
-     * @param id el id de la página
-     * @param name el nombre de la página
-     * @param content el contenido de la página
-     */
-    public void addOrUpdatePage(Integer id, String name, String content) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.beginTransaction();
-        try {
-            ContentValues values = new ContentValues();
-            values.put(Page.KEY_NAME, name);
-            values.put(Page.KEY_CONTENT, content);
-
-            int rows = db.update(Page.TABLE, values, Page.KEY_ID + "= ?",
-                    new String[]{id.toString()});
-
-            if (rows != 1) {
-                values.put(Page.KEY_ID, id);
-                db.insertOrThrow(Page.TABLE, null, values);
-            }
-
-            db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.e("DB", e.getMessage());
         } finally {
@@ -253,12 +225,13 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Crea o actualiza un item del plan de desarrollo
-     * @param id el id del item
-     * @param parentID el id del padre del item (debe ser otro item)
-     * @param name el nombre del item
-     * @param content el contenido del item
+     *
+     * @param id         el id del item
+     * @param parentID   el id del padre del item (debe ser otro item)
+     * @param name       el nombre del item
+     * @param content    el contenido del item
      * @param percentage el porcentaje de ejecición del item
-     * @param table la tabla a la que se agregará el item (depende del tipo)
+     * @param table      la tabla a la que se agregará el item (depende del tipo)
      */
     public void addOrUpdateDevItem(Integer id, int parentID, String name, String content,
                                    int percentage, String table) {
@@ -289,14 +262,16 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Crea o actualiza un proyecto del plan de desarrollo
-     * @param id el id del proyecto
+     *
+     * @param id       el id del proyecto
      * @param parentID el id del padre del proyecto (debe ser un item)
-     * @param name el nombre del proyecto
-     * @param content el contenido del proyecto
-     * @param state el estado actual del proyecto
+     * @param name     el nombre del proyecto
+     * @param content  el contenido del proyecto
+     * @param state    el estado actual del proyecto
      * @param location la ubicación del proyecto
      */
-    public void addOrUpdateProject(Integer id, int parentID, String name, String content, int state, String location) {
+    public void addOrUpdateProject(Integer id, int parentID, String name, String content, int
+            state, String location) {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         try {
@@ -325,8 +300,9 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Agrega un nuevo elemento a una tabla
+     *
      * @param values los valores del elemento
-     * @param table la tabla a la que se agregará
+     * @param table  la tabla a la que se agregará
      * @return el id del elemento agregado
      */
     public long add(ContentValues values, String table) {
@@ -340,33 +316,25 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Actualiza un elemento de una tabla
+     *
      * @param values los valores que seran actualizados
-     * @param id el id del elemento a actualizar
-     * @param table la tabla en la que se encuentra el elemento
+     * @param id     el id del elemento a actualizar
+     * @param table  la tabla en la que se encuentra el elemento
      */
     public void update(ContentValues values, String id, String table) {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
-        db.update(table, values, Notification.KEY_ID + " = ?", new String[] {id});
+        db.update(table, values, Notification.KEY_ID + " = ?", new String[]{id});
         db.setTransactionSuccessful();
         db.endTransaction();
     }
 
     /**
-     * Obtiene la sumatoria de una columa de una tabla
-     * @param table la tabla en la que se realizará la consulta
-     * @param column la columna que será sumada
-     * @return la sumatoria
-     */
-    public double getTotal(String table, String column) {
-        return getTotal(table, column, "");
-    }
-
-    /**
      * Obtiene la sumatoria de una columa de una tabla, filtrando los elementos
-     * @param table la tabla en la que se realizará la consulta
+     *
+     * @param table  la tabla en la que se realizará la consulta
      * @param column la columna que será sumada
-     * @param where el filtro que se aplicará en el where del select
+     * @param where  el filtro que se aplicará en el where del select
      * @return la sumatoria
      */
     public double getTotal(String table, String column, String where) {
@@ -393,58 +361,68 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Filtra las clases que tengan el tipo indicado
+     *
      * @param typeId el id de la fuente
+     * @param year   el año del presupuesto
      * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre y valor de
      * la clase
      */
-    public ArrayList<String[]> getIncomeClassesByType(long typeId) {
+    public ArrayList<String[]> getIncomeClassesByType(String typeId, int year) {
         String QUERY = String.format("SELECT %s, %s, SUM(%s) as SUM " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s <> 0 AND %s = %s " +
                         "GROUP BY %s",
                 Income.KEY_CLASS_COD,
                 Income.KEY_CLASS,
                 Income.KEY_PERCEIVED,
                 Income.TABLE,
-                Income.KEY_SOURCE_COD,
+                Income.KEY_SOURCE,
                 typeId,
                 Income.KEY_PERCEIVED,
+                year,
+                Income.KEY_YEAR,
                 Income.KEY_CLASS_COD);
         return getIdNameValue(QUERY, Income.KEY_CLASS_COD, Income.KEY_CLASS, "SUM");
     }
 
     /**
      * Filtra las clases que no tengan el tipo indicado
+     *
      * @param typeId el id de la fuente
+     * @param year   el año del presupuesto
      * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre y valor de
      * la clase
      */
-    public ArrayList<String[]> getIcomeClassesByNotType(long typeId) {
+    public ArrayList<String[]> getIcomeClassesByNotType(String typeId, int year) {
         String QUERY = String.format("SELECT %s, %s, SUM(%s) as SUM " +
                         "FROM %s " +
-                        "WHERE %s <> %s AND %s <> 0 " +
+                        "WHERE %s <> %s AND %s <> 0 AND %s = %s " +
                         "GROUP BY %s",
                 Income.KEY_CLASS_COD,
                 Income.KEY_CLASS,
                 Income.KEY_PERCEIVED,
                 Income.TABLE,
-                Income.KEY_SOURCE_COD,
+                Income.KEY_SOURCE,
                 typeId,
                 Income.KEY_PERCEIVED,
+                year,
+                Income.KEY_YEAR,
                 Income.KEY_CLASS_COD);
         return getIdNameValue(QUERY, Income.KEY_CLASS_COD, Income.KEY_CLASS, "SUM");
     }
 
     /**
      * Filtra un las secciones por la clase deseada.
+     *
      * @param classId el id de la clase
+     * @param year    el año del presupuesto
      * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre y valor de
      * la sección
      */
-    public ArrayList<String[]> getIncomeSectionsByClass(long classId) {
+    public ArrayList<String[]> getIncomeSectionsByClass(long classId, int year) {
         String QUERY = String.format("SELECT %s, %s, SUM(%s) as SUM " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s <> 0 AND %s = %s " +
                         "GROUP BY %s",
                 Income.KEY_SECTION_COD,
                 Income.KEY_SECTION,
@@ -453,21 +431,25 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Income.KEY_CLASS_COD,
                 classId,
                 Income.KEY_PERCEIVED,
+                year,
+                Income.KEY_YEAR,
                 Income.KEY_SECTION_COD);
         return getIdNameValue(QUERY, Income.KEY_SECTION_COD, Income.KEY_SECTION, "SUM");
     }
 
     /**
      * Filtra los recursos auxiliares por la sección y clase deaseadas.
+     *
      * @param sectionId el id de la sección
-     * @param classId el id de la clase
+     * @param classId   el id de la clase
+     * @param year      el año del presupuesto
      * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre y valor del
      * recurso auxiliar
      */
-    public ArrayList<String[]> getIncomeAuxBySection(long sectionId, long classId) {
+    public ArrayList<String[]> getIncomeAuxBySection(long sectionId, long classId, int year) {
         String QUERY = String.format("SELECT %s, %s, SUM(%s) as SUM " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s = %s AND %s <> 0 AND %s = %s " +
                         "GROUP BY %s",
                 Income.KEY_AUXILIARY_COD,
                 Income.KEY_AUXILIARY,
@@ -478,6 +460,8 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Income.KEY_CLASS_COD,
                 classId,
                 Income.KEY_PERCEIVED,
+                year,
+                Income.KEY_YEAR,
                 Income.KEY_AUXILIARY_COD);
         return getIdNameValue(QUERY, Income.KEY_AUXILIARY_COD, Income.KEY_AUXILIARY, "SUM");
     }
@@ -485,13 +469,15 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
     /**
      * Ejecuta una consulta a la base de datos y devuelve el id, nombre y valor de cada
      * valor que devuelve la consulta
-     * @param query la consulta a ejecutar
-     * @param keyId el id del id que va a devolver para cada elemento
-     * @param keyName el id del nombre que va a devolver para cada elemento
+     *
+     * @param query    la consulta a ejecutar
+     * @param keyId    el id del id que va a devolver para cada elemento
+     * @param keyName  el id del nombre que va a devolver para cada elemento
      * @param keyValue el id del valor que va a devolver para cada elemento
      * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre y valor.
      */
-    private ArrayList<String[]> getIdNameValue(String query, String keyId, String keyName, String keyValue) {
+    private ArrayList<String[]> getIdNameValue(String query, String keyId, String keyName, String
+            keyValue) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         try {
@@ -501,7 +487,8 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                     String[] strings = new String[3];
                     strings[0] = cursor.getString(cursor.getColumnIndex(keyId));
                     strings[1] = cursor.getString(cursor.getColumnIndex(keyName));
-                    strings[2] = Utils.formatDouble(cursor.getDouble(cursor.getColumnIndex(keyValue)));
+                    strings[2] = Utils.formatDouble(cursor.getDouble(cursor.getColumnIndex
+                            (keyValue)));
                     response.add(strings);
                 } while (cursor.moveToNext());
                 return response;
@@ -518,13 +505,16 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Filtra los programas que tengan un proyecto
-     * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre, la cantidad
+     *
+     * @param year el año del presupuesto
+     * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre, la
+     * cantidad
      * a pagar, la cantidad pagada y el porcentaje pagado del programa.
      */
-    public ArrayList<String[]> getExpenseProgramsByProject() {
+    public ArrayList<String[]> getExpenseProgramsByProject(int year) {
         String QUERY = String.format("SELECT %s, %s, SUM(%s) as %s, SUM(%s) as %s " +
                         "FROM %s " +
-                        "WHERE %s <> %s AND %s <> 0 " +
+                        "WHERE %s <> %s AND %s <> 0 AND %s = %s " +
                         "GROUP BY %s",
                 Expense.KEY_PROGRAM_COD,
                 Expense.KEY_PROGRAM,
@@ -533,22 +523,27 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.KEY_PAID,
                 Expense.KEY_PAID,
                 Expense.TABLE,
-                Expense.KEY_PROJECT_COD,
-                0,
+                Expense.KEY_PROJECT,
+                Expense.WITHOUT_PROJECT,
                 Expense.KEY_COMMITED,
+                year,
+                Expense.KEY_YEAR,
                 Expense.KEY_PROGRAM_COD);
         return getExpenseObjects(QUERY, Expense.KEY_PROGRAM_COD, Expense.KEY_PROGRAM);
     }
 
     /**
      * Filtra los programas que no tengan un proyecto.
-     * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre, la cantidad
+     *
+     * @param year el año del presupuesto
+     * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre, la
+     * cantidad
      * a pagar, la cantidad pagada y el porcentaje pagado del programa.
      */
-    public ArrayList<String[]> getExpenseProgramsByNotProject() {
+    public ArrayList<String[]> getExpenseProgramsByNotProject(int year) {
         String QUERY = String.format("SELECT %s, %s, SUM(%s) as %s, SUM(%s) as %s " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s <> 0 AND %s = %s " +
                         "GROUP BY %s",
                 Expense.KEY_PROGRAM_COD,
                 Expense.KEY_PROGRAM,
@@ -557,23 +552,28 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.KEY_PAID,
                 Expense.KEY_PAID,
                 Expense.TABLE,
-                Expense.KEY_PROJECT_COD,
-                0,
+                Expense.KEY_PROJECT,
+                Expense.WITHOUT_PROJECT,
                 Expense.KEY_COMMITED,
+                year,
+                Expense.KEY_YEAR,
                 Expense.KEY_PROGRAM_COD);
         return getExpenseObjects(QUERY, Expense.KEY_PROGRAM_COD, Expense.KEY_PROGRAM);
     }
 
     /**
      * Filtra los proyectos por el programa deseado
+     *
      * @param programId el id del programa
-     * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre, la cantidad
+     * @param year      el año del presupuesto
+     * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre, la
+     * cantidad
      * a pagar, la cantidad pagada y el porcentaje pagado del proyecto.
      */
-    public ArrayList<String[]> getExpenseProjectsByProgram(long programId) {
+    public ArrayList<String[]> getExpenseProjectsByProgram(long programId, int year) {
         String QUERY = String.format("SELECT %s, %s, SUM(%s) as %s, SUM(%s) as %s " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s <> 0 AND %s = %s " +
                         "GROUP BY %s",
                 Expense.KEY_PROJECT_COD,
                 Expense.KEY_PROJECT,
@@ -585,20 +585,25 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.KEY_PROGRAM_COD,
                 programId,
                 Expense.KEY_COMMITED,
+                year,
+                Expense.KEY_YEAR,
                 Expense.KEY_PROJECT_COD);
         return getExpenseObjects(QUERY, Expense.KEY_PROJECT_COD, Expense.KEY_PROJECT);
     }
 
     /**
      * Filtra las actividades del programa deseado
+     *
      * @param programId el id del programa
-     * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre, la cantidad
+     * @param year      el año del presupuesto
+     * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre, la
+     * cantidad
      * a pagar, la cantidad pagada y el porcentaje pagado de la actividad.
      */
-    public ArrayList<String[]> getExpenseActivitiesByProgram(long programId) {
+    public ArrayList<String[]> getExpenseActivitiesByProgram(long programId, int year) {
         String QUERY = String.format("SELECT %s, %s, SUM(%s) as %s, SUM(%s) as %s " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s <> 0 AND %s = %s " +
                         "GROUP BY %s",
                 Expense.KEY_ACTIVITY_COD,
                 Expense.KEY_ACTIVITY,
@@ -610,21 +615,81 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.KEY_PROGRAM_COD,
                 programId,
                 Expense.KEY_COMMITED,
+                year,
+                Expense.KEY_YEAR,
                 Expense.KEY_ACTIVITY_COD);
         return getExpenseObjects(QUERY, Expense.KEY_ACTIVITY_COD, Expense.KEY_ACTIVITY);
     }
 
     /**
      * Filtra las actividades por el proyecto y programa deseados
+     *
      * @param projectId el id del proyecto
      * @param programId el id del programa
-     * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre, la cantidad
+     * @param year      el año del presupuesto
+     * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre, la
+     * cantidad
      * a pagar, la cantidad pagada y el porcentaje pagado de la actividad.
      */
-    public ArrayList<String[]> getExpenseActivitiesByProject(long projectId, long programId) {
-        String QUERY = String.format("SELECT %s, %s, SUM(%s) as %s, SUM(%s) as %s " +
+    public ArrayList<String[]> getExpenseWorksAndActivitiesByProject(long projectId, long
+            programId, int year) {
+        String WORK_QUERY = String.format("SELECT %s, %s, SUM(%s) as %s, SUM(%s) as %s " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s = %s AND %s <> 0 AND NOT %s LIKE \"Na\" AND " +
+                        "NOT %s LIKE \"Sin obra\" AND %s = %s " +
+                        "GROUP BY %s",
+                Expense.KEY_WORK_COD,
+                Expense.KEY_WORK,
+                Expense.KEY_COMMITED,
+                Expense.KEY_COMMITED,
+                Expense.KEY_PAID,
+                Expense.KEY_PAID,
+                Expense.TABLE,
+                Expense.KEY_PROJECT_COD,
+                projectId,
+                Expense.KEY_PROGRAM_COD,
+                programId,
+                Expense.KEY_COMMITED,
+                Expense.KEY_WORK,
+                Expense.KEY_WORK,
+                year,
+                Expense.KEY_YEAR,
+                Expense.KEY_WORK_COD);
+        ArrayList<String[]> objects = getExpenseObjects(
+                WORK_QUERY, Expense.KEY_WORK_COD, Expense.KEY_WORK);
+        if (objects != null && objects.size() > 0) {
+            String FILTERED_ACTIVITY_QUERY = String.format("SELECT %s, %s, SUM(%s) as %s, SUM(%s)" +
+                            " as %s " +
+                            "FROM %s " +
+                            "WHERE %s = %s AND %s = %s AND %s <> 0 AND %s LIKE \"Na\" AND" +
+                            " %s LIKE \"Sin obra\" AND %s = %s " +
+                            "GROUP BY %s",
+                    Expense.KEY_ACTIVITY_COD,
+                    Expense.KEY_ACTIVITY,
+                    Expense.KEY_COMMITED,
+                    Expense.KEY_COMMITED,
+                    Expense.KEY_PAID,
+                    Expense.KEY_PAID,
+                    Expense.TABLE,
+                    Expense.KEY_PROJECT_COD,
+                    projectId,
+                    Expense.KEY_PROGRAM_COD,
+                    programId,
+                    Expense.KEY_COMMITED,
+                    Expense.KEY_WORK,
+                    Expense.KEY_WORK,
+                    year,
+                    Expense.KEY_YEAR,
+                    Expense.KEY_ACTIVITY_COD);
+            ArrayList<String[]> extraObjects = getExpenseObjects(FILTERED_ACTIVITY_QUERY, Expense
+                    .KEY_ACTIVITY_COD, Expense.KEY_ACTIVITY);
+            if (extraObjects != null)
+                objects.addAll(extraObjects);
+            return objects;
+        }
+        String ACTIVITY_QUERY = String.format("SELECT %s, %s, SUM(%s) as %s, SUM(%s) as %s " +
+                        "FROM %s " +
+                        "WHERE %s = %s AND %s = %s AND %s <> 0 AND %s = %s " +
                         "GROUP BY %s",
                 Expense.KEY_ACTIVITY_COD,
                 Expense.KEY_ACTIVITY,
@@ -638,22 +703,28 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.KEY_PROGRAM_COD,
                 programId,
                 Expense.KEY_COMMITED,
+                year,
+                Expense.KEY_YEAR,
                 Expense.KEY_ACTIVITY_COD);
-        return getExpenseObjects(QUERY, Expense.KEY_ACTIVITY_COD, Expense.KEY_ACTIVITY);
+        return getExpenseObjects(ACTIVITY_QUERY, Expense.KEY_ACTIVITY_COD, Expense.KEY_ACTIVITY);
     }
 
     /**
-     * Filtra los grupos por proyecto, actividad y programa
-     * @param projectId el id del proyecto
+     * Filtra los grupos por proyecto, actividad u obra y programa
+     *
+     * @param projectId  el id del proyecto
      * @param activityId el di de la actividad
-     * @param programId el id del programa
+     * @param programId  el id del programa
+     * @param work       si se filtra por obra, de lo contrario se filtra por actividad
+     * @param year       el año del presupuesto
      * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre y valor del
      * grupo
      */
-    public ArrayList<String[]> getExpenseGroupsByProject(long projectId, long activityId, long programId) {
+    public ArrayList<String[]> getExpenseGroupsByProject(long projectId, long activityId, long
+            programId, boolean work, int year) {
         String QUERY = String.format("SELECT %s, %s, SUM(%s) as %s " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s = %s AND %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s = %s AND %s = %s AND %s <> 0 AND %s = %s " +
                         "GROUP BY %s",
                 Expense.KEY_GROUP_COD,
                 Expense.KEY_GROUP,
@@ -662,26 +733,32 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.TABLE,
                 Expense.KEY_PROJECT_COD,
                 projectId,
-                Expense.KEY_ACTIVITY_COD,
+                work ? Expense.KEY_WORK_COD : Expense.KEY_ACTIVITY_COD,
                 activityId,
                 Expense.KEY_PROGRAM_COD,
                 programId,
                 Expense.KEY_COMMITED,
+                year,
+                Expense.KEY_YEAR,
                 Expense.KEY_GROUP_COD);
-        return getIdNameValue(QUERY, Expense.KEY_GROUP_COD, Expense.KEY_GROUP, Expense.KEY_COMMITED);
+        return getIdNameValue(QUERY, Expense.KEY_GROUP_COD, Expense.KEY_GROUP, Expense
+                .KEY_COMMITED);
     }
 
     /**
      * Filtra los grupos por la actividad y programa deseado
+     *
      * @param projectId el id de la actividad
      * @param programId el id del programa
+     * @param year      el año del presupuesto
      * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre y valor del
      * grupo
      */
-    public ArrayList<String[]> getExpenseGroupsByActivity(long projectId, long programId) {
+    public ArrayList<String[]> getExpenseGroupsByActivity(long projectId, long programId, int
+            year) {
         String QUERY = String.format("SELECT %s, %s, SUM(%s) as %s " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s = %s AND %s <> 0 AND %s = %s " +
                         "GROUP BY %s",
                 Expense.KEY_GROUP_COD,
                 Expense.KEY_GROUP,
@@ -693,24 +770,31 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.KEY_PROGRAM_COD,
                 programId,
                 Expense.KEY_COMMITED,
+                year,
+                Expense.KEY_YEAR,
                 Expense.KEY_GROUP_COD);
-        return getIdNameValue(QUERY, Expense.KEY_GROUP_COD, Expense.KEY_GROUP, Expense.KEY_COMMITED);
+        return getIdNameValue(QUERY, Expense.KEY_GROUP_COD, Expense.KEY_GROUP, Expense
+                .KEY_COMMITED);
     }
 
     /**
-     * Filtra los sub grupos por el proyecto, grupo, actividad y programas deseados
-     * @param projectId el id del proyeccto
-     * @param groupId el id del grupo
+     * Filtra los sub grupos por el proyecto, grupo, actividad u obra y programas deseados
+     *
+     * @param projectId  el id del proyeccto
+     * @param groupId    el id del grupo
      * @param activityId el id de la actividad
-     * @param programId el id del programa
+     * @param programId  el id del programa
+     * @param work       si se filtra por obra, de lo contrario se filtra por actividad
+     * @param year       el año del presupuesto actual
      * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre y valor del
      * subgrupo
      */
-    public ArrayList<String[]> getExpenseSubGroupByGroup(long projectId, long groupId, long activityId,
-                                                         long programId) {
+    public ArrayList<String[]> getExpenseSubGroupByGroup(long projectId, long groupId, long
+            activityId, long programId, boolean work, int year) {
         String QUERY = String.format("SELECT %s, %s, SUM(%s) as %s " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s = %s AND %s = %s AND %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s = %s AND %s = %s AND %s = %s AND %s <> 0 AND %s = " +
+                        "%s " +
                         "GROUP BY %s",
                 Expense.KEY_SUB_GROUP_COD,
                 Expense.KEY_SUB_GROUP,
@@ -719,30 +803,35 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.TABLE,
                 Expense.KEY_PROJECT_COD,
                 projectId,
-                Expense.KEY_ACTIVITY_COD,
+                work ? Expense.KEY_WORK_COD : Expense.KEY_ACTIVITY_COD,
                 activityId,
                 Expense.KEY_PROGRAM_COD,
                 programId,
                 Expense.KEY_GROUP_COD,
                 groupId,
                 Expense.KEY_COMMITED,
+                year,
+                Expense.KEY_YEAR,
                 Expense.KEY_SUB_GROUP_COD);
-        return getIdNameValue(QUERY, Expense.KEY_SUB_GROUP_COD, Expense.KEY_SUB_GROUP, Expense.KEY_COMMITED);
+        return getIdNameValue(QUERY, Expense.KEY_SUB_GROUP_COD, Expense.KEY_SUB_GROUP, Expense
+                .KEY_COMMITED);
     }
 
     /**
      * Filtra los subgrupos por el gurpoo, actividad y programa deseados
-     * @param groupId el id del grupo
+     *
+     * @param groupId   el id del grupo
      * @param projectId el id de la actividad
      * @param programId el id del programa
+     * @param year      el año del presupuesto actual
      * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre y valor del
      * subgrupo
      */
     public ArrayList<String[]> getExpenseActivitySubGroupByGroup(long groupId, long projectId,
-                                                                 long programId) {
+                                                                 long programId, int year) {
         String QUERY = String.format("SELECT %s, %s, SUM(%s) as %s " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s = %s AND %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s = %s AND %s = %s AND %s <> 0 AND %s = %s " +
                         "GROUP BY %s",
                 Expense.KEY_SUB_GROUP_COD,
                 Expense.KEY_SUB_GROUP,
@@ -756,26 +845,34 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.KEY_GROUP_COD,
                 groupId,
                 Expense.KEY_COMMITED,
+                year,
+                Expense.KEY_YEAR,
                 Expense.KEY_SUB_GROUP_COD);
-        return getIdNameValue(QUERY, Expense.KEY_SUB_GROUP_COD, Expense.KEY_SUB_GROUP, Expense.KEY_COMMITED);
+        return getIdNameValue(QUERY, Expense.KEY_SUB_GROUP_COD, Expense.KEY_SUB_GROUP, Expense
+                .KEY_COMMITED);
     }
 
     /**
      * Filtra la fila de los gastos por el subgrupo, grupo, actividad, programa y proyecto deseados
-     * @param subId id del subgrupo
-     * @param groupId id del grupo
+     *
+     * @param subId      id del subgrupo
+     * @param groupId    id del grupo
      * @param activityId id de la actividad
-     * @param programId id del programa
-     * @param projectId id del proyecto
+     * @param programId  id del programa
+     * @param projectId  id del proyecto
+     * @param work       si se filtra por obra, de lo contrario se filtra por actividad
+     * @param year       el año del presupuesto
      * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre y valor de
      * la fila
      */
     public ArrayList<String[]> getExpenseRowBySubGroup(long subId, long groupId, long activityId,
-                                                       long programId, long projectId) {
+                                                       long programId, long projectId, boolean
+                                                               work, int year) {
         String QUERY = String.format(
                 "SELECT %s, %s, SUM(%s) as %s " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s = %s AND %s = %s AND %s = %s AND %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s = %s AND %s = %s AND %s = %s AND %s = %s AND %s <> " +
+                        "0 AND %s = %s " +
                         "GROUP BY %s",
                 Expense.KEY_ROW_COD,
                 Expense.KEY_ROW,
@@ -784,7 +881,7 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.TABLE,
                 Expense.KEY_PROJECT_COD,
                 projectId,
-                Expense.KEY_ACTIVITY_COD,
+                work ? Expense.KEY_WORK_COD : Expense.KEY_ACTIVITY_COD,
                 activityId,
                 Expense.KEY_PROGRAM_COD,
                 programId,
@@ -793,24 +890,30 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.KEY_SUB_GROUP_COD,
                 subId,
                 Expense.KEY_COMMITED,
+                year,
+                Expense.KEY_YEAR,
                 Expense.KEY_ROW_COD);
         return getIdNameValue(QUERY, Expense.KEY_ROW_COD, Expense.KEY_ROW, Expense.KEY_COMMITED);
     }
 
     /**
      * Filtra las filas por subgrupo, grupo, actividad y programa
-     * @param subId el id del subgrupo
-     * @param groupId el id del grupo
+     *
+     * @param subId     el id del subgrupo
+     * @param groupId   el id del grupo
      * @param projectId el id de la actividad
      * @param programId el id del programa
+     * @param year      el año del presupuesto actual
      * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre y valor de
      * la fila
      */
-    public ArrayList<String[]> getExpenseActivityRowBySubGroup(long subId, long groupId, long projectId, long programId) {
+    public ArrayList<String[]> getExpenseActivityRowBySubGroup(long subId, long groupId, long
+            projectId, long programId, int year) {
         String QUERY = String.format(
                 "SELECT %s, %s, SUM(%s) as %s " +
                         "FROM %s " +
-                        "WHERE %s = %s AND %s = %s AND %s = %s AND %s = %s AND %s <> 0 " +
+                        "WHERE %s = %s AND %s = %s AND %s = %s AND %s = %s AND %s <> 0 AND %s = " +
+                        "%s " +
                         "GROUP BY %s",
                 Expense.KEY_ROW_COD,
                 Expense.KEY_ROW,
@@ -826,24 +929,70 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                 Expense.KEY_SUB_GROUP_COD,
                 subId,
                 Expense.KEY_COMMITED,
+                year,
+                Expense.KEY_YEAR,
                 Expense.KEY_ROW_COD);
         return getIdNameValue(QUERY, Expense.KEY_ROW_COD, Expense.KEY_ROW, Expense.KEY_COMMITED);
     }
 
-    public void truncate(String table) {
-        String command = String.format("DELETE FROM %s", table);
+    /**
+     * Elimina un elementos de una tabla
+     *
+     * @param table la tabla de la que se eliminaran elementos
+     * @param key   la columna a comparar
+     * @param value el valor de la columna de los elementos a eliminar
+     */
+    public void delete(String table, String key, String value) {
+        String command = String.format(
+                "DELETE FROM %s WHERE %s = %s",
+                table,
+                key,
+                value
+        );
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(command);
     }
 
     /**
+     * Obtiene los años de presupuesto que actualmente se encuentran descargados.
+     *
+     * @return los años
+     */
+    public ArrayList<Integer> getBudgetYears() {
+        String UPDATE_SELECT_QUERY = String.format(
+                "SELECT DISTINCT %s FROM %s",
+                Income.KEY_YEAR,
+                Income.TABLE
+        );
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(UPDATE_SELECT_QUERY, null);
+        ArrayList<Integer> response = new ArrayList<>();
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    response.add(cursor.getInt(cursor.getColumnIndex("year")));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("DB", e.getMessage());
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return response;
+    }
+
+    /**
      * Ejecuta una consulta a la base de datos y devuelve los valores que represetan un objetos de
      * los gastos del presupuesto
-     * @param query la consulta a ejecutar
-     * @param keyId id de la columna de id
+     *
+     * @param query   la consulta a ejecutar
+     * @param keyId   id de la columna de id
      * @param keyName el id de la columna de nombre
-     * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre, la cantidad
-     * a pagar, la cantidad pagada y el porcentaje pagado de cada fila que devuelva la consulta
+     * @return un {@link ArrayList} de arrays de strings. Cada array tiene el id, nombre, la
+     * cantidad a pagar, la cantidad pagada, el porcentaje pagado y el tipo de cada fila que
+     * devuelva la consulta
      */
     private ArrayList<String[]> getExpenseObjects(String query, String keyId, String keyName) {
         SQLiteDatabase db = getReadableDatabase();
@@ -852,7 +1001,7 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 ArrayList<String[]> response = new ArrayList<>();
                 do {
-                    String[] strings = new String[5];
+                    String[] strings = new String[6];
                     strings[0] = cursor.getString(cursor.getColumnIndex(keyId));
                     strings[1] = cursor.getString(cursor.getColumnIndex(keyName));
                     double commited = cursor.getDouble(cursor.getColumnIndex(Expense.KEY_COMMITED));
@@ -860,6 +1009,7 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
                     double paid = cursor.getDouble(cursor.getColumnIndex(Expense.KEY_PAID));
                     strings[3] = Utils.formatDouble(paid);
                     strings[4] = (int) (paid / commited * 100) + "";
+                    strings[5] = keyName;
                     response.add(strings);
                 } while (cursor.moveToNext());
                 return response;
@@ -875,47 +1025,14 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Agrega o actualiza un item de una página en la base de datos
-     * @param id el id del item
-     * @param name el nombre del item
-     * @param content el contenido del item
-     * @param pageId el id del item
-     * @param order el orden del item
-     */
-    public void addOrUpdateItem(Integer id, String name, String content, Integer pageId, int order) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.beginTransaction();
-        try {
-            ContentValues values = new ContentValues();
-            values.put(PageItem.KEY_CONTENT, content);
-            values.put(PageItem.KEY_ORDER, order);
-
-            int rows = db.update(PageItem.TABLE, values, PageItem.KEY_ID + "= ?",
-                    new String[]{id.toString()});
-
-            if (rows != 1) {
-                values.put(PageItem.KEY_PAGE, pageId);
-                values.put(PageItem.KEY_ID, id);
-                values.put(PageItem.KEY_NAME, name);
-                db.insertOrThrow(PageItem.TABLE, null, values);
-            }
-
-            db.setTransactionSuccessful();
-        } catch (Exception e) {
-            Log.e("DB", e.getMessage());
-        } finally {
-            db.endTransaction();
-        }
-    }
-
-    /**
      * Devuelve un query a la tabla de actualizaciónes, que busca un indicador específico
-     * @param app el nombre de la aplicación en la que se encuetra en el servidor
+     *
+     * @param app   el nombre de la aplicación en la que se encuetra en el servidor
      * @param model el nombre del modelo en el que se encuentra en el servidor
-     * @param id el id del objeto en el servidor
+     * @param id    el id del objeto en el servidor
      * @return un string con la query deseada
      */
-    public String queryOne(String app, String model, int id){
+    public String queryOne(String app, String model, int id) {
         String UPDATE_SELECT_QUERY = String.format(
                 "SELECT %s FROM %s WHERE %s = '%s' AND %s = '%s' AND %s = %s",
                 KEY_UPDATE_UPDATED,
@@ -928,11 +1045,12 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Devuelve un query a la tabla de actualizaciónes, que busca varios indicadores
-     * @param app el nombre de la aplicación en la que se encuetra en el servidor
+     *
+     * @param app   el nombre de la aplicación en la que se encuetra en el servidor
      * @param model el nombre del modelo en el que se encuentra en el servidor
      * @return un string con la query deseada
      */
-    public String queryAll(String app, String model){
+    public String queryAll(String app, String model) {
         String UPDATE_SELECT_QUERY = String.format(
                 "SELECT %s FROM %s WHERE %s = '%s' AND %s = '%s'",
                 KEY_UPDATE_UPDATED,
@@ -944,9 +1062,10 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Busca los indicadores de actulización para ver si un objeto esta actualizado o no
-     * @param app el app en la que se encuentra el objeto en el servidor
+     *
+     * @param app   el app en la que se encuentra el objeto en el servidor
      * @param model el modelo en el que se encuentra el objeto en el servidor
-     * @param id el id del objeto en el servidor
+     * @param id    el id del objeto en el servidor
      * @return true si el objeto se encuentran actualizado de lo contrario false.
      */
     public Boolean isUpdated(String app, String model, int id) {
@@ -970,7 +1089,8 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Busca los indicadores de actualización para ver si varios objetos esta actualizados o no
-     * @param app el app en la que se encuentran los objetos en el servidor
+     *
+     * @param app   el app en la que se encuentran los objetos en el servidor
      * @param model el modelo en el que se encuentran los objetos en el servidor
      * @return true si los objetos se encuentran actualizados de lo contrario false.
      */
@@ -996,14 +1116,16 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
     /**
      * Busca los elementos de una tabla y para cada uno de ellos busca en los indicadores de
      * actualización para ver el elemento está actualizado o no
-     * @param app el app en la que se encuentran los objetos en el servidor
-     * @param model el modelo en el que se encuentran los objetos en el servidor
-     * @param table la tabla en la que se buscarán los elementos
+     *
+     * @param app        el app en la que se encuentran los objetos en el servidor
+     * @param model      el modelo en el que se encuentran los objetos en el servidor
+     * @param table      la tabla en la que se buscarán los elementos
      * @param queryWhere el filtro que se le aplicará a la tabla inicial
-     * @param idKey el nombre de la columna en donde se encuentra el id de cada elemento
+     * @param idKey      el nombre de la columna en donde se encuentra el id de cada elemento
      * @return true si los objetos se encuentran actualizados de lo contrario false.
      */
-    public Boolean areUpdated(String app, String model, String table, String queryWhere, String idKey) {
+    public Boolean areUpdated(String app, String model, String table, String queryWhere, String
+            idKey) {
         SQLiteDatabase db = getReadableDatabase();
         String QUERY = String.format(
                 "SELECT %s FROM %s WHERE %s",
@@ -1034,8 +1156,6 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS " + Page.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + PageItem.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_UPDATES);
         db.execSQL("DROP TABLE IF EXISTS " + Axis.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Objective.TABLE);
@@ -1043,6 +1163,7 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Income.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Expense.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Notification.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Comment.TABLE);
         // Hace reset de la ultima fecha de actualización
         SharedPreferences settings = myContext.getSharedPreferences(MainActivity.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
@@ -1054,16 +1175,17 @@ public class InformationOpenHelper extends SQLiteOpenHelper {
 
 
     public boolean dataBaseExist() {
-        File dbFile = new File(DB_PATH+DATABASE_NAME);
+        File dbFile = new File(DB_PATH + DATABASE_NAME);
         return dbFile.exists();
     }
 
     /**
      * Copia la base de datos con la información inicial
-     * @throws IOException
+     *
+     * @throws IOException si ocurre un problema al copiar la base de datos
      */
     public void copyDataBase() throws IOException {
-        InputStream myInput = myContext.getAssets().open("databases/"+DATABASE_NAME);
+        InputStream myInput = myContext.getAssets().open("databases/" + DATABASE_NAME);
         String outFileName = DB_PATH + DATABASE_NAME;
         OutputStream myOutput = new FileOutputStream(outFileName);
         byte[] buffer = new byte[1024];

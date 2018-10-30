@@ -1,6 +1,7 @@
 package gt.muni.chiantla.mymuni.development;
 
 import android.os.Bundle;
+import android.widget.ListView;
 
 import com.eclipsesource.json.JsonArray;
 
@@ -10,23 +11,25 @@ import java.util.ArrayList;
 import gt.muni.chiantla.connections.api.RestConnectionActivity;
 import gt.muni.chiantla.connections.database.InformationOpenHelper;
 import gt.muni.chiantla.content.DevelopmentItem;
-import gt.muni.chiantla.widget.CustomListView;
 
 /**
  * Actividad base para un item del plan de desarrollo
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
 public abstract class DevelopmentItemActivity extends RestConnectionActivity {
-    protected CustomListView mListView;
+    protected ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createOptionsMenu = true;
     }
 
     /**
      * Obtiene la clase de contenido del item de desarrollo.
+     *
      * @return la clase
      * @see gt.muni.chiantla.content
      */
@@ -34,6 +37,7 @@ public abstract class DevelopmentItemActivity extends RestConnectionActivity {
 
     /**
      * Agrega al adaptador los items de desarrollo hijos del item seleccionado con anterioridad.
+     *
      * @param parentId el id del padre del cual serán mostrados todos los hijos.
      */
     protected void showTextInView(int parentId) {
@@ -51,7 +55,8 @@ public abstract class DevelopmentItemActivity extends RestConnectionActivity {
                 try {
                     ArrayList<DevelopmentItem> items = null;
                     items = (ArrayList<DevelopmentItem>) getItemClass()
-                            .getDeclaredMethod("getFromParentId", InformationOpenHelper.class, int.class)
+                            .getDeclaredMethod("getFromParentId", InformationOpenHelper.class,
+                                    int.class)
                             .invoke(null, db, parentId);
                     setAdapter(items);
                 } catch (InvocationTargetException e) {
@@ -69,6 +74,7 @@ public abstract class DevelopmentItemActivity extends RestConnectionActivity {
 
     /**
      * Guarda los items que el servidor devolvió. Luego los agrega al adaptador para ser mostrados.
+     *
      * @param response la respuesta del servidor
      */
     @Override
@@ -76,10 +82,13 @@ public abstract class DevelopmentItemActivity extends RestConnectionActivity {
         super.restResponseHandler(response);
         ArrayList<DevelopmentItem> items = null;
         try {
-            items = (ArrayList<DevelopmentItem>) getItemClass()
-                    .getDeclaredMethod("getFromParentId", InformationOpenHelper.class, JsonArray.class)
-                    .invoke(null, db, response);
-            setAdapter(items);
+            if (response != null) {
+                items = (ArrayList<DevelopmentItem>) getItemClass()
+                        .getDeclaredMethod("getFromParentId", InformationOpenHelper.class,
+                                JsonArray.class)
+                        .invoke(null, db, response);
+                setAdapter(items);
+            }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -89,7 +98,11 @@ public abstract class DevelopmentItemActivity extends RestConnectionActivity {
         }
     }
 
+    protected abstract int getCardColor();
+
+    protected abstract boolean getButtonInverted();
+
     protected void setAdapter(ArrayList<DevelopmentItem> items) {
-        mListView.setAdapter(new ListAdapter(this, items));
+        mListView.setAdapter(new ListAdapter(this, items, getCardColor(), getButtonInverted()));
     }
 }

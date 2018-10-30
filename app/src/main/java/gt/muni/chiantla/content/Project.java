@@ -14,6 +14,7 @@ import gt.muni.chiantla.connections.database.InformationOpenHelper;
 
 /**
  * Clase que representa un proyecto del plan desarrollo
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
@@ -35,11 +36,13 @@ public class Project extends DevelopmentItem {
 
     /**
      * Busca en la base de datos los objetivos que sean hijos del padre indicado.
-     * @param helper el helper
+     *
+     * @param helper   el helper
      * @param parentId el id del padre
      * @return un array de los objetivos seleccionados
      */
-    public static ArrayList<DevelopmentItem> getFromParentId(InformationOpenHelper helper, int parentId) {
+    public static ArrayList<DevelopmentItem> getFromParentId(InformationOpenHelper helper, int
+            parentId) {
         ArrayList<DevelopmentItem> projects = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
         String PAGE_SELECT_QUERY = String.format(
@@ -69,11 +72,13 @@ public class Project extends DevelopmentItem {
 
     /**
      * Guarda los ejes que devolvió el servidor y devuelve los objetos.
-     * @param db el helper
+     *
+     * @param db       el helper
      * @param response la respuesta del servidor
      * @return un array de los ejes que devolvió el servidor.
      */
-    public static ArrayList<DevelopmentItem> getFromParentId(InformationOpenHelper db, JsonArray response) {
+    public static ArrayList<DevelopmentItem> getFromParentId(InformationOpenHelper db, JsonArray
+            response) {
         ArrayList<DevelopmentItem> projects = new ArrayList<>();
         for (JsonValue value : response) {
             JsonObject project = value.asObject();
@@ -92,6 +97,7 @@ public class Project extends DevelopmentItem {
 
     /**
      * Guarda el proyecto en la base de datos
+     *
      * @param db el helper de la base de datos
      */
     public void save(InformationOpenHelper db) {

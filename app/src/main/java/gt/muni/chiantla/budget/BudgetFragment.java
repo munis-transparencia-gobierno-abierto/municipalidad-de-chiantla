@@ -8,15 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import gt.muni.chiantla.CustomActivity;
 import gt.muni.chiantla.R;
 import gt.muni.chiantla.Utils;
 import gt.muni.chiantla.content.Expense;
 import gt.muni.chiantla.content.Income;
-import gt.muni.chiantla.widget.CustomNestedScrollView;
 
 /**
  * Fragmento que muestra ingresos y gastos.
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
@@ -28,21 +27,25 @@ public class BudgetFragment extends Fragment {
     private ProgressBar bar;
     private Expense expense;
     private Income income;
+    private boolean hideProgress;
 
     public static BudgetFragment newInstance() {
-        return new BudgetFragment();
+        BudgetFragment fragment = new BudgetFragment();
+        fragment.hideProgress = false;
+        return fragment;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_budget, container, false);
 
-        incomeView = (TextView) view.findViewById(R.id.income);
-        expenseView = (TextView) view.findViewById(R.id.expense);
-        commitedView = (TextView) view.findViewById(R.id.commited);
-        percentageView = (TextView) view.findViewById(R.id.percetage);
-        bar = (ProgressBar) view.findViewById(R.id.progressExpensesBar);
+        incomeView = view.findViewById(R.id.income);
+        expenseView = view.findViewById(R.id.expense);
+        commitedView = view.findViewById(R.id.commited);
+        percentageView = view.findViewById(R.id.percentage);
+        bar = view.findViewById(R.id.progressExpensesBar);
 
         expense = Expense.getInstance();
         income = Income.getInstance();
@@ -56,11 +59,24 @@ public class BudgetFragment extends Fragment {
         percentageView.setText(percentage + "%");
         bar.setProgress(percentage);
 
-        CustomNestedScrollView scroll = (CustomNestedScrollView) view.findViewById(R.id.scrollableInfo);
-        ((CustomActivity) getActivity()).initScroll(scroll, view);
+        ((BudgetActivity) getActivity()).setViewListeners(view.findViewById(R.id.expensesButton));
+        ((BudgetActivity) getActivity()).setViewListeners(view.findViewById(R.id.incomeButton));
 
         Utils.sendFirebaseEvent("Presupuesto", null, null, null,
                 "Menu_Presupuesto", "Menu_Presupuesto", getActivity());
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BudgetActivity activity = (BudgetActivity) getActivity();
+        activity.setTheme(R.style.BudgetsTheme);
+        if (hideProgress) {
+            activity.hideExpensesProgress();
+            activity.hideIncomeProgress();
+        } else {
+            hideProgress = true;
+        }
     }
 }

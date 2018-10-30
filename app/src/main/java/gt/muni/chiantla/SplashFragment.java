@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 /**
  * Fragmento del primer splash screen.
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */

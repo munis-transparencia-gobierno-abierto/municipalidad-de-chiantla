@@ -1,0 +1,185 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorIncomePrimary"
+    tools:context="gt.muni.chiantla.budget.BudgetInfoActivity">
+
+    <ScrollView
+        android:id="@+id/scrollableInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_marginTop="7dp"
+        android:clipToPadding="false"
+        android:fillViewport="false">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/main_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="29dp"
+                    app:srcCompat="@drawable/chiantla_100x100___02" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="33dp"
+                    android:text="@string/budget"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/HeaderText" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/budgetButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="goToBudget"
+                    app:cardBackgroundColor="@color/backgroundBudgets"
+                    app:cardCornerRadius="6dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:id="@+id/subtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:textAppearance="@style/MainButtonText" />
+
+                        <TextView
+                            android:id="@+id/updateInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/subtitle"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginEnd="7dp"
+                            android:layout_marginRight="7dp"
+                            android:layout_toStartOf="@id/nextButton"
+                            android:layout_toLeftOf="@id/nextButton"
+                            android:textAppearance="@style/BudgetExecutedNumbers"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:id="@+id/nextButton"
+                            android:layout_width="39dp"
+                            android:layout_height="39dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginBottom="2dp"
+                            android:background="@drawable/budget_button_inverted"
+                            android:contentDescription="@string/next_button"
+                            android:paddingLeft="13dp"
+                            android:paddingRight="13dp"
+                            android:src="@drawable/arrow_big_black" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <Button
+                    android:id="@+id/download_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="21dp"
+                    android:background="@drawable/download_button"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/download_white"
+                    android:drawableRight="@drawable/download_white"
+                    android:drawablePadding="6dp"
+                    android:focusable="true"
+                    android:minHeight="0dp"
+                    android:onClick="downloadFile"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="6dp"
+                    android:text="@string/download"
+                    android:textAppearance="@style/BudgetExecutedNumbers" />
+
+                <LinearLayout
+                    android:id="@+id/insertPoint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp"
+                    android:orientation="vertical" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:text="@string/budget_support"
+                    android:textAppearance="@style/NormalText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8.5dp"
+                    android:background="@drawable/budget_background_support" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="24dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="24dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="11dp"
+                        android:layout_marginRight="11dp"
+                        android:src="@drawable/minfin" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/red_ciudadana" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

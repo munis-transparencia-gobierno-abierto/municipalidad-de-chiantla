@@ -3,15 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context="gt.muni.chiantla.SplashFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    android:background="@color/colorMiMuniPrimary"
+    android:clickable="true"
+    android:focusable="true"
+    android:onClick="dismissSplash"
+    tools:context="gt.muni.chiantla.SplashActivity">
 
     <ImageView
-        android:id="@+id/imageView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:srcCompat="@mipmap/iconsomoschiantla" />
+        app:srcCompat="@drawable/iconsomoschiantla" />
+
 </FrameLayout>

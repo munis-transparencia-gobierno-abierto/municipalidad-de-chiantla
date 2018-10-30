@@ -1,49 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/percetage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/progressExpensesBar"
-        android:layout_marginRight="5dp"
-        android:layout_weight="0"
-        android:textAppearance="@style/ProgressNumberBudgets" />
+    <data>
 
-    <TextView
-        android:id="@+id/textView27"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/percetage"
-        android:layout_toRightOf="@+id/percetage"
-        android:text="@string/executed"
-        android:textAppearance="@style/ProgressNumberBudgets" />
+        <variable
+            name="progressColor"
+            type="int" />
 
-    <ProgressBar
-        android:id="@+id/progressExpensesBar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:indeterminate="false"
-        android:indeterminateDrawable="@drawable/custom_expenses_progress"
-        android:progress="50"
-        android:progressBackgroundTint="@color/white"
-        android:progressDrawable="@drawable/custom_expenses_progress"
-        android:visibility="visible"
-        tools:visibility="visible" />
+        <variable
+            name="progressBackgroundColor"
+            type="int" />
+    </data>
 
-    <TextView
-        android:id="@+id/expense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="false"
-        android:layout_below="@+id/percetage"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_weight="0"
-        android:textAppearance="@style/ProgressNumberBudgets" />
+    <merge>
 
-</merge>
+        <TextView
+            android:id="@+id/executedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/commited"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:text="@string/executed"
+            android:textAppearance="@style/BudgetExecutedText" />
+
+        <TextView
+            android:id="@+id/percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_toEndOf="@id/executedText"
+            android:layout_toRightOf="@id/executedText"
+            android:textAppearance="@style/BudgetExecutedNumbers" />
+
+        <ProgressBar
+            android:id="@+id/progressExpensesBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_toStartOf="@id/expense"
+            android:layout_toLeftOf="@id/expense"
+            android:layout_toEndOf="@id/percentage"
+            android:layout_toRightOf="@id/percentage"
+            android:indeterminate="false"
+            android:indeterminateDrawable="@drawable/custom_expenses_progress"
+            android:progress="50"
+            android:progressBackgroundTint="@{progressBackgroundColor != 0 ? progressBackgroundColor : @color/white}"
+            android:progressDrawable="@drawable/custom_expenses_progress"
+            android:progressTint="@{progressColor != 0 ? progressColor : @color/white}"
+            android:visibility="visible"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:textAppearance="@style/BudgetExecutedNumbers" />
+    </merge>
+</layout>

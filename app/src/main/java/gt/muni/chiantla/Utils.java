@@ -2,23 +2,19 @@ package gt.muni.chiantla;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Html;
+import android.text.SpannableString;
 import android.text.Spanned;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,49 +26,50 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
  * Métodos utiles que se usan en la aplicación.
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
 public class Utils {
-    private static final DecimalFormat format = new DecimalFormat("Q###,##0.00");
+    private static final DecimalFormat format = new DecimalFormat("Q###,##0");
     private static final int TWO_MINUTES = 1000 * 60 * 2;
 
     public static int pxToDp(Context context, int px) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        int dp = Math.round(TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_PX, px, displayMetrics));
-        return dp;
+        return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+
     }
 
     public static double dpToPx(Context context, int dp) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        double px = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
-        return px;
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
     /**
      * Coloca los textos en las views correspondientes
-     * @param ids los ids de las views
+     *
+     * @param ids     los ids de las views
      * @param strings los textos a colocar
-     * @param view la view que contiene las views en la que se colocarán los textos
+     * @param view    la view que contiene las views en la que se colocarán los textos
      */
     public static void setTexts(int[] ids, String[] strings, View view) {
         for (int i = 0; i < ids.length; i++) {
-            TextView textView = (TextView) view.findViewById(ids[i]);
+            TextView textView = view.findViewById(ids[i]);
             textView.setText(strings[i]);
         }
     }
 
     /**
      * Coloca los textos en las views correspondientes
-     * @param ids los ids de las views
+     *
+     * @param ids     los ids de las views
      * @param strings los textos a colocar
-     * @param view la view que contiene las views en la que se colocarán los textos
+     * @param view    la view que contiene las views en la que se colocarán los textos
      */
     public static void setTexts(int[] ids, List<String> strings, View view) {
         String[] stringArray = new String[strings.size()];
@@ -82,21 +79,23 @@ public class Utils {
 
     /**
      * Coloca los textos en las views correspondientes
-     * @param ids los ids de las views
-     * @param strings los textos a colocar
+     *
+     * @param ids      los ids de las views
+     * @param strings  los textos a colocar
      * @param activity la actividad que contiene las views en la que se colocarán los textos
      */
     public static void setTexts(int[] ids, String[] strings, Activity activity) {
         for (int i = 0; i < ids.length; i++) {
-            TextView textView = (TextView) activity.findViewById(ids[i]);
+            TextView textView = activity.findViewById(ids[i]);
             textView.setText(strings[i]);
         }
     }
 
     /**
      * Coloca los textos en las views correspondientes
-     * @param ids los ids de las views
-     * @param strings los textos a colocar
+     *
+     * @param ids      los ids de las views
+     * @param strings  los textos a colocar
      * @param activity la actividad que contiene las views en la que se colocarán los textos
      */
     public static void setTexts(int[] ids, List<String> strings, Activity activity) {
@@ -108,9 +107,10 @@ public class Utils {
     /**
      * Dependiendo del caracter inicial y la posición actual, devuelve el caracter de numeración
      * correspondiente. Funciona con caracteres del alfabeto.
-     * @param start
-     * @param current
-     * @return
+     *
+     * @param start   El caracter inicial del conteo
+     * @param current El caracter que se debe mostrar
+     * @return el caracter correspondiente al numero actual
      */
     public static String intToNumbering(char start, int current) {
         String response = "";
@@ -126,6 +126,7 @@ public class Utils {
      * al método correspondiente dependiendo de la versión de android del dispositivo
      */
     public static Spanned fromHtml(String html) {
+        if (html == null || html.equals("")) return new SpannableString("");
         Spanned result;
         if (android.os.Build.VERSION.SDK_INT >= 24) {
             result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
@@ -137,9 +138,10 @@ public class Utils {
     }
 
     public static Spanned trim(Spanned spanned) {
-        while (spanned.charAt(spanned.length() - 1) == '\n') {
-            spanned = (Spanned) spanned.subSequence(0, spanned.length() - 2);
-        }
+        if (spanned.length() > 0)
+            while (spanned.charAt(spanned.length() - 1) == '\n') {
+                spanned = (Spanned) spanned.subSequence(0, spanned.length() - 2);
+            }
         return spanned;
     }
 
@@ -157,9 +159,11 @@ public class Utils {
         if (module != null)
             bundle.putString("Modulo", cleanFirebaseParameter(module));
         if (contentType != null)
-            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, cleanFirebaseParameter(contentType));
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, cleanFirebaseParameter
+                    (contentType));
         if (itemCategory != null)
-            bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, cleanFirebaseParameter(itemCategory));
+            bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, cleanFirebaseParameter
+                    (itemCategory));
         if (itemSubCategory != null)
             bundle.putString("Item_SubCategory", cleanFirebaseParameter(itemSubCategory));
         if (itemName != null)
@@ -169,6 +173,7 @@ public class Utils {
 
     /**
      * Le quita al texto los espacios y los reemplaza con '_'. Quita los caracteres especiales.
+     *
      * @param parameter el string a limpiar
      * @return el string limpio
      */
@@ -184,8 +189,9 @@ public class Utils {
      * Determina si una ubicación es más precisa que otra. Obtenido de
      * <a href="https://developer.android.com/guide/topics/location/strategies.html">la
      * documentación de android</a>
-     * @param location
-     * @param currentBestLocation
+     *
+     * @param location            la ubicacion a comparar
+     * @param currentBestLocation la ubicacion mas precisa hasta ahora
      * @return true si es más precisa, false de lo contrario.
      */
     public static boolean isBetterLocation(Location location, Location currentBestLocation) {
@@ -224,10 +230,7 @@ public class Utils {
             return true;
         } else if (isNewer && !isLessAccurate) {
             return true;
-        } else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
-            return true;
-        }
-        return false;
+        } else return isNewer && !isSignificantlyLessAccurate && isFromSameProvider;
     }
 
     public static boolean isSameProvider(String provider1, String provider2) {
@@ -239,12 +242,14 @@ public class Utils {
 
     /**
      * Crea una imagen para que la foto tomada con la cámara pueda ser guardada.
+     *
      * @param activity la activity que llama al método
      * @return el archivo de la imagen.
      */
-    public static File createImageFile(Activity activity) {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "aviso_chiantla_" + timeStamp + "_";
+    public static File createImageFile(Activity activity, String name) {
+        Locale locale = activity.getResources().getConfiguration().locale;
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", locale).format(new Date());
+        String imageFileName = name + timeStamp + "_";
         File storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = null;
         try {
@@ -261,19 +266,59 @@ public class Utils {
     }
 
     public static Uri getAbsoluteUri(Context context, Uri uri) {
-        String fileName = "unknown";
         Uri filePathUri = uri;
-        if (uri.getScheme().toString().compareTo("content") == 0) {
+        if (uri.getScheme().compareTo("content") == 0) {
             Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
             if (cursor.moveToFirst()) {
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                filePathUri = Uri.parse(cursor.getString(column_index));
+                int column_index = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+                if (column_index != -1)
+                    filePathUri = Uri.parse(cursor.getString(column_index));
             }
-        } else if (uri.getScheme().compareTo("file") == 0) {
-            fileName = filePathUri.getLastPathSegment().toString();
-        } else {
-            fileName = fileName + "_" + filePathUri.getLastPathSegment();
         }
         return filePathUri;
+    }
+
+
+    /**
+     * Generates an image from a view
+     *
+     * @param view the view  that will be an image
+     * @return the bitmap of the generated image
+     */
+    public static Bitmap generateImage(Activity context, View view, boolean rendered) {
+        if (!rendered) {
+            DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
+            view.measure(
+                    View.MeasureSpec.makeMeasureSpec(dm.widthPixels, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(
+                            Integer.MAX_VALUE / 2,
+                            View.MeasureSpec.AT_MOST
+                    )
+            );
+            view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        }
+        Bitmap bitmap = Bitmap.createBitmap(
+                view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return bitmap;
+    }
+
+    /**
+     * Checks if an app is installed
+     *
+     * @param uri the uri of the app to check
+     * @return true if the app is installed
+     */
+    public static boolean appInstalled(Context context, String uri) {
+        PackageManager pm = context.getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        }
+        return app_installed;
     }
 }

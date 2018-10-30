@@ -1,298 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_new_notification"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="gt.muni.chiantla.notifications.NewNotificationActivity">
 
-    <gt.muni.chiantla.widget.CustomNestedScrollView
-        android:id="@+id/scrollableInfo"
+    <view
+        android:id="@+id/pager"
+        class="gt.muni.chiantla.notifications.NewNotificationActivity$NewNotificationViewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/problem_type"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="15sp"
-                android:background="@drawable/dropdown_background"
-                android:ems="10"
-                android:focusable="false"
-                android:hint="Tipo de Reporte*"
-                android:inputType="textPersonName"
-                android:onClick="openSpinner"
-                android:paddingLeft="13dp"
-                android:paddingRight="40dp"
-                android:textAppearance="@style/EditText"
-                android:textColor="@color/notificationsPrimary"
-                android:textColorHint="@color/notificationAddressColor" />
-
-            <Spinner
-                android:id="@+id/problem_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@color/white"
-                android:spinnerMode="dialog"
-                android:visibility="visible" />
-
-            <EditText
-                android:id="@+id/problem"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="15sp"
-                android:background="@color/white"
-                android:ems="10"
-                android:hint="Descripción del Reporte*"
-                android:inputType="textPersonName"
-                android:paddingLeft="13dp"
-                android:paddingRight="13dp"
-                android:textAppearance="@style/EditText"
-                android:textColor="@color/notificationsPrimary"
-                android:textColorHint="@color/notificationAddressColor" />
-
-            <EditText
-                android:id="@+id/location"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="15sp"
-                android:background="@color/white"
-                android:ems="10"
-                android:hint="Aldea / Barrio / Comunidad*"
-                android:inputType="textPersonName"
-                android:paddingLeft="13dp"
-                android:paddingRight="13dp"
-                android:textAppearance="@style/EditText"
-                android:textColor="@color/notificationsPrimary"
-                android:textColorHint="@color/notificationAddressColor" />
-
-            <EditText
-                android:id="@+id/address"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="15sp"
-                android:background="@color/white"
-                android:ems="10"
-                android:hint="Dirección / Ubicación / Indicaciones*"
-                android:inputType="textPersonName"
-                android:paddingLeft="13dp"
-                android:paddingRight="13dp"
-                android:textAppearance="@style/EditText"
-                android:textColor="@color/notificationsPrimary"
-                android:textColorHint="@color/notificationAddressColor" />
-
-            <EditText
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="15sp"
-                android:background="@color/white"
-                android:ems="10"
-                android:hint="Nombre Completo*"
-                android:inputType="textPersonName"
-                android:paddingLeft="13dp"
-                android:paddingRight="13dp"
-                android:textAppearance="@style/EditText"
-                android:textColor="@color/notificationsPrimary"
-                android:textColorHint="@color/notificationAddressColor" />
-
-            <EditText
-                android:id="@+id/phone"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="15sp"
-                android:background="@color/white"
-                android:ems="10"
-                android:hint="Número de Teléfono*"
-                android:inputType="number"
-                android:paddingLeft="13dp"
-                android:paddingRight="13dp"
-                android:textAppearance="@style/EditText"
-                android:textColor="@color/notificationsPrimary"
-                android:textColorHint="@color/notificationAddressColor" />
-
-            <EditText
-                android:id="@+id/solution"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginTop="15sp"
-                android:background="@color/white"
-                android:ems="10"
-                android:hint="Correo electrónico"
-                android:inputType="textEmailAddress"
-                android:paddingLeft="13dp"
-                android:paddingRight="13dp"
-                android:textAppearance="@style/EditText"
-                android:textColor="@color/notificationsPrimary"
-                android:textColorHint="@color/notificationAddressColor" />
-
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Adjuntar foto del problema"
-                android:textAppearance="@style/EditText"
-                android:textColor="@color/white" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/cameraButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="7dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:drawableRight="@mipmap/camera_gray"
-                    android:gravity="center_vertical"
-                    android:onClick="openCamera"
-                    android:paddingLeft="15sp"
-                    android:paddingRight="15sp"
-                    android:stateListAnimator="@null"
-                    android:textAppearance="@style/EditText"
-                    android:textColor="@color/notificationsPrimary"
-                    app:srcCompat="@mipmap/cameraorange" />
-
-                <ImageButton
-                    android:id="@+id/photoButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:onClick="selectImages"
-                    android:paddingLeft="15sp"
-                    android:paddingRight="15sp"
-                    android:stateListAnimator="@null"
-                    android:textAppearance="@style/EditText"
-                    android:textColor="@color/notificationsPrimary"
-                    app:srcCompat="@mipmap/gallerieorange" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView26"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="right"
-                android:text="*Campos requeridos"
-                android:textAppearance="@style/MiniText" />
-
-            <RelativeLayout
-                android:id="@+id/selectedImageWrap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="@color/white"
-                android:padding="1dp"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/selectedImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:scaleType="centerCrop" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:onClick="removeImage"
-                    app:srcCompat="@mipmap/cancelarfoto" />
-
-                <ImageView
-                    android:id="@+id/imageView21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/border_image_new" />
-
-            </RelativeLayout>
-
-            <CheckBox
-                android:id="@+id/gpsLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
-                android:checked="true"
-                android:onClick="askPermission"
-                android:text="Compartir tu Ubicación"
-                android:textAppearance="@style/EditText"
-                android:textColor="@color/white"
-                app:buttonTint="@color/white" />
-
-            <Button
-                android:id="@+id/addButton"
-                android:layout_width="205dp"
-                android:layout_height="44dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/border_radius"
-                android:backgroundTint="#EC5300"
-                android:clickable="false"
-                android:cursorVisible="true"
-                android:onClick="saveNotification"
-                android:stateListAnimator="@null"
-                android:text="Enviar Reporte"
-                android:textAppearance="@style/NotificationButtonText"
-                android:visibility="visible" />
-
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="206dp"
-                android:layout_height="44dp"
-                android:background="@color/white"
-                android:clickable="false"
-                android:drawableRight="@mipmap/plane_white_gray_outline"
-                android:paddingRight="15sp"
-                android:text="Mandar Reporte"
-                android:textAppearance="@style/EditText"
-                android:textColor="@color/notificationButtonGray"
-                android:visibility="gone" />
-        </LinearLayout>
-    </gt.muni.chiantla.widget.CustomNestedScrollView>
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_above="@+id/imageButton3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/transparent_gradient_notifications"
-        android:backgroundTint="@color/notificationsPrimary"
-        android:visibility="visible" />
-
-    <ImageButton
-        android:id="@+id/imageButton3"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:adjustViewBounds="false"
-        android:background="@color/notificationsPrimary"
-        android:cropToPadding="true"
-        android:paddingBottom="20dp"
-        android:paddingTop="10dp"
-        android:stateListAnimator="@null"
-        android:visibility="visible"
-        app:srcCompat="@mipmap/scrolldownwhite" />
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="0"
+        android:paddingLeft="37dp"
+        android:paddingRight="37dp">
 
-</RelativeLayout>
+        <Button
+            fontPath="fonts/Archivo-Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:background="@android:color/transparent"
+            android:onClick="prevStep"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="@string/notification_prev"
+            android:textColor="@drawable/text_button"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/nextButton"
+            fontPath="fonts/Archivo-Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/notification_next_button"
+            android:onClick="nextStep"
+            android:padding="12dp"
+            android:text="@string/notification_next"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+</LinearLayout>

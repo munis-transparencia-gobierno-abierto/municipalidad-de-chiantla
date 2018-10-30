@@ -12,9 +12,11 @@ import java.util.ArrayList;
 import gt.muni.chiantla.R;
 import gt.muni.chiantla.Utils;
 import gt.muni.chiantla.content.DevelopmentItem;
+import gt.muni.chiantla.databinding.SectionDevelopmentItemBinding;
 
 /**
  * Adaptador para los items de desarrollo
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
@@ -26,10 +28,17 @@ public class ListAdapter extends BaseAdapter {
     };
     private Context context;
     private ArrayList<DevelopmentItem> objects;
+    private SectionDevelopmentItemBinding binding;
+    private LayoutInflater inflater;
+    private int cardBackground;
+    private boolean buttonInverted;
 
-    public ListAdapter(Context context, ArrayList<DevelopmentItem> objects) {
+    ListAdapter(Context context, ArrayList<DevelopmentItem> objects, int cardBackground,
+                boolean buttonInverted) {
         this.context = context;
         this.objects = objects;
+        this.cardBackground = cardBackground;
+        this.buttonInverted = buttonInverted;
     }
 
     @Override
@@ -53,22 +62,28 @@ public class ListAdapter extends BaseAdapter {
         String currentNumbering = getCurrentNumbering(current, i);
         String name = current.getName();
         Integer progress = current.getPercentage();
+        if (inflater == null) {
+            inflater = (LayoutInflater)
+                    getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
         if (view == null) {
-            LayoutInflater inflater = (LayoutInflater)
-                    context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.section_development_item, null);
+            binding = SectionDevelopmentItemBinding.inflate(inflater, viewGroup, false);
+            binding.setButtonInverted(buttonInverted);
+            binding.setCardColor(cardBackground);
+            view = binding.getRoot();
         }
         String[] strings = new String[]{currentNumbering, name, progress + "%"};
         Utils.setTexts(ids, strings, view);
-        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        ProgressBar progressBar = view.findViewById(R.id.progressBar);
         progressBar.setProgress(progress);
         return view;
     }
 
     /**
      * Obtiene la numeración para el item.
+     *
      * @param current el item actual
-     * @param i el contador de items
+     * @param i       el contador de items
      * @return la numeración
      */
     protected String getCurrentNumbering(DevelopmentItem current, int i) {

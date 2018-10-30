@@ -2,19 +2,49 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorMiMuniPrimary</item>
+        <item name="colorPrimaryDark">@color/colorMiMuniPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:textColorPrimary">@color/textColor</item>
-        <item name="progressBarBackground">@color/progress_bar_background</item>
+        <item name="progressBarBackground">@color/black</item>
         <item name="android:textViewStyle">@style/BaseTextView</item>
+        <item name="android:actionBarStyle">@style/ActionBarTheme</item>
+        <item name="popupMenuStyle">@style/popupMenuStyle</item>
+        <item name="textColor">@color/textColor</item>
+        <item name="android:textColorHint">@color/textColorHint</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar</item>
+        <item name="android:fadeScrollbars">false</item>
+        <item name="android:scrollbarSize">4dp</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+    </style>
+
+    <style name="TutorialFragmentTheme" parent="@android:style/Theme.Dialog">
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+    <style name="ActionBarTheme" parent="Widget.AppCompat.ActionBar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetEnd">0dp</item>
+        <item name="android:contentInsetStart">0dp</item>
+        <item name="android:contentInsetEnd">0dp</item>
+    </style>
+
+
+    <style name="popupMenuStyle" parent="Base.Widget.AppCompat.Light.PopupMenu">
+        <item name="android:dropDownVerticalOffset">5dp</item>
+        <item name="android:popupBackground">@drawable/white_radius_background</item>
     </style>
 
     <style name="BaseTextView" parent="android:Widget.TextView">
         <item name="android:includeFontPadding">false</item>
-        <item name="android:elegantTextHeight">true</item>
     </style>
 
     <style name="MenuTheme" parent="AppTheme">
@@ -25,13 +55,34 @@
     <style name="DiscussionTheme" parent="AppTheme">
         <item name="colorPrimary">@color/primaryDiscussionColor</item>
         <item name="colorPrimaryDark">@color/primaryDiscussionColor</item>
+        <item name="android:windowBackground">@color/primaryDiscussionColor</item>
     </style>
 
     <style name="BudgetsTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/colorBudgetsPrimary</item>
-        <item name="colorPrimaryDark">@color/colorBudgetsPrimary</item>
-        <item name="progressBarBackground">@color/progressBarBudgetsColor</item>
-        <item name="android:windowBackground">@color/backgroundBudgets</item>
+        <item name="colorPrimary">@color/mainBudgetBackground</item>
+        <item name="colorPrimaryDark">@color/mainBudgetBackground</item>
+        <item name="android:windowBackground">@color/mainBudgetBackground</item>
+        <item name="textColor">@color/white</item>
+    </style>
+
+    <style name="ExpensesTheme" parent="BudgetsTheme">
+        <item name="colorPrimary">@color/colorExpensesPrimary</item>
+        <item name="colorPrimaryDark">@color/colorExpensesPrimary</item>
+        <item name="android:windowBackground">@color/colorExpensesPrimary</item>
+    </style>
+
+    <style name="ExpensesTextInvertedTheme" parent="ExpensesTheme">
+        <item name="textColor">@color/textColor</item>
+    </style>
+
+    <style name="IncomeTheme" parent="BudgetsTheme">
+        <item name="colorPrimary">@color/colorIncomePrimary</item>
+        <item name="colorPrimaryDark">@color/colorIncomePrimary</item>
+        <item name="android:windowBackground">@color/colorIncomePrimary</item>
+    </style>
+
+    <style name="IncomeTextInvertedTheme" parent="IncomeTheme">
+        <item name="textColor">@color/textColor</item>
     </style>
 
     <style name="NotificationsTheme" parent="AppTheme">
@@ -39,121 +90,77 @@
         <item name="colorPrimaryDark">@color/notificationsPrimary</item>
     </style>
 
+    <style name="NotificationsInvertedTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/notificationsSecondary</item>
+        <item name="colorPrimaryDark">@color/notificationsSecondary</item>
+    </style>
+
     <style name="NotificationsThemeFullBackground" parent="NotificationsTheme">
         <item name="android:windowBackground">@color/notificationsPrimary</item>
-    </style>
-
-    <style name="IncomeTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/colorIncomePrimary</item>
-        <item name="colorPrimaryDark">@color/colorIncomePrimary</item>
-        <item name="progressBarBackground">@color/progressBarIncomeColor</item>
-        <item name="android:windowBackground">@color/backgroundBudgets</item>
-    </style>
-
-    <style name="IncomeTypeTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/colorIncomeTypePrimary</item>
-        <item name="colorPrimaryDark">@color/colorIncomeTypePrimary</item>
-        <item name="progressBarBackground">@color/progressBarIncomeTypeColor</item>
-        <item name="android:windowBackground">@color/backgroundBudgets</item>
-    </style>
-
-    <style name="IncomeClassTheme" parent="IncomeTypeTheme">
-        <item name="colorPrimary">@color/colorIncomeClasPrimary</item>
-        <item name="colorPrimaryDark">@color/colorIncomeClasPrimary</item>
-        <item name="progressBarBackground">@color/progressBarIncomeClassColor</item>
-    </style>
-
-    <style name="IncomeSectionTheme" parent="IncomeTypeTheme">
-        <item name="colorPrimary">@color/colorIncomeSectionPrimary</item>
-        <item name="colorPrimaryDark">@color/colorIncomeSectionPrimary</item>
-    </style>
-
-    <style name="ExpensesTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/colorExpensesPrimary</item>
-        <item name="colorPrimaryDark">@color/colorExpensesPrimary</item>
-        <item name="progressBarBackground">@color/progressBarExpensesColor</item>
-    </style>
-
-    <style name="ExpensesProjectsTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/colorExpensesProjectsPrimary</item>
-        <item name="colorPrimaryDark">@color/colorExpensesProjectsPrimary</item>
-        <item name="progressBarBackground">@color/progressBarExpensesProjectsColor</item>
-    </style>
-
-    <style name="ExpensesProgramTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/colorExpensesProgramPrimary</item>
-        <item name="colorPrimaryDark">@color/colorExpensesProgramPrimary</item>
-        <item name="progressBarBackground">@color/progressBarExpensesProgramColor</item>
-    </style>
-
-    <style name="ExpensesProjectTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/colorExpensesProjectPrimary</item>
-        <item name="colorPrimaryDark">@color/colorExpensesProjectPrimary</item>
+        <item name="textColor">@color/white</item>
     </style>
 
     <style name="AppThemeBackground" parent="AppTheme">
+        <item name="colorPrimary">@color/colorMiMuniPrimary</item>
+        <item name="colorPrimaryDark">@color/colorMiMuniPrimary</item>
+        <item name="android:windowBackground">@color/colorMiMuniPrimary</item>
+    </style>
+
+    <style name="MainMenuTheme" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
-    <style name="BaseText" parent="TextAppearance.AppCompat">
-        <item name='android:includeFontPadding'>false</item>
-        <item name='android:elegantTextHeight'>true</item>
+    <style name="HeaderText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/white</item>
+        <item name='android:textSize'>33sp</item>
+        <item name='android:textAllCaps'>true</item>
+        <item name="fontPath">fonts/Chivo-Black.ttf</item>
     </style>
 
-    <style name="HeaderText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name="android:textColor">@color/textColor</item>
-        <item name='android:textSize'>24sp</item>
-        <item name="android:letterSpacing">0.025</item>
-        <item name="fontPath">fonts/Poppins-Regular.ttf</item>
+    <style name="MainButtonText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/white</item>
+        <item name='android:textSize'>22sp</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
+    </style>
+
+    <style name="SectionTitleText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/white</item>
+        <item name='android:textSize'>30sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="fontPath">fonts/Chivo-Black.ttf</item>
     </style>
 
     <style name="FiguresText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name='android:textSize'>50sp</item>
-        <item name="fontPath">fonts/Poppins-Light.ttf</item>
+        <item name="android:textColor">@color/colorMiMuniPrimary</item>
+        <item name='android:textSize'>37sp</item>
+        <item name="fontPath">fonts/WorkSans-Light.ttf</item>
     </style>
 
     <style name="FiguresSub" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
         <item name="android:textColor">@color/textColor</item>
-        <item name='android:textSize'>13sp</item>
-        <item name="android:letterSpacing">0.03</item>
-        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
-        <item name="android:textAllCaps">true</item>
+        <item name='android:textSize'>15sp</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
     </style>
 
     <style name="StatusText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name="android:textColor">@color/statusNotDone</item>
+        <item name="android:textColor">@color/textColor</item>
         <item name='android:textSize'>10sp</item>
-        <item name="android:letterSpacing">0.025</item>
-        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
     </style>
 
     <style name="AboutText" parent="TextAppearance.AppCompat">
         <item name='android:fontFamily'>sans-serif</item>
         <item name="android:textColor">@color/statusNotDone</item>
         <item name='android:textSize'>13sp</item>
-        <item name="android:letterSpacing">0.03</item>
         <item name="fontPath">fonts/Roboto-Regular.ttf</item>
     </style>
 
     <style name="ProgressBarText" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">11sp</item>
-        <item name="android:letterSpacing">0.1</item>
-        <item name="fontPath">fonts/Poppins-SemiBold.ttf</item>
-        <item name="android:lineSpacingExtra">9sp</item>
-    </style>
-
-    <style name="AboutLinkText" parent="AboutText">
-        <item name="android:textColor">@color/primaryDiscussionColor</item>
+        <item name="android:textSize">13sp</item>
+        <item name="fontPath">fonts/WorkSans-Light.ttf</item>
     </style>
 
 
@@ -161,260 +168,118 @@
         <item name="android:textColor">@color/textColor</item>
     </style>
 
-    <style name="ProjectText" parent="FiguresSub">
-        <item name='android:textSize'>14sp</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
-    </style>
-
-    <style name="SubtitleText" parent="FiguresSub">
-        <item name='android:textSize'>14sp</item>
-    </style>
-
-    <style name="BigText" parent="FiguresSub">
-        <item name="android:textAllCaps">false</item>
-        <item name='android:textSize'>16sp</item>
-        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
-    </style>
-
-    <style name="LongText" parent="FiguresSub">
-        <item name="android:textAllCaps">false</item>
-        <item name='android:textSize'>14sp</item>
-        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
-    </style>
-
-    <style name="ButtonText" parent="LongText">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
-    </style>
-
-
-    <style name="LongTextMedium" parent="LongText">
-        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
-    </style>
 
     <style name="ExecutedText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name='android:textSize'>12sp</item>
-        <item name="android:letterSpacing">0.025</item>
-        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
-
-    <style name="UpdateText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
         <item name="android:textColor">@color/white</item>
         <item name='android:textSize'>12sp</item>
-        <item name="android:letterSpacing">0.025</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
-
-    <style name="Numbering" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name="android:textColor">@color/white</item>
-        <item name='android:textSize'>11sp</item>
-        <item name="android:letterSpacing">0.025</item>
-        <item name="fontPath">fonts/Poppins-Medium.ttf</item>
-    </style>
-
-    <style name="EditText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name="android:textColor">@color/notificationsPrimary</item>
-        <item name='android:textSize'>13sp</item>
-        <item name="android:lineSpacingExtra">1sp</item>
-        <item name="android:letterSpacing">0.03</item>
-        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
     </style>
 
     <style name="DevelopmentNumber" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorMiMuniPrimary</item>
         <item name='android:textSize'>30sp</item>
-        <item name="fontPath">fonts/Roboto-Light.ttf</item>
+        <item name="fontPath">fonts/WorkSans-Light.ttf</item>
     </style>
 
-    <style name="SmallText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name="android:textColor">@color/textColor</item>
-        <item name='android:textSize'>13sp</item>
-        <item name="android:lineSpacingExtra">2sp</item>
-        <item name='android:letterSpacing'>0.03</item>
-        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
-    </style>
-
-    <style name="LongBoldText" parent="LongText">
-        <item name="fontPath">fonts/Roboto-Bold.ttf</item>
-    </style>
-
-    <style name="NotificationButtonText" parent="SmallText">
-        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
-        <item name="android:textAllCaps">true</item>
+    <style name="SmallBlueText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="SmallBlueText" parent="SmallText">
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
-
-    <style name="SmallTextNotification" parent="SmallText">
-        <item name="android:textColor">@color/notificationsPrimary</item>
-    </style>
-
-    <style name="SmallTextBold" parent="SmallText">
-        <item name="android:textColor">@color/textColor</item>
-        <item name="fontPath">fonts/Roboto-Bold.ttf</item>
-    </style>
-
-    <style name="MiniText" parent="SmallText">
-        <item name="android:textColor">@color/white</item>
-        <item name='android:textSize'>10sp</item>
-        <item name="android:lineSpacingExtra">4sp</item>
-        <item name='android:letterSpacing'>0.03</item>
-        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
-    </style>
-
-    <style name="LocationText" parent="MiniText">
-        <item name='android:letterSpacing'>0.025</item>
-        <item name='android:textSize'>11sp</item>
-        <item name="android:textColor">@color/statusNotDone</item>
-        <item name="fontPath">fonts/Roboto-Light.ttf</item>
+        <item name='android:textSize'>14sp</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
     </style>
 
     <style name="SmallerText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
         <item name="android:textColor">@color/textColor</item>
-        <item name='android:textSize'>11sp</item>
-        <item name="android:lineSpacingExtra">4sp</item>
-        <item name='android:letterSpacing'>0.03</item>
-        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+        <item name='android:textSize'>12sp</item>
+        <item name="fontPath">fonts/WorkSans-Regular.ttf</item>
     </style>
 
-    <style name="SmallerTextBudget" parent="SmallerText">
-        <item name="android:textColor">@color/budgetDividerColor</item>
-    </style>
-
-    <style name="BudgetsBigText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
+    <style name="BudgetBigText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>
         <item name='android:textSize'>35sp</item>
-        <item name="android:lineSpacingExtra">8sp</item>
-        <item name='android:letterSpacing'>0.025</item>
-        <item name="fontPath">fonts/Poppins-Regular.ttf</item>
+        <item name='android:textAllCaps'>true</item>
+        <item name="fontPath">fonts/Chivo-Black.ttf</item>
     </style>
 
-    <style name="IncomeBigText" parent="BudgetsBigText">
-        <item name='android:textSize'>23sp</item>
-        <item name="android:lineSpacingExtra">3sp</item>
-        <item name="fontPath">fonts/Poppins-Medium.ttf</item>
+    <style name="BudgetBigFigures" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name='android:textSize'>36sp</item>
+        <item name="fontPath">fonts/WorkSans-Light.ttf</item>
     </style>
 
-    <style name="IncomeTypeBigText" parent="BudgetsBigText">
-        <item name='android:textSize'>22sp</item>
-        <item name="android:lineSpacingExtra">4sp</item>
-        <item name="fontPath">fonts/Poppins-Medium.ttf</item>
-    </style>
-
-    <style name="IncomeClassBigText" parent="BudgetsBigText">
-        <item name='android:textSize'>16sp</item>
-        <item name="android:textColor">@color/textColor</item>
-        <item name="android:lineSpacingExtra">7sp</item>
-        <item name="android:letterSpacing">0.025</item>
-    </style>
-
-    <style name="UpdateTimeNumbersText" parent="IncomeTypeBigText">
-        <item name='android:textColor'>@color/textColor</item>
-    </style>
-
-    <style name="MuniMenuText" parent="IncomeClassBigText">
-        <item name="fontPath">fonts/Poppins-Medium.ttf</item>
-    </style>
-
-    <style name="IncomeClassNumbering" parent="IncomeClassBigText">
-        <item name="fontPath">fonts/Poppins-SemiBold.ttf</item>
-    </style>
-
-
-    <style name="BudgetsBigFigures" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name="android:textColor">@color/textColor</item>
-        <item name='android:textSize'>40sp</item>
-        <item name="android:lineSpacingExtra">4sp</item>
-        <item name='android:letterSpacing'>0.025</item>
-        <item name="fontPath">fonts/Roboto-Light.ttf</item>
-    </style>
-
-    <style name="IncomeBigFigures" parent="BudgetsBigFigures">
-        <item name='android:textSize'>35sp</item>
-    </style>
-
-    <style name="IncomeTypeBigFigures" parent="BudgetsBigFigures">
-        <item name='android:textSize'>25sp</item>
-    </style>
-
-    <style name="ProgressNumberBudgets" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name="android:textColor">@color/textColor</item>
-        <item name='android:textSize'>13sp</item>
-        <item name="android:lineSpacingExtra">2sp</item>
-        <item name='android:letterSpacing'>0.03</item>
-        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
-    </style>
-
-    <style name="SmallRegularText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name="android:textColor">@color/textColor</item>
-        <item name='android:textSize'>13sp</item>
-        <item name="android:lineSpacingExtra">2sp</item>
-        <item name='android:letterSpacing'>0.03</item>
-        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
-    </style>
-
-    <style name="BudgetsItem" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
+    <style name="BudgetActionText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColor</item>
         <item name='android:textSize'>14sp</item>
-        <item name="android:lineSpacingExtra">1sp</item>
-        <item name='android:letterSpacing'>0.03</item>
-        <item name="fontPath">fonts/Roboto-Light.ttf</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
     </style>
 
-    <style name="AboutTitleText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
+    <style name="BudgetExecutedText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name='android:textSize'>10sp</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
+    </style>
+
+    <style name="BudgetExecutedNumbers" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name='android:textSize'>13sp</item>
+        <item name="fontPath">fonts/TextMeOne-Regular.ttf</item>
+    </style>
+
+    <style name="InputText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColorHint">?attr/android:textColorHint</item>
+        <item name='android:textSize'>13sp</item>
+        <item name="fontPath">fonts/WorkSans-Regular.ttf</item>
+    </style>
+
+    <style name="NormalText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/textColor</item>
+        <item name='android:textSize'>13sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="fontPath">fonts/WorkSans-Regular.ttf</item>
+    </style>
+
+    <style name="NormalBoldText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/textColor</item>
+        <item name='android:textSize'>13sp</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
+    </style>
+
+    <style name="NormalSubText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/textColor</item>
+        <item name='android:textSize'>15sp</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
+    </style>
+
+    <style name="ImportantText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColor</item>
         <item name='android:textSize'>14sp</item>
-        <item name="android:lineSpacingExtra">1sp</item>
-        <item name='android:letterSpacing'>0.03</item>
-        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
     </style>
 
-    <style name="AboutOrangeTitleText" parent="AboutTitleText">
-        <item name="android:textColor">@color/versionColor</item>
+    <style name="BudgetSubtitleText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name='android:textSize'>24sp</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
     </style>
 
-    <style name="ExpensesHeaderText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
+    <style name="BudgetsItemTableText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColor</item>
-        <item name='android:textSize'>15sp</item>
-        <item name='android:letterSpacing'>0.025</item>
-        <item name='android:textAllCaps'>true</item>
-        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+        <item name='android:textSize'>12sp</item>
+        <item name="fontPath">fonts/WorkSans-Regular.ttf</item>
     </style>
 
-    <style name="MenuText" parent="ExpensesHeaderText">
-        <item name="fontPath">fonts/Poppins-Bold.ttf</item>
-    </style>
-
-    <style name="ExpensesItemHeader" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
+    <style name="BudgetItemTableHeader" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColor</item>
-        <item name='android:textSize'>15sp</item>
-        <item name='android:letterSpacing'>0.03</item>
+        <item name='android:textSize'>13sp</item>
         <item name='android:textAllCaps'>true</item>
-        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
+    </style>
+
+    <style name="BudgetItemTableSubHeader" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/textColor</item>
+        <item name='android:textSize'>12sp</item>
+        <item name='android:textAllCaps'>true</item>
+        <item name="fontPath">fonts/Archivo-SemiBold.ttf</item>
     </style>
 
     <style name="BudgetProgressionText" parent="TextAppearance.AppCompat">
@@ -424,44 +289,10 @@
         <item name="fontPath">fonts/Poppins-SemiBold.ttf</item>
     </style>
 
-    <style name="ProgressExecutedBudgets" parent="SmallRegularText">
-        <item name="fontPath">fonts/Roboto-Light.ttf</item>
-    </style>
-    <style name="BudgetIntroTitleText" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
-        <item name='android:textSize'>33sp</item>
-        <item name="fontPath">fonts/Poppins-Regular.ttf</item>
-    </style>
-
-    <style name="InfoContent" parent="LongText">
-        <item name="android:lineSpacingExtra">5sp</item>
-        <item name="android:letterSpacing">0.03</item>
-    </style>
-
-    <style name="Population" parent="TextAppearance.AppCompat">
-        <item name='android:fontFamily'>sans-serif</item>
+    <style name="PopulationTitle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColor</item>
-        <item name='android:textSize'>13sp</item>
-        <item name='android:letterSpacing'>0.03</item>
-        <item name="android:lineSpacingExtra">7sp</item>
-    </style>
-
-    <style name="PopulationList" parent="Population">
-        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
-    </style>
-
-    <style name="PopulationTitle" parent="Population">
-        <item name="fontPath">fonts/Roboto-Medium.ttf</item>
-    </style>
-
-    <style name="PopulationTotal" parent="Population">
-        <item name="fontPath">fonts/Roboto-Bold.ttf</item>
-    </style>
-
-    <style name="LawItemBlue" parent="UpdateText">
-        <item name="android:letterSpacing">0.03</item>
-        <item name="android:lineSpacingExtra">2sp</item>
-        <item name="fontPath">fonts/Roboto-Bold.ttf</item>
+        <item name='android:textSize'>18sp</item>
+        <item name="fontPath">fonts/Archivo-Bold.ttf</item>
     </style>
 
     <style name="NotificationSpinnerTitle" parent="TextAppearance.AppCompat">
@@ -478,11 +309,5 @@
         <item name="android:lineSpacingExtra">2sp</item>
         <item name="android:textColor">@color/notificationAddressColor</item>
     </style>
-
-    <style name="NotificationSpinnerChecked" parent="NotificationSpinner">
-        <item name="fontPath">fonts/Roboto-Bold.ttf</item>
-        <item name="android:textColor">@color/notificationCheckText</item>
-    </style>
-
 
 </resources>

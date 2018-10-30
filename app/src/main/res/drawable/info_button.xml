@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true">
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="@color/mainBudgetBackground" />
+                </shape>
+            </item>
+            <item android:bottom="8dp" android:drawable="@drawable/pregunta_white" android:left="10dp" android:right="10dp" android:top="8dp" />
+        </layer-list>
+    </item>
+</selector>

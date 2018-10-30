@@ -3,7 +3,7 @@
     xmlns:compat="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/about_info"
-        android:icon="@mipmap/info_white"
+        android:icon="@drawable/info_button"
         android:title="@string/about_info"
         compat:showAsAction="always" />
 </menu>

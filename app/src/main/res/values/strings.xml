@@ -1,306 +1,142 @@
 <resources>
+    <string name="fileprovider">com.example.android.fileprovider</string>
     <string name="municipality">Chiantla</string>
+    <string name="full_municipality">Municipio de Chiantla</string>
     <string name="app_name">Somos Chiantla</string>
     <string name="my_muni">Mi Chiantla</string>
     <string name="discussion">Noticias y Discusión</string>
-    <string name="notification">Reportar a la Muni</string>
+    <string name="notification">Reportar a\nla Muni</string>
+    <string name="source">Fuente:</string>
 
-    <string name="explore_muni">Conoce tu municipio</string>
+    <!-- Content descriptions -->
+    <string name="share_button">Compartir</string>
+    <string name="info_button">Informacion</string>
+    <string name="next_button">Más información</string>
+
     <string name="development_plan">Plan de Desarrollo</string>
-    <string name="contacts">Contactos</string>
-    <string name="health_centers">Centros Asistenciales de Salud</string>
-    <string name="laws">Ley de Acceso a la Información Pública</string>
-
-    <string name="general_source">&#060;b&#062;Datos del Municipio de Chiantla.&#060;&#047;b&#062; Guatemala: USAID\nexos
-        Locales, 2016.</string>
-    <string name="population_source">&#060;b&#062;Plan de Desarrollo Municipal PDM del Municipio de Chiantla.
-    &#060;&#047;b&#062; Guatemala: SEGEPLAN/DPT, 2010. </string>
-
-    <string name="total_pop">Población total</string>
-    <string name="women">Mujeres</string>
-    <string name="men">Hombres</string>
-    <string name="younger_than_29">Menores de\n29 años</string>
-    <string name="older_than_29">Mayores de\n29 años</string>
-
-    <string name="malnutrition">Desnutrición\n crónica</string>
-    <string name="poberty">Pobreza</string>
-    <string name="extreme_poberty">Extrema\n Pobreza</string>
-    <string name="literacy">Alfabetismo</string>
-
-    <string name="kiche">Kiché</string>
-    <string name="spanish">Español</string>
-    <string name="mam">Mam</string>
+    <string name="development_plan_title">Plan de Desarollo\nMunicipal 2010 - 2025</string>
 
     <string name="category">Categoría</string>
     <string name="number">Número</string>
-    <string name="villas">Villas</string>
-    <string name="zones">Zonas</string>
-    <string name="cantons">Cantones</string>
-    <string name="colonies">Colonias</string>
-    <string name="farmhouses">Caseríos</string>
-    <string name="villages">Aldeas</string>
-    <string name="places">Parajes</string>
-    <string name="fams">Fincas</string>
-    <string name="total">Total</string>
-
-    <string name="farming">Agricultura</string>
-    <string name="services">Servicios</string>
 
     <string name="mission">Misión de la Municipalidad</string>
-    <string name="vision">Visión de la Municipalidad</string>
-    <string name="return_to_muni">Regresar a Mi Chiantla</string>
 
     <string name="executed">Ejecutado</string>
     <string name="axes">Ejes de desarrollo</string>
     <string name="objectives">Objetivos</string>
     <string name="projects">Proyectos</string>
-    <string name="full_plan">Descubre el plan completo</string>
-    <string name="next">Continuar</string>
-
-    <string name="law_title">LAIP</string>
 
     <string name="done">Finalizado</string>
     <string name="not_done">No Iniciado</string>
     <string name="doing">En Proceso</string>
 
-    <string name="main">Principal</string>
+    <string name="main_contact">Contacto Principal</string>
     <string name="address">Dirección:</string>
-    <string name="schedule">Horario:</string>
-    <string name="mail">Correo Electrónico:</string>
     <string name="phone">Teléfono:</string>
-    <string name="facebook">Facebook:</string>
-    <string name="twitter">Twitter:</string>
-    <string name="instagram">Instagram:</string>
-    <string name="youtube">Youtube:</string>
-    <string name="website">Sitio web:</string>
-    <string name="offices">Dependencias Municipales</string>
     <string name="email_subject">Contacto desde app</string>
     <string name="select_action">Selecciona una Acción</string>
     <string name="send_email">Enviar Correo</string>
     <string name="call">Llamar</string>
     <string name="add_contact">Agregar Contacto</string>
 
-    <string name="health_centers_header">Centros - Salud</string>
-    <string name="health_center">Centro de Salud Chiantla</string>
-    <string name="health_posts">Puestos de Salud</string>
-    <string name="director">Director</string>
-    <string name="municipal_heath_centers">Centros de Convergencia</string>
-
-    <string name="malformed_url">Ha ocurrido un error: URL Malformada, cierra la aplicación y vuelve a intentarlo</string>
-    <string name="connection_error">No se ha podido conectar con el servidor, por favor espera unos minutos y vuelve a intentarlo</string>
-
     <string name="budget">Presupuesto</string>
-    <string name="budget_intro">Aquí puedes explorar el presupuesto municipal del año en curso hasta la fecha de hoy.</string>
-    <string name="see_budget">Ver Presupuesto</string>
-    <string name="updated_info">Información actualizada:</string>
+    <string name="budget_year">Presupuesto %1$s</string>
+    <string name="budget_updated_info">Datos actualizados por el ministerio de finanzas el %1$s</string>
+    <string name="download">Descargar</string>
     <string name="income">Ingresos</string>
     <string name="added">Ingresado</string>
     <string name="expenses">Gastos</string>
     <string name="budgeted">Presupuestado</string>
     <string name="programs">Programas</string>
-    <string name="project">Proyecto</string>
     <string name="activities">Actividades</string>
     <string name="activity">Actividad</string>
+    <string name="work">Obra</string>
     <string name="own_income">Ingresos Propios</string>
     <string name="other_income">Transferencias del Gobierno Central</string>
     <string name="income_class">Clase</string>
     <string name="section">Sección</string>
-    <string name="auxiliary">Recurso Auxiliar</string>
+    <string name="budget_percentage">%1$d%%</string>
     <string name="auxiliary_min">Rec. Aux</string>
     <string name="expenses_projects">Proyectos e Infraestructura</string>
     <string name="not_projects">Gastos Administrativos y Servicios Públicos</string>
+    <string name="details">Detalles</string>
+    <string name="budget_get_info">Preguntas Frecuentes</string>
+    <string name="ask_question">Preguntar a la Muni</string>
+    <string name="budget_support">Con el apoyo de:</string>
 
     <string name="sent_notifications">Reportes enviados</string>
     <string name="sent">Enviado</string>
     <string name="saved">No Enviado</string>
     <string name="new_notification">Nuevo Reporte</string>
-    <string name="problem_type">Tipo de problema...</string>
-    <string-array name="problem_types">
-        <item>Tipo de problema...</item>
-        <item>Agua y Drenajes</item>
-        <item>Iluminación</item>
-        <item>Estado de Calles, Carreteras, Caminos o Banquetas</item>
-        <item>Problemas de Tránsito</item>
-        <item>Servicios Publicos (Mercado, Cementerio, Instalaciones Deportivas, etc.)</item>
-        <item>Corrupción y Denuncia Municipal</item>
-        <item>Seguridad Ciudadana</item>
-        <item>Medio Ambiente, Áreas Verdes</item>
-        <item>Solicitar Información</item>
-        <item>Problemas de esta aplicación</item>
-        <item>Otros</item>
-    </string-array>
-    <string name="selected_image">1 imagen seleccionada</string>
+    <string name="problem_type">¿Cuál es el problema?</string>
+    <string name="problem_description">Describe el problema</string>
+    <string name="problem_description_placeholder">Explica el problema aquí&#8230;</string>
+    <string name="problem_location">¿Donde te encuentras?</string>
+    <string name="problem_neighborhood_placeholder">Aldea o barrio&#8230;</string>
+    <string name="problem_location_placeholder">Escribe la dirección completa aquí&#8230;</string>
+    <string name="problem_gps">Compartir tu ubicación GPS</string>
+    <string name="problem_image">Agrega una foto</string>
+    <string name="problem_end">Terminar el reporte</string>
+    <string name="problem_contact">Contacto</string>
+    <string name="problem_contact_name_placeholder">Nombre completo*</string>
+    <string name="problem_contact_phone_placeholder">Número de Teléfono*</string>
+    <string name="problem_contact_email_placeholder">Correo electrónico*</string>
+    <string name="problem_suggested_fields">*Campos sugeridos</string>
+    <string name="problem_suggested_field">*Campo sugerido</string>
+    <string name="problem_anonimity">Puedes enviar un reporte anónimo</string>
+    <string name="problem_contact_means">Si lo haces solo podremos contactarte por medio del app</string>
+    <string name="problem_type_water">Agua y Drenajes</string>
+    <string name="problem_type_light">Alumbrado público</string>
+    <string name="problem_type_streets">Estado de Calles, Carreteras, Caminos o Banquetas</string>
+    <string name="problem_type_transit">Problemas de Tránsito</string>
+    <string name="problem_type_services">Servicios Publicos (Mercado, Cementerio, Instalaciones Deportivas, etc.)</string>
+    <string name="problem_type_corruption">Corrupción y Denuncia Municipal</string>
+    <string name="problem_type_security">Seguridad Ciudadana</string>
+    <string name="problem_type_ambient">Medio Ambiente, Áreas Verdes</string>
+    <string name="problem_type_information">Solicitar Información</string>
+    <string name="problem_type_activities">Actividades Municipales</string>
+    <string name="problem_type_service">Mal servicio al cliente</string>
+    <string name="problem_type_application">Problemas de esta aplicación</string>
+    <string name="problem_type_other">Otros</string>
+    <string name="notification_next">Siguiente</string>
+    <string name="notification_prev">Regresar</string>
+    <string name="budget_problem_type">Información del presupuesto</string>
+    <string name="budget_notification">Solicito más información del elemento del presupuesto \"%1$s\"</string>
+    <string name="required_fields_content">Por favor llena todos los campos.</string>
+    <string name="required_fields">Campos requeridos</string>
+    <string name="notification_status">Estado</string>
+    <string name="notification_office">Oficina encargada</string>
+    <string name="notification_problem_description">Descripción del problema</string>
+    <string name="notification_address">Dirección</string>
+    <string name="neighborhood">Aldea / Barrio</string>
+    <string name="full_name">Nombre completo</string>
+    <string name="phone_number">Número de teléfono</string>
+    <string name="email">Correo electrónico</string>
+    <string name="answers">Respuestas</string>
     <string name="error">Error</string>
-    <string name="fill_fields">Debes llenar todos los campos que tienen un asterisco (*).</string>
-    <string name="accept">Aceptar</string>
+    <string name="notification_image_name">aviso_chiantla_</string>
+
+    <string name="notification_not_deleted">No se ha podido contactar al servidor. El reporte no ha sido borrado. Por favor intentalo más tarde.</string>
+    <string name="obtaining_location">Obteniendo tu ubicación</string>
+    <string name="wait_while_location_obtained">Espera un momento mientras obtenemos tu ubicación</string>
+    <string name="cancel">Cancelar</string>
 
     <string name="sent_success">¡Tu reporte ha sido enviado existosamente!</string>
-    <string name="sent_emergencies">Recuerda que esta app no es para reportar emergencias.</string>
-    <string name="sent_call">En caso de emergencia, llamar directamente al número siguiente:</string>
+    <string name="sent_emergencies">Recuerda que esta app no es para\nreportar emergencias.</string>
+    <string name="sent_if_emergency">En caso de emergencia, llamar\ndirectamente al número siguiente:</string>
     <string name="sent_phone">+502 4938 5722</string>
     <string name="sent_notification_return">Volver a Menú Inicial</string>
-    <string name="sent_notification">Reporte Enviado</string>
+    <string name="saved_success">Tu reporte se ha guardado localmente</string>
+    <string name="send_later">Tu reporte se subirá cuando tengas internet.</string>
 
     <string name="info_continue">Continuar</string>
     <string name="about_info">Acerca de</string>
-    <string name="development_info_title">Plan de Desarrollo</string>
-    <string name="development_info_content">El Plan de Desarrollo Municipal es el plan de trabajo a largo
-        plazo de la Municipalidad. Fue desarrollado en el año 2009 por la Municipalidad, SEGEPLAN,
-        COCODES y organizaciones que trabajan a nivel local.\n\nEstá compuesto por proyectos
-        agrupados en objetivos, que a su vez están agrupados en cuatro ejes de desarrollo
-        principales. Para calcular los porcentajes de ejecución se divide la cantidad de proyectos
-        completados y en curso entre la cantidad de proyectos del plan.\n\nActualmente la
-        Municipalidad de Chiantla trabaja en implementar nuevos Planes de Desarrollo Comunitarios.
-        Acércate a la Municipalidad o a tu COCODE para enterarte y participar.</string>
-    <string name="budget_info_title">Presupuesto 2017</string>
-    <string name="budget_info_content">Aquí puedes explorar  a fondo el presupuesto municipal del
-        año en curso hasta la fecha de hoy. La fuente de información es el Ministerio de Finanzas,
-        que comparte con Somos Chiantla la información financiera reportada cotidianamente por la
-        Municipalidad.\n\nPuedes solicitar información específica sobre el presupuesto municipal al
-        encargado de la Unidad de Información Pública de la Municipalidad. Encuentra sus datos de
-        contacto en la sección de “Contactos” de esta aplicación.\n\nRecuerda que según la Ley de
-        Acceso a la Información Pública es tu derecho solicitar información y obligación de las
-        instituciones de gobierno entregarla.\n\n\n
-        TERMINOS CLASIFICACIÓN PRESUPUESTARIA\n\n1. INGRESOS\n\n1.1. Ingresos Propios: Constituyen
-        los recursos que se sustentan con bases legales y son provenientes de la venta de bienes o
-        servicios, así como todos aquellos provenientes de la venta de activos, cobros de tasas y
-        arbitrios. \n\n1.1.1. Ingresos Tributarios: En esta clase se incluyen impuestos, arbitrios
-        y contribuciones especiales; dividiéndose en dos secciones: impuestos directos e indirectos.
-        \n\n1.1.1.1. Impuestos directos: Comprende los ingresos tributos que se originan en los
-        pagos que realizan las personas naturales y las entidades públicas y privadas al Estado,
-        en concepto de gravámenes sobre el ingreso, la renta y el patrimonio. \n\n1.1.1.2. Impuestos
-        indirectos: Comprende los ingresos tributarios originados en los pagos que realizan las
-        personas naturales y entidades públicas y privadas, al Estado, en concepto de gravámenes
-        sobre la producción, compra, importación, venta, exportación de bienes o servicios y que
-        trasladan a los costos de producción o comercialización. \n\n1.1.2. Ingresos No Tributarios:
-        Comprenden los ingresos provenientes de fuentes no impositivas, que contienen el concepto de
-        contraprestación, tales como: tasas, derechos, arrendamientos, multas, etc. \n\n1.1.2.1.
-        Tasas: Comprende los ingresos derivados de los importes pagados al Estado en virtud de la
-        entrega de un bien o la contraprestación de un servicio público. \n\n1.1.2.2. Arrendamiento
-        de edificios equipos e instalaciones: Comprende los recursos originados por el arrendamiento
-        a terceros de edificios, maquinarias, equipos e instalaciones municipales. \n\n1.1.2.2.
-        Otros ingresos no tributarios: Comprende otros ingresos de carácter no tributario, descrito
-        en el manual de clasificación presupuestaria como \n\n1.1.3. Venta de bienes y servicios de
-        la administración pública: Comprende los recursos provenientes de la venta de bienes y
-        prestación de servicios que efectúa el sector público, cuya gestión no se realiza bajo
-        criterios empresariales, ni que vendan o distribuyan con fines de promoción en ferias y
-        exposiciones. \n\n1.1.3.1. Venta de Servicios: Comprenden los ingresos generados por la
-        venta de diversos servicios por parte de las instituciones públicas no empresariales, tales
-        como servicios agropecuarios (estaciones experimentales, laboratorios de suelos, mecanización
-        agropecuaria), de salud y asistencia social, de aduanas (almacenaje, extracción de muestras,
-        etc.), de servicios administrativos municipales (certificaciones, autorizaciones, etc.), y
-        otros servicios. \n\n1.1.4. Ingresos de Operación: Comprende la totalidad de los recursos
-        provenientes de la venta de bienes y/o la prestación de servicios. \n\n1.1.4.1. Venta de
-        bienes: Comprende los recursos provenientes de la venta de mercancías o productos
-        industriales o comerciales que realizan, tanto en el mercado interno como externo, las
-        empresas públicas. \n\n1.1.4.2. Venta de servicios: Comprende los ingresos generados por la
-        venta de diversos servicios administrativos municipales (certificaciones, autorizaciones,
-        etc.), y otros servicios.\n\n1.1.4.3. Rentas de la Propiedad: Comprende los ingresos
-        provenientes de intereses, dividendos y/o utilidades, arrendamiento de tierras y terrenos y
-        derechos derivados de la propiedad de activos de las entidades del sector público y privado.
-        \n\n1.1.5. Trasferencias de Capital: Comprende los recursos que provienen de transferencias
-        de capital, por subsidios o donaciones del sector público, privado o de gobiernos e
-        instituciones extranjeras, en cumplimiento de disposiciones legales y contractuales
-        previstas, aplicables a gastos de capital.\n\n1.2. Trasferencias del Gobierno Central:
-        Comprende los recursos trasladados en concepto de 9% constitucional, IVAPAZ, Circulación de
-        Vehículos y Petróleo a las Municipalidad por leyes específicas.\n\n1.2.1. Trasferencias
-        corrientes: Comprende los recursos que provienen de subsidios o donaciones del sector
-        público, privado o de gobiernos e instituciones extranjeras, no sujetas a contraprestación
-        en bienes y/o servicios, en cumplimiento de disposiciones legales y contractuales previstas,
-        aplicables a gastos corrientes\n\n1.2.2. Trasferencias de capital: Comprende los recursos
-        que provienen de transferencias de capital, por subsidios o donaciones del sector público,
-        privado o de gobiernos e instituciones extranjeras, en cumplimiento de disposiciones legales
-        y contractuales previstas, aplicables a gastos de capital.\n\n2. GASTOS\n\n2.1. Proyectos e
-        Infraestructura: Se refiere a la construcción, ampliación o mejora de un bien que incrementa
-        su valor de capital, la satisfacción de la necesidad que se plantea en la formulación.\n\n
-        2.1.1. Prevención de la desnutrición critica: Resultados estratégicos del país, que se
-        encuentra en el Plan Nacional de Desarrollo “K\'atun: Nuestra Guatemala 2032”, al que es
-        vinculado el presupuesto municipal a través de los proyectos para el cumplimiento de los
-        ejes de Gobierno Central. \n\n2.1.1.1. Consejería y capacitación a madres y mujeres
-        embarazadas\n\n2.1.1.2. Familias con servicios de agua apta: Resultados estratégicos del
-        país, que se encuentra en el Plan Nacional de Desarrollo “K\'atun: Nuestra Guatemala 2032”,
-        al que es vinculado el presupuesto municipal a través de los proyectos para el cumplimiento
-        de los ejes de Gobierno Central.\n\n2.1.2. Prevención de la mortalidad: Resultados
-        estratégicos del país, que se encuentra en el Plan Nacional de Desarrollo “K\'atun: Nuestra
-        Guatemala 2032”, al que es vinculado el presupuesto municipal a través de los proyectos para
-        el cumplimiento de los ejes de Gobierno Central.\n\n2.1.2.1. Infraestructura de salud\n\n
-        2.1.2.2. Infraestructura para servicios de salud\n\n2.1.2.3. Familias con servicios de
-        alcantarillado \n\n2.1.2.4. Familias con servicios de desechos: Productos de resultado
-        estratégicos del país, que se encuentra en el Plan Nacional de Desarrollo “K\'atun: Nuestra
-        Guatemala 2032”, al que es vinculado el presupuesto municipal a través de los proyectos
-        para el cumplimiento de los ejes de Gobierno Central.  \n\n2.1.3. Gestión de la educación
-        local de calidad: Resultados estratégicos del país, que se encuentra en el Plan Nacional de
-        Desarrollo “K\'atun: Nuestra Guatemala 2032”, al que es vinculado el presupuesto municipal a
-        través de los proyectos para el cumplimiento de los ejes de Gobierno Central. \n\n2.1.3.1.
-        Infraestructura de educación: Productos de resultado estratégicos del país, que se encuentra
-        en el Plan Nacional de Desarrollo “K\'atun: Nuestra Guatemala 2032”, al que es vinculado el
-        presupuesto municipal a través de los proyectos para el cumplimiento de los ejes de Gobierno
-        Central. \n\n2.1.4. Seguridad Integral\n\n2.1.4.1. Seguridad preventiva y delito: Productos
-        de resultado estratégicos del país, que se encuentra en el Plan Nacional de Desarrollo
-        “K\'atun: Nuestra Guatemala 2032”, al que es vinculado el presupuesto municipal a través de
-        los proyectos para el cumplimiento de los ejes de Gobierno Central.\n\n2.1.5. Ambiente y
-        recursos naturales: Productos de resultado estratégicos del país, que se encuentra en el
-        Plan Nacional de Desarrollo “K\'atun: Nuestra Guatemala 2032”, al que es vinculado el
-        presupuesto municipal a través de los proyectos para el cumplimiento de los ejes de Gobierno
-        Central.\n\n2.1.6. Movilidad urbana y espacios públicos: Resultados estratégicos del país,
-        que se encuentra en el Plan Nacional de Desarrollo “K\'atun: Nuestra Guatemala 2032”, al que
-        es vinculado el presupuesto municipal a través de los proyectos para el cumplimiento de los
-        ejes de Gobierno Central. \n\n2.1.6.1. Áreas con ordenamiento vial: Productos de resultado
-        estratégicos del país, que se encuentra en el Plan Nacional de Desarrollo “K\'atun: Nuestra
-        Guatemala 2032”, al que es vinculado el presupuesto municipal a través de los proyectos para
-        el cumplimiento de los ejes de Gobierno Central.\n\n2.1.7. Protección social: Resultados
-        estratégicos del país, que se encuentra en el Plan Nacional de Desarrollo “K\'atun: Nuestra
-        Guatemala 2032”, al que es vinculado el presupuesto municipal a través de los proyectos para
-        el cumplimiento de los ejes de Gobierno Central.\n\n2.1.8. Apoyo a la salud preventiva:
-        Resultados estratégicos del país, que se encuentra en el Plan Nacional de Desarrollo
-        “K\'atun: Nuestra Guatemala 2032”, al que es vinculado el presupuesto municipal a través de
-        los proyectos para el cumplimiento de los ejes de Gobierno Central.\n\n2.2. Gastos
-        Administrativos y servicios públicos \n\n2.2.1. Actividades centrales: Son las dependencias
-        específicas que le dan el soporte a la administración de la Municipalidad para su buen
-        funcionamiento. Cada una de las dependencias municipales tiene asignados rubros ya que de
-        ello depende su funcionamiento. \n\n2.2.1.1. Concejo Municipal\n\n2.2.1.2. Alcaldía
-        Municipal\n\n2.2.1.3. Secretaria Municipal\n\n2.2.1.4. Unidad de AFIM\n\n2.2.1.5. Juzgado de
-        asuntos municipales\n\n2.2.1.6. Dirección Municipal de planificación \n\n2.2.1.7. Dirección
-        Municipal de la Mujer\n\n2.2.1.8. IUSI\n\n2.2.1.9. Unidad de auditoria interna\n\n2.2.1.10.
-        Oficina municipal de recursos naturales\n\n2.2.1.11. Sindicatura municipal \n\n2.2.1.12.
-        Oficina municipal de recursos humanos\n\n2.2.1.13. Unidad de Información Publica \n\n
-        2.2.1.14. Unidad de archivo y reproducción \n\n2.2.1.15. Unidad de Informática\n\n2.2.1.16.
-        Dirección de ordenamiento territorial\n\n2.2.1.17. Feria Municipal: Se cuenta con
-        presupuesto para llevar a cabo las actividades de feria ya que son parte de la cultura del
-        municipio. \n\n2.2.2. Servicios públicos municipales \n\n2.2.2.1. Oficina Municipal de
-        Servicios Públicos\n\n2.2.2.2. Cementerio Municipal\n\n2.2.2.3. Policía Municipal y de
-        Transito\n\n2.2.2.4. Vivero Municipal\n\n2.2.2.5. Radiodifusora municipal\n\n2.2.2.6.
-        Operación y manteamiento\n\n2.2.2.7. Convoy Municipal\n\n2.2.2.8. Mercado Municipal\n\n
-        2.2.2.9. Departamento de Electricidad\n\n2.2.2.10. Rastro Municipal\n\n2.2.2.11.
-        Departamento de agua potable\n\n2.2.2.12. Biblioteca Municipal\n\n2.2.2.13. Marimba
-        Municipal\n\n2.2.2.14. Fontanería Municipal\n\n2.2.2.15. Recolección y extracción de
-        basura\n\n2.2.2.16. Subsidio al Deporte \n\n2.2.3. Intervenciones institucionales
-        municipales: Aportes que la municipalidad da a otras instituciones sin fines de lucro.
-        \n\n2.2.4. Partidas no asignadas a programas: En este va incluido el pago a amortizaciones
-        e intereses al préstamo (si se tuviese) \n\n\nFUENTE. \n\nAdministración Financiera
-        Integrada Municipal \n\nUnidad de Presupuesto \n\nGobierno Municipal 2016 – 2020\n\n\n
-        Director Financiero, Edward Arnoldo López Mérida\n\nEncargada de Presupuesto, Mileylhy
-        Larissa Figueroa Martínez
-    </string>
-    <string name="notifications_info_title">Reporte a la Muni</string>
-    <string name="notifications_info_content">En esta sección puedes reportar distintos tipos de
-        problemas directamente a la Municipalidad.\n\nAsegura llenar todos los campos del formulario,
-        tu nombre y teléfono, para que podamos contestarte; verificar y dar seguimiento al problema
-        reportado.\n\nEsta NO es una plataforma para reportar emergencias que deben ser atendidas
-        inmediatamente. Para emergencias contacta personalmente o por teléfono al 4938 5722.\n\n
-        El proceso de un reportes es:\n\nESTADO: Enviado\nReporte enviado desde tu teléfono a
-        nuestro servidor\n\nESTADO: Recibido\nReporte ha sido recibido por la dependencia municipal
-        correspondiente y su veracidad, severidad y posible solución están siendo evaluadas.\n\n
-        ESTADO: Procesado\nSe han solicitado los materiales para solucionar el problema y
-        la solución se ejecutará en menos de 48 horas.\n\nESTADO: Solucionado\nEl reporte ha sido
-        solucionado satisfactoriamente
-    </string>
 
     <string name="about_muni">Acerca de Somos Chiantla</string>
     <string name="last_update">Última actualización </string>
     <string name="app_version">Versión de la Aplicación</string>
     <string name="open_source">Open Source</string>
-    <string name="open_source_text">Este es un proyecto Open Source con licencia MIT.</string>
+    <string name="open_source_text">Este es un proyecto Open Source con licencia MIT.\nCopyright &#169; 2017,  Explico S.A. / DAI\nVer detalle de licencia al final de esta página</string>
     <string name="github_link">github.com/munis-transparencia-gobierno-abierto/municipalidad-de-chiantla</string>
     <string name="credits">Créditos</string>
     <string name="financing">Financiamiento</string>
@@ -308,16 +144,120 @@
     <string name="usaid_link">www.facebook.com/USAID.NexosLocales</string>
     <string name="development">Desarrollo</string>
     <string name="ludiverse_explico">Ludiverse Inc. / Explico S.A.</string>
-    <string name="development_link">www.ludiverse.net</string>
+    <string name="development_link">info@ludiverse.net</string>
     <string name="design">Diseño</string>
     <string name="klap">Klap</string>
-    <string name="klap_link">www.klap.com.gt</string>
+    <string name="klap_link">hello@klap.com.gt</string>
     <string name="programming">Programación</string>
-    <string name="innerlemonade">InnerLemonade</string>
-    <string name="innerlemonade_link">www.innerlemonade.com</string>
+    <string name="innerlemonade">Diego Enriquez</string>
+    <string name="innerlemonade_link">diego@innerlemonade.com</string>
+    <string name="license">Licencia MIT</string>
+    <string name="full_license">Copyright &#169; 2017,  Explico S.A. / DAI\n\n
+        Permission is hereby granted, free of charge, to any person obtaining a copy of this
+        software and associated documentation files (the "Software"), to deal in the Software
+        without restriction, including without limitation the rights to use, copy, modify, merge,
+        publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+        to whom the Software is furnished to do so, subject to the following conditions:\n\n
+        The above copyright notice and this permission notice shall be included in all copies or
+        substantial portions of the Software.\n\n
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+        INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+        PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+        FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+        OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+        DEALINGS IN THE SOFTWARE.\n\n
+        Copyright &#169; 2017,  Explico S.A. / DAI\n\n
+        Se concede permiso, libre de cargos, a cualquier persona que obtenga una copia de este
+        software y de los archivos de documentación asociados (el "Software"), para utilizar el
+        Software sin restricción, incluyendo sin limitación los derechos a usar, copiar, modificar,
+        fusionar, publicar, distribuir, sublicenciar, y/o vender copias del Software, y a permitir
+        a las personas a las que se les proporcione el Software a hacer lo mismo, sujeto a las
+        siguientes condiciones:\n\n
+        El aviso de copyright anterior y este aviso de permiso se incluirán en todas las copias o
+        partes sustanciales del Software.\n\n
+        EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O IMPLÍCITA,
+        INCLUYENDO PERO NO LIMITADA A GARANTÍAS DE COMERCIALIZACIÓN, IDONEIDAD PARA UN PROPÓSITO
+        PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO LOS AUTORES O PROPIETARIOS DE LOS DERECHOS DE
+        AUTOR SERÁN RESPONSABLES DE NINGUNA RECLAMACIÓN, DAÑOS U OTRAS RESPONSABILIDADES, YA SEA EN
+        UNA ACCIÓN DE CONTRATO, AGRAVIO O CUALQUIER OTRO MOTIVO, DERIVADAS DE, FUERA DE O EN
+        CONEXIÓN CON EL SOFTWARE O SU USO U OTRO TIPO DE ACCIONES EN EL SOFTWARE.
+    </string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="full_privacy_policy_p1">Technologias Civicas / Municipalidad de Chiantla built the
+        Somos Chiantla app as an Open Source app. This SERVICE is provided by Technologias Civicas
+        / Municipalidad de Chiantla at no cost and is intended for use as is.\n
+        This page is used to inform visitors regarding our policies with the collection, use, and
+        disclosure of Personal Information if anyone decided to use our Service.\n
+        If you choose to use our Service, then you agree to the collection and use of information
+        in relation to this policy. The Personal Information that we collect is used for providing
+        and improving the Service. we will not use or share your information with anyone except as
+        described in this Privacy Policy.\n
+        The terms used in this Privacy Policy have the same meanings as in our Terms and
+        Conditions, which is accessible at Somos Chiantla unless otherwise defined in this Privacy
+        Policy.\n\n
+        Information Collection and Use\n\n
+        For a better experience, while using our Service, we may require you to provide us with
+        certain personally identifiable information, including but not limited to Location,
+        Network access &amp; connections, USB storage contents. The information that we request will be
+        retained by us and used as described in this privacy policy.\n
+        The app does use third party services that may collect information used to identify you.\n
+        Link to privacy policy of third party service providers used by the app\n</string>
+    <string name="google_play_services">Google Play Services</string>
+    <string name="firebase_analytics">Firebase Analytics</string>
+    <string name="full_privacy_policy_p2">Log Data\n\n
+        We want to inform you that whenever you use our Service, in a case of an error in the app
+        we collect data and information (through third party products) on your phone called Log
+        Data. This Log Data may include information such as your device Internet Protocol (“IP”)
+        address, device name, operating system version, the configuration of the app when utilizing
+        our Service, the time and date of your use of the Service, and other statistics.\n\n
+        Cookies\n\n
+        Cookies are files with a small amount of data that are commonly used as anonymous unique
+        identifiers. These are sent to your browser from the websites that you visit and are stored
+        on your device\'s internal memory.\n
+        code and libraries that use “cookies” to collect information and improve their services.
+        You have the option to either accept or refuse these cookies and know when a cookie is
+        being sent to your device. If you choose to refuse our cookies, you may not be able to use
+        some portions of this Service.\n\n
+        Service Providers\n\n
+        we may employ third-party companies and individuals due to the following reasons:\n
+        To facilitate our Service;\n
+        To provide the Service on our behalf;\n
+        To perform Service-related services; or\n
+        To assist us in analyzing how our Service is used.\n
+        we want to inform users of this Service that these third parties have access to your
+        Personal Information. The reason is to perform the tasks assigned to them on our behalf.
+        However, they are obligated not to disclose or use the information for any other
+        purpose.\n\n
+        Security\n\n
+        we value your trust in providing us your Personal Information, thus we are striving to use
+        commercially acceptable means of protecting it. But remember that no method of transmission
+        over the internet, or method of electronic storage is 100&#37; secure and reliable, and we
+        cannot guarantee its absolute security.\n\n
+        Links to Other Sites\n\n
+        This Service may contain links to other sites. If you click on a third-party link, you will
+        be directed to that site. Note that these external sites are not operated by us. Therefore,
+        we strongly advise you to review the Privacy Policy of these websites. we have no control
+        over and assume no responsibility for the content, privacy policies, or practices of any
+        third-party sites or services.\n\n
+        Children’s Privacy\n\n
+        These Services do not address anyone under the age of 13. we do not knowingly collect
+        personally identifiable information from children under 13. In the case we discover that a
+        child under 13 has provided us with personal information, we immediately delete this from
+        our servers. If you are a parent or guardian and you are aware that your child has provided
+        us with personal information, please contact us so that we will be able to do necessary
+        actions.\n\n
+        Changes to This Privacy Policy\n\n
+        we may update our Privacy Policy from time to time. Thus, you are advised to review this
+        page periodically for any changes. we will notify you of any changes by posting the new
+        Privacy Policy on this page. These changes are effective immediately after they are posted
+        on this page.\n\n
+        Contact Us\n\n
+        If you have any questions or suggestions about our Privacy Policy, do not hesitate to
+        contact us.
+    </string>
 
     <string name="discussion_explanation">Esta sección te llevará a la página
-        de la Municipalidad de Chiantla en Facebook,. Aprovecha estos espacios para conocer noticias
+        de la Municipalidad de Chiantla en Facebook.\n\nAprovecha estos espacios para conocer noticias
         del Gobierno Municipal 2016 - 2020.</string>
     <string name="go_to_facebook">Ir a Facebook</string>
     <string name="aboutChiantla">Acerca de ‘Somos Chiantla’</string>
@@ -332,4 +272,30 @@
     <string name="loading_data">Actualizando datos...</string>
 
     <string name="percentage">%</string>
+
+    <string-array name="tutorial_budget_info">
+        <item>{\"title\":\"Bienvenido a nuestro presupuesto\", \"content\":\"Desde aquí puedes navegar por el presupuesto del año en curso y de años anteriores.\"}</item>
+        <item>{\"content\":\"Tambén puedes descargar la data en formato .csv.\"}</item>
+    </string-array>
+    <string-array name="tutorial_budget">
+        <item>{\"content\":\"Navega y Explora en detalle los Ingresos y Gastos de tu Muni.\"}</item>
+        <item>{\"content\":\"Puedes compartir cualquier rubro en tus redes.\"}</item>
+        <item>{\"content\":\"También solicitar más información de cada rubro.\"}</item>
+    </string-array>
+    <string-array name="tutorial_notification_menu">
+        <item>{\"title\":\"¿Algo qué reportar?\", \"content\":\"Desde aquí puedes reportar algo a la municipalidad. También ver información y respuestas sobre reportes que hayas enviado anteriormente.\"}</item>
+    </string-array>
+    <string-array name="tutorial_new_notification">
+        <item>{\"title\":\"¿Qué quieres reportar?\", \"content\":\"Ingresa la información y sigue los pasos para enviar tu reporte.\"}</item>
+    </string-array>
+    <string-array name="tutorial_new_notification_photo">
+        <item>{\"title\":\"¡Envía una foto del problema!\", \"content\":\"Puedes tomar una foto...\"}</item>
+        <item>{\"content\":\"o escoger entre las imágenes en tu celular.\"}</item>
+    </string-array>
+    <string-array name="tutorial_notifications">
+        <item>{\"content\":\"Ingresa a un reporte para revisarlo con detalle, conocer su estado y las respuestas que la municipalidad tenga para ti.\"}</item>
+    </string-array>
+    <string-array name="tutorial_my_muni">
+        <item>{\"title\":\"¡Aquí información importante de tu municipio!\", \"content\":\"Explora datos del municipio, contactos importantes, oficinas municipales y otros .\"}</item>
+    </string-array>
 </resources>

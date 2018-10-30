@@ -1,138 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/sectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="18dp"
+        android:gravity="center"
+        android:textAppearance="@style/SectionTitleText" />
 
     <RelativeLayout
         android:id="@+id/circles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
+        android:layout_below="@id/sectionTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp">
 
         <ImageView
             android:id="@+id/enabled"
-            android:layout_width="wrap_content"
+            android:layout_width="17dp"
             android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/circulo" />
+            android:elevation="10dp"
+            app:srcCompat="@drawable/eye_red_cursor_presupuesto" />
 
         <ImageView
             android:id="@+id/state0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/circulo_normal" />
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="7dp"
+            android:layout_marginLeft="7dp"
+            app:srcCompat="@drawable/circulo_inhabilitado" />
 
         <View
             android:id="@+id/line0"
             android:layout_width="45dp"
             android:layout_height="1dp"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/state0"
             android:layout_toRightOf="@+id/state0"
+            android:alpha="0.5"
             android:background="@color/white" />
 
         <ImageView
             android:id="@+id/state1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/line0"
             android:layout_toRightOf="@+id/line0"
-            app:srcCompat="@mipmap/circulo_normal" />
+            app:srcCompat="@drawable/circulo_inhabilitado" />
 
         <View
             android:id="@+id/line1"
             android:layout_width="45dp"
             android:layout_height="1dp"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/state1"
             android:layout_toRightOf="@+id/state1"
+            android:alpha="0.5"
             android:background="@color/white" />
 
         <ImageView
             android:id="@+id/state2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/line1"
             android:layout_toRightOf="@+id/line1"
-            app:srcCompat="@mipmap/circulo_normal" />
+            app:srcCompat="@drawable/circulo_inhabilitado" />
 
         <View
             android:id="@+id/line2"
             android:layout_width="45dp"
             android:layout_height="1dp"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/state2"
             android:layout_toRightOf="@+id/state2"
+            android:alpha="0.5"
             android:background="@color/white" />
 
         <ImageView
             android:id="@+id/state3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/line2"
             android:layout_toRightOf="@+id/line2"
-            app:srcCompat="@mipmap/circulo_normal" />
+            app:srcCompat="@drawable/circulo_inhabilitado" />
 
         <View
             android:id="@+id/line3"
             android:layout_width="45dp"
             android:layout_height="1dp"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/state3"
             android:layout_toRightOf="@+id/state3"
+            android:alpha="0.5"
             android:background="@color/white" />
 
         <ImageView
-            android:id="@+id/state4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_toEndOf="@+id/line3"
             android:layout_toRightOf="@+id/line3"
-            app:srcCompat="@mipmap/circulo_normal" />
+            app:srcCompat="@drawable/circulo_inhabilitado" />
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/texts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/circles"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="13dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/text0"
-            android:layout_width="60dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:alpha="1"
             android:gravity="center_horizontal"
             android:text="@string/expenses"
-            android:textAppearance="@style/BudgetProgressionText" />
+            android:textAppearance="@style/BudgetProgressionText"
+            android:textColor="@color/textColor" />
 
         <TextView
             android:id="@+id/text1"
-            android:layout_width="60dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:alpha="0.5"
             android:gravity="center_horizontal"
             android:text="@string/programs"
             android:textAppearance="@style/BudgetProgressionText" />
 
         <TextView
             android:id="@+id/text2"
-            android:layout_width="60dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:alpha="0.5"
             android:gravity="center_horizontal"
             android:text="@string/projects"
             android:textAppearance="@style/BudgetProgressionText" />
 
         <TextView
             android:id="@+id/text3"
-            android:layout_width="60dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:alpha="0.5"
             android:gravity="center_horizontal"
             android:text="@string/activities"
             android:textAppearance="@style/BudgetProgressionText" />
 
         <TextView
             android:id="@+id/text4"
-            android:layout_width="60dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:alpha="0.5"
             android:gravity="center_horizontal"
             android:text="@string/activity"
             android:textAppearance="@style/BudgetProgressionText" />
     </LinearLayout>
 
-</merge>
+</RelativeLayout>

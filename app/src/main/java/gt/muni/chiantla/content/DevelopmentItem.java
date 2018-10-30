@@ -2,6 +2,7 @@ package gt.muni.chiantla.content;
 
 /**
  * Clase base para los items del plan de desarrollo
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
@@ -15,17 +16,13 @@ public abstract class DevelopmentItem {
 
     protected String content;
     protected String name;
-    protected int parentId;
-    protected char numberingStart;
     protected int id;
     protected int percentage;
+    int parentId;
+    private char numberingStart;
 
-    protected DevelopmentItem() {
-
-    }
-
-    public DevelopmentItem(int id, String name, String content, int parentId,
-                           char numberingStart, int percentage) {
+    DevelopmentItem(int id, String name, String content, int parentId,
+                    char numberingStart, int percentage) {
         this.name = name;
         this.content = content;
         this.parentId = parentId;

@@ -1,104 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingRight="20dp"
-    android:paddingTop="10dp">
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="6dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/imageView15"
-            android:layout_width="50dp"
+        <TextView
+            android:id="@+id/problem_type"
+            fontPath="fonts/Archivo-Bold.ttf"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_weight="0"
-            android:scaleType="center"
-            app:srcCompat="@mipmap/envelopporangefuerte" />
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toStartOf="@id/nextArrow"
+            android:layout_toLeftOf="@id/nextArrow"
+            android:singleLine="true"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/problem_type"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toStartOf="@id/nextArrow"
+            android:layout_toLeftOf="@id/nextArrow"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textAppearance="@style/InputText"
+            android:textColor="@color/notificationAddressColor" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_below="@id/address"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/NormalText"
+                android:textColor="@color/textColorHint" />
 
-                <TextView
-                    android:id="@+id/problem_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:singleLine="true"
-                    android:textAppearance="@style/SmallTextNotification" />
-
-                <TextView
-                    android:id="@+id/gen_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0"
-                    android:textAppearance="@style/SmallText" />
-
-                <TextView
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:textAppearance="@style/SmallTextNotification" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:textAppearance="@style/SmallText"
-                    android:textColor="@color/notificationAddressColor" />
-
-                <TextView
-                    android:id="@+id/status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:gravity="right"
-                    android:textAppearance="@style/SmallText" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textAppearance="@style/NormalText"
+                android:textColor="@color/textColorHint" />
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/responsesNumber"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/budget_button"
+            android:backgroundTint="@color/notificationsSecondary"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/NormalText"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
         <ImageView
-            android:id="@+id/imageView16"
+            android:id="@+id/nextArrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="0"
-            app:srcCompat="@mipmap/arrowrightorangefuerte" />
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/arrow_small_black_home_report" />
+    </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/budgetDividerColor"></View>
-
-</LinearLayout>
+</android.support.v7.widget.CardView>

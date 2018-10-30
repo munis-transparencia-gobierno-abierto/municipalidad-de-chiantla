@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="progressColor"
+            type="int" />
+
+        <variable
+            name="progressBackgroundColor"
+            type="int" />
+
+        <variable
+            name="expense"
+            type="boolean" />
+
+        <variable
+            name="name"
+            type="String" />
+
+        <variable
+            name="cardColor"
+            type="int" />
+
+        <variable
+            name="subtitleSize"
+            type="int" />
+
+        <variable
+            name="buttonInverted"
+            type="boolean" />
+
+        <variable
+            name="hasTopBorder"
+            type="boolean" />
+
+        <variable
+            name="lightBackgroundColor"
+            type="boolean" />
+
+        <variable
+            name="buttonRotation"
+            type="int" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/card_margin"
+        android:layout_weight="1"
+        app:cardBackgroundColor="@{cardColor}"
+        card_view:cardCornerRadius="6dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/backgroundBudgets"
+            android:visibility='@{hasTopBorder ? android.view.View.VISIBLE : android.view.View.GONE }' />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/infoContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:padding="6dp">
+
+                <ImageView
+                    android:id="@+id/infoButton"
+                    android:layout_width="29dp"
+                    android:layout_height="29dp"
+                    android:layout_alignBottom="@id/shareButton"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_toStartOf="@id/shareButton"
+                    android:layout_toLeftOf="@id/shareButton"
+                    android:contentDescription="@string/info_button"
+                    android:padding="6dp"
+                    android:src="@{lightBackgroundColor ? @drawable/artboard_35 : @drawable/infosmallwhite }" />
+
+                <ImageView
+                    android:id="@+id/shareButton"
+                    android:layout_width="26dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/share_button"
+                    android:padding="6dp"
+                    android:src="@{lightBackgroundColor ? @drawable/sharesmallblack : @drawable/sharesmallwhite}" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/mainContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/infoContainer"
+                android:layout_marginBottom="23dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/card_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="18dp"
+                    android:layout_toStartOf="@id/nextButton"
+                    android:layout_toLeftOf="@id/nextButton"
+                    android:text="@{name}"
+                    android:textAppearance="@style/BudgetSubtitleText"
+                    android:textSize="@{subtitleSize}" />
+
+                <TextView
+                    android:id="@+id/amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/card_name"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toStartOf="@id/nextButton"
+                    android:layout_toLeftOf="@id/nextButton"
+                    android:textAppearance="@style/BudgetBigFigures" />
+
+                <RelativeLayout
+                    android:id="@+id/progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/amount"
+                    android:orientation="horizontal"
+                    android:visibility='@{expense ? android.view.View.VISIBLE : android.view.View.GONE }'>
+
+                    <include
+                        layout="@layout/section_progress_expenses"
+                        app:progressBackgroundColor="@{progressBackgroundColor}"
+                        app:progressColor="@{progressColor}" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/nextButton"
+                    android:layout_width="39dp"
+                    android:layout_height="39dp"
+                    android:layout_alignBottom="@id/amount"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="2dp"
+                    android:background="@{buttonInverted ? @drawable/budget_button_inverted : @drawable/budget_button}"
+                    android:contentDescription="@string/next_button"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
+                    android:rotation="@{buttonRotation}"
+                    android:src="@{buttonInverted ? @drawable/arrow_big_black : @drawable/arrow_big_white}" />
+
+                <LinearLayout
+                    android:id="@+id/cardList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/progress"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:orientation="vertical" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

@@ -1,71 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_income_section"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="gt.muni.chiantla.budget.IncomeSectionFragment">
+<layout>
 
-    <LinearLayout
-        android:id="@+id/header"
+    <data>
+
+        <variable
+            name="name"
+            type="String" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorIncomeAuxPrimary"
+        android:layout_height="match_parent"
+        android:background="@color/colorIncomePrimary"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
-        android:paddingLeft="35dp"
-        android:paddingRight="35dp"
-        android:paddingTop="20dp">
+        tools:context="gt.muni.chiantla.budget.IncomeSectionFragment">
 
-        <TextView
-            android:id="@+id/sectionName"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/IncomeClassBigText" />
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingLeft="@dimen/budget_padding"
+            android:paddingRight="@dimen/budget_padding"
+            android:paddingBottom="13dp"
+            android:scrollbarStyle="outsideOverlay">
 
-        <TextView
-            android:id="@+id/textView38"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sectionName"
-            android:layout_marginTop="15dp"
-            android:text="@string/added"
-            android:textAppearance="@style/ProgressNumberBudgets" />
+            <include
+                android:id="@+id/projects_button"
+                layout="@layout/section_budget_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:buttonInverted="@{false}"
+                app:buttonRotation="@{270}"
+                app:cardColor="@{@color/white}"
+                app:hasTopBorder="@{true}"
+                app:lightBackgroundColor="@{true}"
+                app:name="@{name}"
+                app:subtitleSize="@{18}" />
 
-        <TextView
-            android:id="@+id/sectionValue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textAppearance="@style/IncomeTypeBigFigures" />
-    </LinearLayout>
+        </ScrollView>
 
-    <gt.muni.chiantla.widget.CustomListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
-        android:background="@color/white"
-        android:divider="@color/budgetDividerColor"
-        android:dividerHeight="1dp"
-        android:paddingLeft="35sp"
-        android:paddingRight="35dp" />
-
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:adjustViewBounds="false"
-        android:background="@color/colorBudgetsPrimary"
-        android:cropToPadding="true"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:stateListAnimator="@null"
-        android:visibility="visible"
-        app:srcCompat="@mipmap/scrolldownwhite" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

@@ -10,33 +10,43 @@ import android.widget.TextView;
 import gt.muni.chiantla.R;
 import gt.muni.chiantla.Utils;
 import gt.muni.chiantla.content.Axis;
-import gt.muni.chiantla.widget.CustomListView;
 
 /**
  * Actividad de los ejes del plan de desarrollo
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
-public class AxesActivity extends DevelopmentItemActivity implements AdapterView.OnItemClickListener {
+public class AxesActivity extends DevelopmentItemActivity implements AdapterView
+        .OnItemClickListener {
     private int PARENT_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setCustomActionBar(R.string.axes, true);
+        setCustomActionBar(null, true);
         setContentView(R.layout.activity_development_item);
+
+        ((TextView) findViewById(R.id.sectionTitle)).setText(R.string.axes);
 
         ((ProgressBar) findViewById(R.id.progressBar)).setProgress(34);
         ((TextView) findViewById(R.id.progressBarText)).setText("1/3");
 
-        mListView = (CustomListView) findViewById(R.id.list);
+        mListView = findViewById(R.id.list);
         mListView.setOnItemClickListener(this);
 
-        initScroll(mListView, findViewById(android.R.id.content));
         showTextInView(PARENT_ID);
 
         Utils.sendFirebaseEvent("MiChiantla", "Plan_de_Desarrollo", null, null,
                 "Menu_Ejes_Plan_de_Desarrollo", "Plan_de_Desarrollo", this);
+    }
+
+    protected int getCardColor() {
+        return getResources().getColor(R.color.black);
+    }
+
+    protected boolean getButtonInverted() {
+        return true;
     }
 
     @Override

@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBudgetsPrimary"
-    tools:context="gt.muni.chiantla.Splash2Fragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    android:clickable="true"
+    android:focusable="true"
+    android:onClick="dismissSplash"
+    tools:context="gt.muni.chiantla.SplashActivity">
 
     <ImageView
-        android:id="@+id/imageView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:srcCompat="@mipmap/iconslogoslanding" />
+        app:srcCompat="@drawable/iconslogoslandingwhite" />
+
 </FrameLayout>

@@ -8,21 +8,24 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import gt.muni.chiantla.R;
 import gt.muni.chiantla.content.Notification;
 
 /**
  * Adaptador para las notificaciones.
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
 public class NotificationAdapter extends BaseAdapter {
-    private ArrayList<Notification> notifications;
+    private List<Notification> notifications;
     private Context context;
 
-    public NotificationAdapter(ArrayList<Notification> notifications, Context context) {
-        this.notifications = notifications;
+    public NotificationAdapter(Collection<Notification> notifications, Context context) {
+        this.notifications = new ArrayList<>(notifications);
         this.context = context;
     }
 
@@ -53,8 +56,6 @@ public class NotificationAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.address)).setText(notification.getAddress());
         ((TextView) view.findViewById(R.id.date)).setText(notification.getDate());
         ((TextView) view.findViewById(R.id.status)).setText(notification.getStatus());
-        if (notification.getGenId() != null)
-            ((TextView) view.findViewById(R.id.gen_id)).setText(" - " + notification.getGenId());
         return view;
     }
 }

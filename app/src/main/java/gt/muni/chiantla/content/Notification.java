@@ -6,20 +6,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.io.Serializable;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import gt.muni.chiantla.connections.database.InformationOpenHelper;
 
 /**
  * Clase que representa un reporte
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
-public class Notification {
+public class Notification implements Serializable {
     // constantes para la base de datos
     public static final String TABLE = "notifications";
     public static final String KEY_ID = "id";
@@ -36,6 +40,9 @@ public class Notification {
     public static final String KEY_LON = "lon";
     public static final String KEY_GEN_ID = "gen_id";
     public static final String KEY_STATUS = "status";
+    public static final String KEY_TOKEN = "registration_token";
+    public static final String KEY_COMMENTS = "comments";
+    public static final String KEY_OFFICE = "office";
     public static final String LOCATION_PREFIX = "location-";
     public static final String PERSON_PREFIX = "person-";
 
@@ -49,13 +56,16 @@ public class Notification {
     private String phone;
     private String date;
     private String genId;
-    private Uri imageUri;
+    private String imageUri;
     private Double lat;
     private Double lon;
     private String status;
+    private String registrationToken;
+    private ArrayList<Comment> comments;
+    private String office;
 
     public Notification(String problemType, String problem, String location, String address,
-                        String solution, String name, String phone, Uri imageUri,
+                        String solution, String name, String phone, String imageUri,
                         double lat, double lon, String status) {
         this.problemType = problemType;
         this.problem = problem;
@@ -71,11 +81,14 @@ public class Notification {
         this.lat = lat;
         this.lon = lon;
         this.status = status;
+        this.registrationToken = FirebaseInstanceId.getInstance().getToken();
+        this.comments = new ArrayList<>();
     }
 
-    private Notification(int id, String problemType, String problem, String location, String address,
-                         String solution, String name, String phone, String genId, String date,
-                         Uri imageUri, double lat, double lon, String status) {
+    private Notification(int id, String problemType, String problem, String location,
+                         String address, String solution, String name, String phone, String genId,
+                         String date, String imageUri, double lat, double lon, String status,
+                         ArrayList<Comment> comments, String office) {
         this.id = id;
         this.problemType = problemType;
         this.problem = problem;
@@ -90,12 +103,16 @@ public class Notification {
         this.lat = lat;
         this.lon = lon;
         this.status = status;
+        this.registrationToken = FirebaseInstanceId.getInstance().getToken();
+        this.comments = comments;
+        this.office = office;
     }
 
     /**
      * Crea una notificación guardada en la base de datos
+     *
      * @param helper el helper de la base de datos
-     * @param id el id de la notificación a crear
+     * @param id     el id de la notificación a crear
      */
     public Notification(InformationOpenHelper helper, int id) {
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -118,10 +135,9 @@ public class Notification {
                 date = cursor.getString(cursor.getColumnIndex(KEY_DATE));
                 lat = cursor.getDouble(cursor.getColumnIndex(KEY_LAT));
                 lon = cursor.getDouble(cursor.getColumnIndex(KEY_LON));
-                String uri = cursor.getString(cursor.getColumnIndex(KEY_IMAGE));
-                if (uri != null)
-                    imageUri = Uri.parse(uri);
+                imageUri = cursor.getString(cursor.getColumnIndex(KEY_IMAGE));
                 status = cursor.getString(cursor.getColumnIndex(KEY_STATUS));
+                office = cursor.getString(cursor.getColumnIndex(KEY_OFFICE));
             }
         } catch (Exception e) {
             Log.e("DB", e.getMessage());
@@ -130,15 +146,19 @@ public class Notification {
                 cursor.close();
             }
         }
+        this.registrationToken = FirebaseInstanceId.getInstance().getToken();
+        this.comments = new ArrayList<>();
     }
 
     /**
      * Obtiene todas las notificaciones de la base de datos
+     *
      * @param helper el helper de la base de datos
-     * @return un {@link ArrayList} con todas las notificaciones que se encuentren en la base de datos
+     * @return un {@link ArrayList} con todas las notificaciones que se encuentren en la base de
+     * datos
      */
-    public static ArrayList<Notification> getAll(InformationOpenHelper helper) {
-        ArrayList<Notification> notifications = new ArrayList<>();
+    public static HashMap<String, Notification> getAll(InformationOpenHelper helper) {
+        HashMap<String, Notification> notifications = new HashMap<>();
         SQLiteDatabase db = helper.getReadableDatabase();
         String PAGE_SELECT_QUERY = String.format(
                 "SELECT * FROM %s",
@@ -157,15 +177,17 @@ public class Notification {
                     String phone = cursor.getString(cursor.getColumnIndex(KEY_PHONE));
                     String date = cursor.getString(cursor.getColumnIndex(KEY_DATE));
                     String genId = cursor.getString(cursor.getColumnIndex(KEY_GEN_ID));
-                    String uriString = cursor.getString(cursor.getColumnIndex(KEY_IMAGE));
+                    String imageUri = cursor.getString(cursor.getColumnIndex(KEY_IMAGE));
                     String status = cursor.getString(cursor.getColumnIndex(KEY_STATUS));
-                    Uri imageUri = null;
-                    if (uriString != null)
-                        imageUri = Uri.parse(uriString);
                     double lat = cursor.getDouble(cursor.getColumnIndex(KEY_LAT));
                     double lon = cursor.getDouble(cursor.getColumnIndex(KEY_LON));
-                    notifications.add(new Notification(id, problemType, problem, location, address, solution,
-                            name, phone, genId, date, imageUri, lat, lon, status));
+                    String office = cursor.getString(cursor.getColumnIndex(KEY_OFFICE));
+                    ArrayList<Comment> comments = Comment.getComments(helper, genId);
+                    Notification newNotification = new Notification(id, problemType, problem,
+                            location, address, solution, name, phone, genId, date, imageUri, lat,
+                            lon, status, comments, office);
+                    if (genId != null) notifications.put(genId, newNotification);
+                    else notifications.put(id + "", newNotification);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
@@ -181,6 +203,7 @@ public class Notification {
 
     /**
      * Guarda la noticicación en la base de datos
+     *
      * @param db el helper de la base de datos
      * @return el id de la notificación guardada
      */
@@ -195,8 +218,9 @@ public class Notification {
         values.put(KEY_PHONE, phone);
         values.put(KEY_DATE, date);
         values.put(KEY_STATUS, status);
+        values.put(KEY_OFFICE, office);
         if (imageUri != null)
-            values.put(KEY_IMAGE, imageUri.toString());
+            values.put(KEY_IMAGE, imageUri);
         values.put(KEY_LAT, lat);
         values.put(KEY_LON, lon);
         if (genId != null)
@@ -206,6 +230,7 @@ public class Notification {
 
     /**
      * Actualiza la notificación en la base de datos con una nueva id generada
+     *
      * @param db la base de datos en donde se enceuntra guardada la notificación
      */
     public void saveGenId(InformationOpenHelper db) {
@@ -216,6 +241,7 @@ public class Notification {
 
     /**
      * Actualiza la notificación en la base de datos con un nuevo estatus
+     *
      * @param db la base de datos en donde se enceuntra guardada la notificación
      */
     public void saveStatus(InformationOpenHelper db) {
@@ -225,12 +251,24 @@ public class Notification {
     }
 
     /**
+     * Actualiza la notificación en la base de datos con una nueva oficina
+     *
+     * @param db la base de datos en donde se enceuntra guardada la notificación
+     */
+    public void saveOffice(InformationOpenHelper db) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_OFFICE, office);
+        db.update(values, Long.toString(id), TABLE);
+    }
+
+    /**
      * Obtiene las llaves de la información que espera el servidor cuando se guarde la notificación
      * en el mismo
+     *
      * @return las llaves
      */
     public String[] getKeys() {
-        String[] response = new String[] {
+        String[] response = new String[]{
                 "desc",
                 KEY_SOLUTION,
                 KEY_PROBLEM_TYPE,
@@ -239,31 +277,59 @@ public class Notification {
                 LOCATION_PREFIX + KEY_LON,
                 PERSON_PREFIX + KEY_NAME,
                 PERSON_PREFIX + KEY_PHONE,
+                KEY_ADDRESS,
+                KEY_TOKEN,
+                KEY_ID
         };
         return response;
     }
 
     /**
      * Obtiene la información que espera el servidor cuando se guarde la notificación en el mismo
+     *
      * @return las llaves
      */
     public String[] getStrings() {
-        String[] response = new String[] {
+        String[] response = new String[]{
                 problem,
                 solution,
                 problemType,
                 location,
-                lat.toString(),
-                lon.toString(),
+                (lat != null) ? lat.toString() : null,
+                (lon != null) ? lon.toString() : null,
                 name,
-                phone
+                phone,
+                address,
+                registrationToken,
+                id + ""
         };
         return response;
     }
 
+    /**
+     * Adds a new comment
+     *
+     * @param date    the comments date
+     * @param content the comments content
+     */
+    public void addComment(String date, String content, InformationOpenHelper db) {
+        Comment comment = new Comment(getCommentsNumber(), content, date);
+        comment.save(db, genId);
+        comments.add(comment);
+    }
+
+    /**
+     * Removes a notification
+     *
+     * @param db the database
+     */
+    public void delete(InformationOpenHelper db) {
+        db.delete(TABLE, KEY_ID, id + "");
+    }
+
     // Getters y setters
     public Uri getImageUri() {
-        return imageUri;
+        return (imageUri == null) ? null : Uri.parse(imageUri);
     }
 
     public String[] getImageKey() {
@@ -287,7 +353,13 @@ public class Notification {
     }
 
     public String getGenId() {
-        return genId;
+        if (genId != null)
+            return genId;
+        return "";
+    }
+
+    public void setGenId(String genId) {
+        this.genId = genId;
     }
 
     public String getProblem() {
@@ -318,8 +390,20 @@ public class Notification {
         return lon;
     }
 
-    public void setGenId(String genId) {
-        this.genId = genId;
+    public String getOffice() {
+        return office;
+    }
+
+    public void setOffice(String office) {
+        this.office = office;
+    }
+
+    public int getCommentsNumber() {
+        return comments.size();
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
     }
 
     public String getStatus() {

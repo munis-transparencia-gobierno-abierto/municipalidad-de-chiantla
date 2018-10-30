@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 /**
  * Fragmento del segundo splash screen.
+ *
  * @author Ludiverse
  * @author Innerlemonade
  */
